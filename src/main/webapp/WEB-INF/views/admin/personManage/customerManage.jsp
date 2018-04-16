@@ -21,10 +21,6 @@
 									400, 500 ],
 							frozenColumns : [ [
 									{
-										field : 'ck',
-										checkbox : true
-									},
-									{
 										width : '150',
 										title : '姓名',
 										field : 'userName',
@@ -55,7 +51,7 @@
 									{
 										width : '150',
 										title : '厂牌类型',
-										field : 'changType',
+										field : 'status',
 										align : 'center',
 										sortable : true
 									},
@@ -66,7 +62,7 @@
 										align : 'center',
 										sortable : true,
 										formatter : function(value, row, index) {
-											value = value.toString();
+											value = value + '';
 											if (value == undefined
 													|| value == ""
 													|| value.length != 14) {
@@ -134,17 +130,19 @@
 		parent.$.messager.confirm('询问', '您是否要修改当前角色状态？', function(b) {
 			if (b) {
 				progressLoad();
-				$.post('${path}/mgr/personManage/customerManage/updateStatus', {
-					customerId : customerId,
-					status : status
-				}, function(result) {
-					if (result.success) {
-						parent.$.messager.alert('提示', result.msg, 'info');
-						customerManageDataGrid.datagrid('reload');
-					}
-					progressClose();
-					customerManageDataGrid.datagrid('unselectAll');
-				}, 'JSON');
+				$.post('${path}/mgr/personManage/customerManage/updateStatus',
+						{
+							customerId : customerId,
+							status : status
+						}, function(result) {
+							if (result.success) {
+								parent.$.messager.alert('提示', result.msg,
+										'info');
+								customerManageDataGrid.datagrid('reload');
+							}
+							progressClose();
+							customerManageDataGrid.datagrid('unselectAll');
+						}, 'JSON');
 			}
 		});
 	}
@@ -155,7 +153,7 @@
 					title : '会员详情',
 					width : 660,
 					height : 500,
-					href : '${path }/personManage/customerManage/customerLook?customerId='
+					href : '${path}/mgr/personManage/customerManage/customerLook?customerId='
 							+ customerId,
 					buttons : [ {
 						text : '关闭',
@@ -164,6 +162,7 @@
 						}
 					} ]
 				});
+		customerManageDataGrid.datagrid('unselectAll');
 	}
 	// 搜索
 	function customerManageSearchFun() {
@@ -195,15 +194,15 @@
 		<br>
 		<div style="float: left; border: 0px solid; width: 1300px; height: 35px; background-color: #DBDBDB; padding-left: 15px;">
 			<div style="border: 0px solid; float: left; width: 700px; margin-top: 6px; font-size: 16px;">列表</div>
-			<div style="border: 0px solid; float: left; width: 80px; margin-top: 3px; margin-left: 20px">
+			<!-- <div style="border: 0px solid; float: left; width: 80px; margin-top: 3px; margin-left: 20px">
 				<button type="button" onclick="addCustomerFun()" style="width: 80px; height: 26px;">批量删除</button>
-			</div>
-			<div style="border: 0px solid; float: left; width: 120px; margin-top: 3px; margin-left: 20px">
+			</div> -->
+			<!-- <div style="border: 0px solid; float: left; width: 120px; margin-top: 3px; margin-left: 20px">
 				<button type="button" id="importExcel" onclick="importExcelFun()" style="width: 120px; height: 26px;">批量导出EXCEL</button>
-			</div>
-			<div style="border: 0px solid; float: left; width: 120px; margin-top: 3px; margin-left: 20px">
+			</div> -->
+			<!-- <div style="border: 0px solid; float: left; width: 120px; margin-top: 3px; margin-left: 20px">
 				<button type="button" id="importExcel" onclick="importExcelFun()" style="width: 100px; height: 26px;">EXCEL导入</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div data-options="region:'center',border:false">

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -20,9 +21,16 @@ import org.springframework.stereotype.Service;
 public class PolicyholderServiceImpl extends ServiceImpl<PolicyholderMapper, Policyholder> implements IPolicyholderService {
 	@Autowired
 	private PolicyholderMapper mapper;
+
 	@Override
 	public Policyholder selectPolicyholder(Policyholder policyholder) {
 		return mapper.selectPolicyholder(policyholder);
 	}
-	
+
+	@Override
+	@Transactional
+	public void updatePolicyHolderStatus(Policyholder policyholder) {
+		mapper.updatePolicyHolderStatus(policyholder);
+	}
+
 }

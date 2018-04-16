@@ -124,15 +124,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 		pageInfo.setTotal(1);
 	}
 
-	@Override
-	public void orderListGroupByProvince(PageInfo pageInfo) {
-		Page<Map<String, Object>> page = new Page<Map<String, Object>>(pageInfo.getNowpage(), pageInfo.getSize());
-		page.setOrderByField(pageInfo.getSort());
-		page.setAsc(pageInfo.getOrder().equalsIgnoreCase("asc"));
-		//List<Map<String, Object>> list = orderInfoMapper.orderListGroupByProvince(page);
-		//pageInfo.setRows(list);
-		//pageInfo.setTotal(page.getTotal());
-	}
 
 	@Override
 	public List<Map<String, String>> getOrderTypeList() {

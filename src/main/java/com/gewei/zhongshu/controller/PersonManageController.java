@@ -1,9 +1,12 @@
 package com.gewei.zhongshu.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,21 +15,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gewei.commons.base.BaseController;
 import com.gewei.commons.result.PageInfo;
 import com.gewei.commons.shiro.PasswordHash;
+import com.gewei.commons.utils.BeanUtils;
 import com.gewei.commons.utils.DateUtil;
 import com.gewei.commons.utils.StringUtils;
 import com.gewei.commons.utils.UUIDUtil;
+import com.gewei.fuwushang.service.IPolicyholderService;
+import com.gewei.fuwushang.service.ITCustomerBasicinfoService;
 import com.gewei.model.Operator;
 import com.gewei.model.OperatorRes;
+import com.gewei.model.Policyholder;
+import com.gewei.model.TChinaArea;
 import com.gewei.model.TCustomerBasicinfo;
 import com.gewei.model.TMemberBasicinfo;
+import com.gewei.model.TMerchantManage;
 import com.gewei.model.User;
 import com.gewei.model.vo.OperatorVo;
 import com.gewei.model.vo.ProductInfoVo;
 import com.gewei.zhongshu.service.IOperatorService;
+import com.gewei.zhongshu.service.ITChinaAreaService;
+import com.gewei.zhongshu.service.ITMerchantManageService;
 import com.gewei.zhongshu.service.IUserService;
 
 /**
@@ -43,6 +56,18 @@ public class PersonManageController extends BaseController {
 	private PasswordHash passwordHash;
 	@Autowired
 	private IOperatorService iOperatorServiceImpl;
+	@Autowired
+	private IPolicyholderService iPolicyholderServiceImpl;
+	@Autowired
+	private ITCustomerBasicinfoService iTCustomerBasicinfoServiceImpl;
+	@Autowired
+	private IUserService userServiceImpl;
+	@Autowired
+	private IPolicyholderService policyholderService;
+	@Autowired
+	private ITChinaAreaService iTChinaAreaServiceImpl;
+	@Autowired
+	private ITMerchantManageService tMerchantManageServiceImpl;
 
 	@PostMapping("/operatorManage/roleList")
 	@ResponseBody
@@ -54,6 +79,29 @@ public class PersonManageController extends BaseController {
 	@GetMapping("/tOperatorManage/addPage")
 	public String addPage() {
 		return "admin/personManage/operatorManageAdd";
+	}
+
+	@GetMapping("/operatorManage")
+	public String operatorManage() {
+		return "admin/personManage/operatorManage";
+	}
+
+	@GetMapping("/memberManage/memberLook")
+	public String getMemberInfoById(Model model, String memberId) {
+		TMemberBasicinfo memberInfo = iOperatorServiceImpl.getMemberInfoById(memberId);
+		Map<String, Object> convertObjToMap = BeanUtils.ConvertObjToMap(memberInfo);
+		model.addAttribute("memberInfo", convertObjToMap);
+		return "admin/personManage/memberManageLook";
+	}
+
+	@GetMapping("/memberManage")
+	public String memberManage() {
+		return "admin/personManage/memberManage";
+	}
+
+	@GetMapping("/customerManage")
+	public String customerManage() {
+		return "admin/personManage/customerManage";
 	}
 
 	@GetMapping("/tOperatorManage/editPage")
@@ -94,11 +142,6 @@ public class PersonManageController extends BaseController {
 		return "admin/personManage/operatorManageLook";
 	}
 
-	@GetMapping("/operatorManage")
-	public String operatorManage() {
-		return "admin/personManage/operatorManage";
-	}
-
 	@PostMapping("/operatorManage/operatorAdd")
 	@ResponseBody
 	@Transactional
@@ -137,12 +180,9 @@ public class PersonManageController extends BaseController {
 			operator.setRootccCommissionType(1 == Integer.parseInt(operatorVoRe.getRootccCommission()) ? "01" : "02");
 			operator.setRootdkCommissionType(1 == Integer.parseInt(operatorVoRe.getRootdkCommission()) ? "01" : "02");
 			operator.setRootrsCommissionType(1 == Integer.parseInt(operatorVoRe.getRootrsCommission()) ? "01" : "02");
-			operator.setRootccCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootccCommission()) ? Float.parseFloat(operatorVoRe.getRootccCommissionValue()) * 100
-					: Float.parseFloat(operatorVoRe.getRootccCommissionValue().toString()));
-			operator.setRootdkCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootdkCommission()) ? Float.parseFloat(operatorVoRe.getRootdkCommissionValue()) * 100
-					: Float.parseFloat(operatorVoRe.getRootdkCommissionValue().toString()));
-			operator.setRootrsCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootrsCommission()) ? Float.parseFloat(operatorVoRe.getRootrsCommissionValue()) * 100
-					: Float.parseFloat(operatorVoRe.getRootrsCommissionValue().toString()));
+			operator.setRootccCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootccCommission()) ? Float.parseFloat(operatorVoRe.getRootccCommissionValue()) * 100 : Float.parseFloat(operatorVoRe.getRootccCommissionValue().toString()));
+			operator.setRootdkCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootdkCommission()) ? Float.parseFloat(operatorVoRe.getRootdkCommissionValue()) * 100 : Float.parseFloat(operatorVoRe.getRootdkCommissionValue().toString()));
+			operator.setRootrsCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootrsCommission()) ? Float.parseFloat(operatorVoRe.getRootrsCommissionValue()) * 100 : Float.parseFloat(operatorVoRe.getRootrsCommissionValue().toString()));
 			operator.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
 			iOperatorServiceImpl.insertOperator(operator);
 			// 插入角色
@@ -182,12 +222,9 @@ public class PersonManageController extends BaseController {
 			operator.setRootccCommissionType(1 == Integer.parseInt(operatorVoRe.getRootccCommission()) ? "01" : "02");
 			operator.setRootdkCommissionType(1 == Integer.parseInt(operatorVoRe.getRootdkCommission()) ? "01" : "02");
 			operator.setRootrsCommissionType(1 == Integer.parseInt(operatorVoRe.getRootrsCommission()) ? "01" : "02");
-			operator.setRootccCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootccCommission()) ? Float.parseFloat(operatorVoRe.getRootccCommissionValue()) * 100
-					: Float.parseFloat(operatorVoRe.getRootccCommissionValue().toString()));
-			operator.setRootdkCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootdkCommission()) ? Float.parseFloat(operatorVoRe.getRootdkCommissionValue()) * 100
-					: Float.parseFloat(operatorVoRe.getRootdkCommissionValue().toString()));
-			operator.setRootrsCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootrsCommission()) ? Float.parseFloat(operatorVoRe.getRootrsCommissionValue()) * 100
-					: Float.parseFloat(operatorVoRe.getRootrsCommissionValue().toString()));
+			operator.setRootccCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootccCommission()) ? Float.parseFloat(operatorVoRe.getRootccCommissionValue()) * 100 : Float.parseFloat(operatorVoRe.getRootccCommissionValue().toString()));
+			operator.setRootdkCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootdkCommission()) ? Float.parseFloat(operatorVoRe.getRootdkCommissionValue()) * 100 : Float.parseFloat(operatorVoRe.getRootdkCommissionValue().toString()));
+			operator.setRootrsCommissionValue(1 == Integer.parseInt(operatorVoRe.getRootrsCommission()) ? Float.parseFloat(operatorVoRe.getRootrsCommissionValue()) * 100 : Float.parseFloat(operatorVoRe.getRootrsCommissionValue().toString()));
 			operator.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
 			iOperatorServiceImpl.updateOperator(operator);
 			// 修改user_role
@@ -238,18 +275,6 @@ public class PersonManageController extends BaseController {
 		return pageInfo;
 	}
 
-	@GetMapping("/memberManage/memberLook")
-	public String getMemberInfoById(Model model, String memberId) {
-		TMemberBasicinfo memberInfo = iOperatorServiceImpl.getMemberInfoById(memberId);
-		model.addAttribute("memberInfo", memberInfo);
-		return "admin/personManage/memberManageLook";
-	}
-
-	@GetMapping("/memberManage")
-	public String memberManage() {
-		return "admin/personManage/memberManage";
-	}
-
 	@PostMapping("/memberDataGrid")
 	@ResponseBody
 	public Object memberListDataGrid(ProductInfoVo productInfoVo, Integer page, Integer rows, String sort, String order) {
@@ -291,40 +316,58 @@ public class PersonManageController extends BaseController {
 		return renderSuccess("修改成功！");
 	}
 
-	@GetMapping("/customerManage")
-	public String customerManage() {
-		return "admin/personManage/customerManage";
-	}
-
 	@GetMapping("/customerManage/customerLook")
 	public String getCustomerInfoById(Model model, String customerId) {
-		TCustomerBasicinfo tCustomerBasicinfo = iOperatorServiceImpl.getCustomerIdInfoById(customerId);
-		tCustomerBasicinfo.setBusinessInsStartTime(formateTime(tCustomerBasicinfo.getBusinessInsStartTime()));
-		tCustomerBasicinfo.setTrafficInsStartTime(formateTime(tCustomerBasicinfo.getTrafficInsStartTime()));
-		tCustomerBasicinfo.setExamineTime(formateTime(tCustomerBasicinfo.getExamineTime()));
-		tCustomerBasicinfo.setRegisterTime(formateTime(tCustomerBasicinfo.getRegisterTime()));
-		model.addAttribute("customerInfo", tCustomerBasicinfo);
+		EntityWrapper<TCustomerBasicinfo> entityWrapper = new EntityWrapper<TCustomerBasicinfo>();
+		entityWrapper.eq("USER_ID", customerId);
+		TCustomerBasicinfo tCustomerBasicinfo = iTCustomerBasicinfoServiceImpl.selectOne(entityWrapper);
+		System.out.println("tCustomerBasicinfo=" + JSON.toJSONString(tCustomerBasicinfo));
+		if (tCustomerBasicinfo != null) {
+			tCustomerBasicinfo.setBusinessInsStartTime(formateTime(tCustomerBasicinfo.getBusinessInsStartTime()));
+			tCustomerBasicinfo.setTrafficInsStartTime(formateTime(tCustomerBasicinfo.getTrafficInsStartTime()));
+			tCustomerBasicinfo.setExamineTime(formateTime(tCustomerBasicinfo.getExamineTime()));
+			tCustomerBasicinfo.setRegisterTime(formateTime(tCustomerBasicinfo.getRegisterTime()));
+			model.addAttribute("customerInfo", tCustomerBasicinfo);
+			return "admin/personManage/customerManageLook";
+		}
+		EntityWrapper<Policyholder> entityWrapper2 = new EntityWrapper<Policyholder>();
+		entityWrapper2.eq("PID", customerId);
+		Policyholder policyholder = iPolicyholderServiceImpl.selectOne(entityWrapper2);
+		System.out.println("policyholder=" + JSON.toJSONString(policyholder));
+		Map<String, Object> convertObjToMap = BeanUtils.ConvertObjToMap(policyholder);
+		if (policyholder != null) {
+			convertObjToMap.put("userId", policyholder.getPid());
+			convertObjToMap.put("cardId", policyholder.getCertNo());
+			convertObjToMap.put("cardType", policyholder.getCertType());
+			model.addAttribute("customerInfo", convertObjToMap);
+			return "admin/personManage/customerManageLook";
+		}
 		return "admin/personManage/customerManageLook";
-	}
-
-	private String formateTime(String yyyyMMDDhhmmss) {
-		StringBuffer result = new StringBuffer("");
-		String year = yyyyMMDDhhmmss.substring(0, 4);
-		String month = yyyyMMDDhhmmss.substring(4, 6);
-		String day = yyyyMMDDhhmmss.substring(6, 8);
-		result.append(year).append("-").append(month).append("-").append(day);
-		return result.toString();
 	}
 
 	@PostMapping("/customerManage/updateStatus")
 	@ResponseBody
 	public Object updateCustomerStatus(String customerId, String status) {
 		try {
-			TCustomerBasicinfo tCustomerBasicinfo = new TCustomerBasicinfo();
-			tCustomerBasicinfo.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
-			tCustomerBasicinfo.setStatus(status);
-			tCustomerBasicinfo.setUserId(customerId);
-			iOperatorServiceImpl.updateCustomerStatus(tCustomerBasicinfo);
+			EntityWrapper<TCustomerBasicinfo> entityWrapper = new EntityWrapper<TCustomerBasicinfo>();
+			entityWrapper.eq("USER_ID", customerId);
+			TCustomerBasicinfo tCustomerBasicinfo = iTCustomerBasicinfoServiceImpl.selectOne(entityWrapper);
+			if (tCustomerBasicinfo != null) {
+				tCustomerBasicinfo.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
+				tCustomerBasicinfo.setStatus(status);
+				tCustomerBasicinfo.setUserId(customerId);
+				iOperatorServiceImpl.updateCustomerStatus(tCustomerBasicinfo);
+				return renderSuccess("修改成功！");
+			}
+			EntityWrapper<Policyholder> entityWrapper2 = new EntityWrapper<Policyholder>();
+			entityWrapper2.eq("PID", customerId);
+			Policyholder policyholder = iPolicyholderServiceImpl.selectOne(entityWrapper2);
+			if (policyholder != null) {
+				policyholder.setStatus(status);
+				policyholder.setPid(customerId);
+				iPolicyholderServiceImpl.updatePolicyHolderStatus(policyholder);
+				return renderSuccess("修改成功！");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return renderError("修改失败！");
@@ -337,19 +380,85 @@ public class PersonManageController extends BaseController {
 	public PageInfo customerDataGrid(ProductInfoVo productInfoVo, Integer page, Integer rows, String sort, String order) {
 		System.out.println("productInfoVo:" + JSON.toJSONString(productInfoVo));
 		PageInfo pageInfo = new PageInfo(page, rows, sort, order);
-		Map<String, Object> condition = new HashMap<String, Object>();
 		String keywordInfo = productInfoVo.getKeywordInfo();
+		EntityWrapper<TCustomerBasicinfo> wrapper = new EntityWrapper<TCustomerBasicinfo>();
+		EntityWrapper<Policyholder> wrapper2 = new EntityWrapper<Policyholder>();
 		if (keywordInfo != null && !"".equals(keywordInfo)) {
 			String keywordType = productInfoVo.getKeywordType();
 			if ("USER_NAME".equals(keywordType)) {
-				condition.put("USER_NAME", keywordInfo);
+				wrapper.eq("USER_NAME", keywordInfo);
+				wrapper2.eq("USER_NAME", keywordInfo);
 			} else if ("TELEPHONE".equals(keywordType)) {
-				condition.put("TELEPHONE", keywordInfo);
+				wrapper.eq("TELEPHONE", keywordInfo);
+				wrapper2.eq("TELPHONE", keywordInfo);
 			}
 		}
-		pageInfo.setCondition(condition);
-		System.out.println("condition:" + JSON.toJSONString(condition));
-		iOperatorServiceImpl.customerDataGrid(pageInfo);
+		TreeSet<Map<String, Object>> customerSet = new TreeSet<Map<String, Object>>((x, y) -> ((String) x.get("userId")).compareTo((String) y.get("userId")));
+		List<Map<String, Object>> customerMapList = new ArrayList<Map<String, Object>>();
+		// 普通客户
+		List<TCustomerBasicinfo> ptList = iTCustomerBasicinfoServiceImpl.selectList(wrapper);
+		for (TCustomerBasicinfo tCustomerBasicinfo : ptList) {
+			HashMap<String, Object> customerMap = new HashMap<String, Object>();
+			System.out.println("【普通客户】userId=" + tCustomerBasicinfo.getUserId());
+			customerMap.put("userId", tCustomerBasicinfo.getUserId());
+			customerMap.put("telephone", tCustomerBasicinfo.getTelephone());
+			customerMap.put("userName", tCustomerBasicinfo.getUserName());
+			customerMap.put("carNum", tCustomerBasicinfo.getCarNum());
+			customerMap.put("carFrameNum", tCustomerBasicinfo.getCarFrameNum());
+			customerMap.put("changType", tCustomerBasicinfo.getChangType());
+			customerMap.put("registerTime", tCustomerBasicinfo.getRegisterTime());
+			customerMap.put("status", tCustomerBasicinfo.getStatus());
+			customerMapList.add(customerMap);
+		}
+		// 投保客户
+		List<Policyholder> tbList = iPolicyholderServiceImpl.selectList(wrapper2);
+		for (Policyholder policyholder : tbList) {
+			HashMap<String, Object> customerMap = new HashMap<String, Object>();
+			System.out.println("【投保客户】userId=" + policyholder.getPid());
+			customerMap.put("userId", policyholder.getPid());
+			customerMap.put("telephone", policyholder.getTelphone());
+			customerMap.put("userName", policyholder.getUserName());
+			customerMap.put("carNum", policyholder.getCarNum());
+			customerMap.put("carFrameNum", policyholder.getCarFrameNum());
+			customerMap.put("changType", policyholder.getChangType());
+			customerMap.put("registerTime", policyholder.getRegisterTime());
+			customerMap.put("status", policyholder.getStatus());
+			customerMapList.add(customerMap);
+		}
+		customerSet.addAll(customerMapList);
+		// 设置返回
+		int start = (page.intValue() - 1) * rows;
+		int forStart = 0;
+		int forEnd = 0;
+		if (customerSet.size() <= start) {
+			forStart = customerSet.size();
+			forEnd = customerSet.size();
+		} else if (start < customerSet.size() && customerSet.size() <= start + rows) {
+			forStart = (int) start;
+			forEnd = customerSet.size();
+		} else {
+			forStart = (int) start;
+			forEnd = rows.intValue();
+		}
+		customerMapList.clear();
+		customerMapList.addAll(customerSet);
+		List<Map<String, Object>> customerMapListRe = new ArrayList<Map<String, Object>>();
+		for (int j = forStart; j < forEnd; j++) {
+			customerMapListRe.add(customerMapList.get(j));
+		}
+		System.out.println("【所有客户】" + JSON.toJSONString(customerMapListRe));
+		pageInfo.setRows(customerMapListRe);
+		pageInfo.setTotal(customerSet.size());
+		System.out.println("【所有客户数量】" + pageInfo.getTotal());
 		return pageInfo;
+	}
+
+	private String formateTime(String yyyyMMDDhhmmss) {
+		StringBuffer result = new StringBuffer("");
+		String year = yyyyMMDDhhmmss.substring(0, 4);
+		String month = yyyyMMDDhhmmss.substring(4, 6);
+		String day = yyyyMMDDhhmmss.substring(6, 8);
+		result.append(year).append("-").append(month).append("-").append(day);
+		return result.toString();
 	}
 }

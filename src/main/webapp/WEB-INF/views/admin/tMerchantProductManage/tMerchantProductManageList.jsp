@@ -205,7 +205,7 @@
 		parent.$.modalDialog({
 			title : '产品详情',
 			width : 500,
-			height : 500,
+			height : 400,
 			href : '${path}/mgr/tMerchantProductManage/productInfo?productId='
 					+ productId + '&productType=' + productType,
 			buttons : [ {
@@ -309,9 +309,9 @@
 		<br>
 		<div style="float: left; border: 0px solid; width: 1300px; height: 35px; background-color: #DBDBDB; padding-left: 15px;">
 			<div style="border: 0px solid; float: left; width: 750px; margin-top: 8px; font-size: 16px;">产品列表</div>
-			<div style="border: 0px solid; float: left; width: 120px; margin-top: 4px; margin-left: 300px">
+			<!-- <div style="border: 0px solid; float: left; width: 120px; margin-top: 4px; margin-left: 300px">
 				<button type="button" id="importExcel" onclick="importExcelFun()" style="width: 120px; height: 26px;">批量导出EXCEL</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 

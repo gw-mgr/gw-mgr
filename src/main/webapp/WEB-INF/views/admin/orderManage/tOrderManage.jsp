@@ -114,7 +114,7 @@
 				selected : true,
 				fit : true,
 				href : href
-				//content : content
+			//content : content
 
 			});
 		}
@@ -124,73 +124,55 @@
 	<div data-options="region:'center',border:false" style="overflow: hidden; padding: 3px;">
 		<div style="border: 0px solid; width: 1300px; height: 40px; margin: 5px">
 			<div style="font-weight: bold; border: 0px solid; float: left; width: 250px; height: 40px; margin-left: 120px; font-size: 24px">
-				订单总数：
-				<span id="orderTotalNum" style="font-size: 24px; color: #000000; font-weight: bold"></span>
+				订单总数： <span id="orderTotalNum" style="font-size: 24px; color: #000000; font-weight: bold"></span>
 			</div>
 			<div style="font-weight: bold; border: 0px solid; float: left; width: 250px; height: 40px; margin-left: 50px; font-size: 24px">
-				成交总量：
-				<span id="orderTotalMoney" style="font-size: 24px; color: #000000; font-weight: bold"></span>
+				成交总量： <span id="orderTotalMoney" style="font-size: 24px; color: #000000; font-weight: bold"></span>
 			</div>
 			<div style="font-weight: bold; border: 0px solid; float: left; width: 250px; height: 40px; margin-left: 50px; font-size: 24px">
-				昨日订单数：
-				<span id="yesterdayOrderTotalNum" style="font-size: 24px; color: #000000; font-weight: bold"></span>
+				昨日订单数： <span id="yesterdayOrderTotalNum" style="font-size: 24px; color: #000000; font-weight: bold"></span>
 			</div>
 			<div style="font-weight: bold; border: 0px solid; float: left; width: 250px; height: 40px; margin-left: 50px; font-size: 24px">
-				昨日成交数：
-				<span id="yesterdayOrderTotalMoney" style="font-size: 24px; color: #000000; font-weight: bold"></span>
+				昨日成交数： <span id="yesterdayOrderTotalMoney" style="font-size: 24px; color: #000000; font-weight: bold"></span>
 			</div>
 		</div>
 		<div style="border: 0px solid; width: 1300px; height: 90px; margin-left: 5px;">
 			<div id="CaiChanDiv" onclick="chooseOrderTab('CCBX');" style="background-color: #FF3399; line-height: 30px; text-align: center; border-radius: 10px; border: 0px solid; float: left; width: 600px; height: 70px; padding-top: 10px; margin-left: 30px; font-size: 15px">
 				财产保险
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="CCBXOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
+				(&nbsp;昨日成交数： <span id="CCBXOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
 			<div id="RenShouDiv" onclick="chooseOrderTab('RSBX');" style="background-color: #FF3399; line-height: 30px; text-align: center; border-radius: 10px; border: 0px solid; float: left; width: 600px; height: 70px; padding-top: 10px; margin-left: 35px; font-size: 15px">
 				人寿保险
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="RSBXOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
+				(&nbsp;昨日成交数： <span id="RSBXOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
 		</div>
 		<div style="border: 0px solid; width: 1300px; height: 80px; margin-left: 5px; margin-top: 10px">
-			<div id="DaiKuanDiv" onclick="chooseOrderTab('DKYW');" style="background-color: #FF8000; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 180px; height: 70px; padding-top: 10px; margin-left: 30px; font-size: 15px">
+			<div id="DaiKuanDiv" onclick="chooseOrderTab('DKYW');" style="background-color: #FF8000; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 55px; font-size: 15px">
 				贷款业务
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="DKYWOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
+				(&nbsp;昨日成交数： <span id="DKYWOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
-			<div id="LiCaiDiv" onclick="chooseOrderTab('LCCP');" style="background-color: #00CC66; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 180px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+			<!-- <div id="LiCaiDiv" onclick="chooseOrderTab('LCCP');" style="background-color: #00CC66; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 180px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				理财产品
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="LCCPOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
-			</div>
-			<div id="ErShouCheDiv" onclick="chooseOrderTab('ESQC');" style="background-color: #80FF00; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 180px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+				(&nbsp;昨日成交数： <span id="LCCPOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
+			</div> -->
+			<div id="ErShouCheDiv" onclick="chooseOrderTab('ESQC');" style="background-color: #80FF00; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				二手汽车
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="ESQCOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
+				(&nbsp;昨日成交数： <span id="ESQCOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
-			<div id="CheWuDiv" onclick="chooseOrderTab('CWDB');" style="background-color: #00FF7F; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 180px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+			<div id="CheWuDiv" onclick="chooseOrderTab('CWDB');" style="background-color: #00FF7F; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				车务代办
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="CWDBOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
+				(&nbsp;昨日成交数： <span id="CWDBOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
-			<div id="MeiRongDiv" onclick="chooseOrderTab('QCMR');" style="background-color: #0080FF; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 180px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+			<div id="MeiRongDiv" onclick="chooseOrderTab('QCMR');" style="background-color: #0080FF; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				汽车美容
 				<br>
-				(&nbsp;昨日成交数：
-				<span id="QCMROrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span>
-				&nbsp;)
+				(&nbsp;昨日成交数： <span id="QCMROrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
 		</div>
 		<div style="border: 0px solid; background-color: #C0C0C0; font-weight: bold; width: 1300px; height: 25px; margin-top: 3px; font-size: 15px; padding-left: 20px; padding-top: 5px">保险订单数据:</div>

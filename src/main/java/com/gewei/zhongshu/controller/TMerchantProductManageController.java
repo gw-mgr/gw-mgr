@@ -214,9 +214,9 @@ public class TMerchantProductManageController extends BaseController {
 			EntityWrapper<TMerchantProductCategory> entityWrapper2 = new EntityWrapper<TMerchantProductCategory>();
 			entityWrapper2.eq("CATEGORY_ID", productType);
 			TMerchantProductCategory merchantProductCategory = iTMerchantProductCategoryServiceImpl.selectOne(entityWrapper2);
-			Message message = new Message();
 			if (status.equals("03")) {
 				// 强制下架
+				Message message = new Message();
 				message.setContent("(" + merchantProductCategory.getCategoryName() + "）的产品" + productManage.getProductName() + "被强制下架，如有疑问，请联系客服。");
 				message.setUserId(productManage.getMerchantId());
 				message.setType("12");
@@ -226,9 +226,13 @@ public class TMerchantProductManageController extends BaseController {
 				iMessageServiceImpl.insert(message);
 			} else if (status.equals("01")) {
 				// 恢复上架
+				Message message = new Message();
 				message.setContent("(" + merchantProductCategory.getCategoryName() + "）的产品" + productManage.getProductName() + "已重新上架，快去看看吧！");
 				message.setUserId(productManage.getMerchantId());
 				message.setType("11");
+				message.setCreateTime(currentTime.toString());
+				message.setUpdateTime(currentTime.toString());
+				message.setOperatorId(operatorId);
 				iMessageServiceImpl.insert(message);
 			}
 		} catch (Exception e) {

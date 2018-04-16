@@ -1,8 +1,11 @@
 package com.gewei.zhongshu.controller;
+
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gewei.commons.base.BaseController;
 import com.gewei.commons.result.PageInfo;
+import com.gewei.fuwushang.service.IOrderCxService;
+import com.gewei.fuwushang.service.IOrderSxService;
+import com.gewei.model.OrderSx;
 import com.gewei.model.vo.OrderInfoVo;
 import com.gewei.zhongshu.service.IOrderInfoService;
-import com.alibaba.fastjson.JSON;
+
 /**
  * <p>
  * 服务商的产品管理 前端控制器
@@ -28,28 +37,45 @@ import com.alibaba.fastjson.JSON;
 public class TOrderManageController extends BaseController {
 	@Autowired
 	private IOrderInfoService iOrderInfoServiceImpl;
+	@Autowired
+	private IOrderSxService iOrderSxServiceImpl;
+	@Autowired
+	private IOrderCxService iOrderCxServiceImpl;
+
 	@GetMapping("/manage")
 	public String manager() {
 		return "admin/orderManage/tOrderManage";
 	}
+
 	@PostMapping("/orderList")
 	@ResponseBody
-	public PageInfo orderListGroupByProvince(Integer page, Integer rows, String sort, String order) throws UnsupportedEncodingException {
+	public PageInfo orderList(Integer page, Integer rows, String sort, String order) throws UnsupportedEncodingException {
+		TreeSet<String> orderIdSet = new TreeSet<String>((x, y) -> x.compareTo(y));
+		// 寿险订单查询
+		EntityWrapper<OrderSx> sxEW = new EntityWrapper<OrderSx>();
+		List<OrderSx> sxList = iOrderSxServiceImpl.selectList(sxEW);
+		for (OrderSx orderSx : sxList) {
+			
+		}
+		// 财险订单查询
+		// 普通订单查询
 		PageInfo pageInfo = new PageInfo(page, rows, sort, order);
-		iOrderInfoServiceImpl.orderListGroupByProvince(pageInfo);
 		return pageInfo;
 	}
+
 	@GetMapping("/orderInfo")
 	public String orderInfo(Model model, String orderType) {
 		model.addAttribute("orderType", orderType);
 		return "admin/orderManage/tOrderInfoList";
 	}
+
 	@PostMapping("/orderTypeList")
 	@ResponseBody
 	public Object getOrderTypeList() {
 		List<Map<String, String>> orderTypeList = iOrderInfoServiceImpl.getOrderTypeList();
 		return orderTypeList;
 	}
+
 	@GetMapping("/ajaxData")
 	@ResponseBody
 	public String ajaxData() {
@@ -71,6 +97,7 @@ public class TOrderManageController extends BaseController {
 		result.putAll(yesterdayOrderNum);
 		return JSON.toJSONString(result);
 	}
+
 	@PostMapping("/dataGrid")
 	@ResponseBody
 	public PageInfo dataGrid(OrderInfoVo orderInfoVo, Integer page, Integer rows, String sort, String order) throws UnsupportedEncodingException {
@@ -81,6 +108,7 @@ public class TOrderManageController extends BaseController {
 		iOrderInfoServiceImpl.getOrderInsDataGroupByProvince(pageInfo);
 		return pageInfo;
 	}
+
 	private Map<String, Object> getCondition(OrderInfoVo orderInfoVo) throws UnsupportedEncodingException {
 		Map<String, Object> condition = new HashMap<String, Object>();
 		if (orderInfoVo.getCreateStartTime() != null && !"".equals(orderInfoVo.getCreateStartTime())) {

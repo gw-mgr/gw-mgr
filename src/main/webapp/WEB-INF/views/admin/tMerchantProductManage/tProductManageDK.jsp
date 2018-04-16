@@ -49,7 +49,7 @@
 			<tr height="30px">
 				<th align="right">产品介绍:</th>
 				<td colspan="2">
-					<textarea name="productDescript" style="width: 390px; height: 100px;" readonly="readonly">${tProductManage.productDescript}</textarea>
+					<textarea name="productDescript" style="width: 300px; height: 60px;" readonly="readonly">${tProductManage.productDescript}</textarea>
 				</td>
 			</tr>
 		</table>

@@ -21,7 +21,7 @@ public interface OperatorMapper extends BaseMapper<Operator> {
 	@Update("UPDATE operator SET UPDATE_TIME = #{updateTime} WHERE OPER_ID = #{operId}")
 	void updateStatus(Operator operator);
 
-	@Select("SELECT id as roleId, name as roleName FROM role WHERE description like '操作员-%'")
+	@Select("SELECT id as roleId, name as roleName FROM role WHERE name like '%中枢系统%'")
 	List<Map<String, String>> roleList();
 
 	@Insert("INSERT INTO user_role (user_id,role_id) VALUE (#{operatorId},#{roleId})")
@@ -42,8 +42,6 @@ public interface OperatorMapper extends BaseMapper<Operator> {
 	void updateMemberStatus(TMemberBasicinfo tMemberBasicinfo);
 
 	TCustomerBasicinfo getCustomerIdInfoById(String customerId);
-
-	List<Map<String, Object>> customerDataGrid(Page<Map<String, Object>> page, Map<String, Object> condition);
 
 	@Update("UPDATE t_customer_basicinfo SET STATUS = #{status}, UPDATE_TIME = #{updateTime} WHERE USER_ID = #{userId}")
 	void updateCustomerStatus(TCustomerBasicinfo tCustomerBasicinfo);

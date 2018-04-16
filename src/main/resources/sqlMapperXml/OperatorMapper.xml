@@ -62,14 +62,16 @@
 	<select id="memberListDataGrid" resultType="Map">
 		SELECT 
 			m.USER_ID as userId,m.USER_NAME as userName,m.TELEPHONE as telephone,
-			m.WECHAT_NUM as wechatNum,m.PROVINCE as province,m.USER_ADDR as userAddr,
+			m.WECHAT_NUM as wechatNum,T.NAME as province,m.USER_ADDR as userAddr,
 			mg.MERCHANT_NAME as merchantName, m1.USER_NAME AS recommender,m2.USER_NAME AS dirRecommender,
 			m.CREATE_TIME as createTime,m.UPDATE_TIME as updateTime,m.STATUS as status
 		FROM t_member_basicinfo m
 		LEFT JOIN t_merchant_manage mg ON mg.MERCHANT_ID = m.MERCHANT_ID
 		LEFT JOIN t_member_basicinfo m1 ON m.RECOMMENDER = m1.USER_ID
 		LEFT JOIN t_member_basicinfo m2 ON m.DIR_RECOMMENDER = m2.USER_ID
+		LEFT JOIN t_china_area T ON m.PROVINCE = T.ID
 		<where>
+			m.TYPE = '01'
 			<if test=" USER_NAME != null and USER_NAME != '' ">
                 <![CDATA[ and m.USER_NAME like CONCAT('%',#{USER_NAME},'%') ]]>
 			</if>
@@ -87,29 +89,15 @@
 	<select id="getMemberInfoById" resultType="com.gewei.model.TMemberBasicinfo">
 		SELECT 
 			m.USER_ID as userId,m.USER_NAME as userName,m.TELEPHONE as telephone,m.MOBILE_PHONE as mobilePhone,m.REMARK as remark,
-			m.WECHAT_NUM as wechatNum,m.PROVINCE as province,m.USER_ADDR as userAddr,m.MAIL as mail,m.QQ as qq,m.INS_COMPANY as insCompany,
+			m.WECHAT_NUM as wechatNum,T.NAME as province,m.USER_ADDR as userAddr,m.MAIL as mail,m.QQ as qq,m.INS_COMPANY as insCompany,
 			mg.MERCHANT_NAME as merchantName, m1.USER_NAME AS recommender,m2.USER_NAME AS dirRecommender,m.BANK_NAME as bankName,m.BANK_HOST as bankHost,
 			m.BANK_CARD as bankCard,m.CREATE_TIME as createTime,m.UPDATE_TIME as updateTime,m.STATUS as status,m.CARD_TYPE as cardType,m.CARD_ID as cardId
 		FROM t_member_basicinfo m
 		LEFT JOIN t_merchant_manage mg ON mg.MERCHANT_ID = m.MERCHANT_ID
 		LEFT JOIN t_member_basicinfo m1 ON m.RECOMMENDER = m1.USER_ID
 		LEFT JOIN t_member_basicinfo m2 ON m.DIR_RECOMMENDER = m2.USER_ID
+		LEFT JOIN t_china_area T ON m.PROVINCE = T.ID
 		WHERE m.USER_ID = #{memberId}
-	</select>
-	
-	<select id="customerDataGrid" resultType="Map">
-		SELECT 
-		m.USER_ID as userId,m.USER_NAME as userName,m.CAR_NUM as carNum,m.CAR_FRAME_NUM as carFrameNum,
-		m.CHANG_TYPE as changType,m.REGISTER_TIME as registerTime,m.STATUS as status,m.TELEPHONE as telephone
-		FROM t_customer_basicinfo m
-		<where>
-			<if test=" USER_NAME != null and USER_NAME != '' ">
-                <![CDATA[ and m.USER_NAME like CONCAT('%',#{USER_NAME},'%') ]]>
-			</if>
-			<if test=" TELEPHONE != null and TELEPHONE != '' ">
-                <![CDATA[ and m.TELEPHONE = #{TELEPHONE} ]]>
-			</if>
-		</where>
 	</select>
 	
 	<select id="getCustomerIdInfoById" resultType="com.gewei.model.TCustomerBasicinfo">

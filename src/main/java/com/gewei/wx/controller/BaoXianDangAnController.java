@@ -78,8 +78,6 @@ public class BaoXianDangAnController extends BaseController {
 	@Autowired
 	private IBeneficialService beneficialService;
 	@Autowired
-	private IOrderSxService orderSxService;
-	@Autowired
 	private IParameterService iParameterServiceImpl;
 	@Autowired
 	private IOrderSxBxsxService iOrderSxBxsxServiceImpl;
@@ -280,7 +278,6 @@ public class BaoXianDangAnController extends BaseController {
 			// 参数返回
 			result.setMsg("用户不存在");
 			System.out.println("【out-getCustomerInfo】:result=" + JSON.toJSONString(result));
-			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.setSuccess(false);
@@ -558,7 +555,7 @@ public class BaoXianDangAnController extends BaseController {
 				}
 				String beneficiaryIds = beneficiaryId.length() == 0 ? beneficiaryId.toString() : beneficiaryId.substring(0, beneficiaryId.length() - 1).toString();
 				orderSx.setBeneficiaryId(beneficiaryIds);
-				orderSxService.insert(orderSx);
+				iIOrderSxServiceImpl.insert(orderSx);
 				return renderSuccess("添加成功！");
 			} else {// ++++++++++++++++++++编辑++++++++++++++++++++++
 				EntityWrapper<OrderSx> orderSxWrapper = new EntityWrapper<OrderSx>();

@@ -19,10 +19,6 @@
 									400, 500 ],
 							frozenColumns : [ [
 									{
-										field : 'ck',
-										checkbox : true
-									},
-									{
 										width : '100',
 										title : '姓名',
 										field : 'userName',
@@ -37,28 +33,29 @@
 										sortable : true
 									},
 									{
-										width : '90',
+										width : '110',
 										title : '微信号',
 										field : 'wechatNum',
 										align : 'center',
 										sortable : true
 									},
 									{
-										width : '50',
+										width : '90',
 										title : '省份',
 										field : 'province',
 										align : 'center',
 										sortable : true
 									},
 									{
-										width : '180',
+										width : '200',
 										title : '地址',
 										field : 'userAddr',
-										align : 'center',
+										halign : 'center',
+										align : 'left',
 										sortable : true
 									},
 									{
-										width : '80',
+										width : '100',
 										title : '所属服务商',
 										field : 'merchantName',
 										align : 'center',
@@ -202,9 +199,9 @@
 	function tMemberManageLookFun(memberId) {
 		parent.$.modalDialog({
 			title : '会员详情',
-			width : 620,
-			height : 580,
-			href : '${path }/personManage/memberManage/memberLook?memberId='
+			width : 720,
+			height : 550,
+			href : '${path }/mgr/personManage/memberManage/memberLook?memberId='
 					+ memberId,
 			buttons : [ {
 				text : '关闭',
@@ -213,6 +210,7 @@
 				}
 			} ]
 		});
+		memberManageDataGrid.datagrid('unselectAll');
 	}
 	/**
 	 * 搜索
@@ -248,7 +246,7 @@
 		<br>
 		<div style="float: left; border: 0px solid; width: 1300px; height: 35px; background-color: #DBDBDB; padding-left: 15px;">
 			<div style="border: 0px solid; float: left; width: 700px; margin-top: 6px; font-size: 16px;">列表</div>
-			<div style="border: 0px solid; float: left; width: 80px; margin-top: 3px; margin-left: 20px">
+			<!-- <div style="border: 0px solid; float: left; width: 80px; margin-top: 3px; margin-left: 20px">
 				<button type="button" onclick="addMerchantFun()" style="width: 80px; height: 26px;">批量删除</button>
 			</div>
 			<div style="border: 0px solid; float: left; width: 120px; margin-top: 3px; margin-left: 20px">
@@ -256,7 +254,7 @@
 			</div>
 			<div style="border: 0px solid; float: left; width: 120px; margin-top: 3px; margin-left: 20px">
 				<button type="button" id="importExcel" onclick="importExcelFun()" style="width: 100px; height: 26px;">EXCEL导入</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div data-options="region:'center',border:false">
