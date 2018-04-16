@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp"%>
+<script type='text/javascript' src='${path}/static/jquery.citys.js'></script>
 <script type="text/javascript">
 	//下拉框选择控件，下拉框的内容是动态查询数据库信息  
 	var tMerchantManageDataGrid;
@@ -87,11 +88,11 @@
 										formatter : function(value, row, index) {
 											switch (value) {
 											case "01":
-												return '申请中';
+												return '<font color=\'red\' >申请中</font>';
 											case "02":
 												return '已上线';
 											case "03":
-												return '已关闭';
+												return '<b>已关闭</b>';
 											}
 										}
 									},
@@ -195,65 +196,9 @@
 										});
 							}
 						});
+		$('#city').citys();
 	});
-	$('#province').combobox(
-			{
-				url : '${path}/mgr/tMerchantManage/chinaAreaList?pId=0',
-				editable : false, //不可编辑状态  
-				cache : false,
-				valueField : 'ID',
-				textField : 'NAME',
-				onHidePanel : function() {
-					var province = $('#province').combobox('getValue');
-					$('#city').combobox('setValue', '');
-					$("#country").combobox("setValue", '');
-					var country = $('#country').combobox('getValue');
-					if (province != '') {
-						$.ajax({
-							type : "POST",
-							url : "${path}/mgr/tMerchantManage/chinaAreaList?pId="
-									+ province,
-							cache : false,
-							dataType : "json",
-							success : function(data) {
-								$("#city").combobox("loadData", data);
-							}
-						});
-					}
-				}
-			});
-	$('#city').combobox({
-		editable : false, //不可编辑状态  
-		cache : false,
-		valueField : 'ID',
-		textField : 'NAME',
-		onHidePanel : function() {
-			$("#country").combobox("setValue", '');
-			var city = $('#city').combobox('getValue');
-			if (city != '') {
-				$.ajax({
-					type : "POST",
-					url : "${path}/mgr/tMerchantManage/chinaAreaList?pId=" + city,
-					cache : false,
-					dataType : "json",
-					success : function(data) {
-						$("#country").combobox("loadData", data);
-					}
-				});
-			}
-		}
-	});
-	$('#country').combobox({
-		editable : false, //不可编辑状态  
-		cache : false,
-		// panelHeight: 'auto',//自动高度适合
-		valueField : 'ID',
-		textField : 'NAME',
-		onHidePanel : function() {
-			var str = $('#country').combobox('getText');
-			$("#cregicounty").val(str);
-		}
-	});
+
 	/**
 	 * 修改服务商状态status
 	 */
@@ -332,7 +277,8 @@
 			title : '服务商详情',
 			width : 500,
 			height : 400,
-			href : '${path}/mgr/tMerchantManage/lookPage?merchantId=' + merchantId,
+			href : '${path}/mgr/tMerchantManage/lookPage?merchantId='
+					+ merchantId,
 			buttons : [ {
 				text : '关闭',
 				handler : function() {
@@ -356,7 +302,8 @@
 					title : '编辑',
 					width : 700,
 					height : 700,
-					href : '${path}/mgr/tMerchantManage/editPage?merchantId=' + id,
+					href : '${path}/mgr/tMerchantManage/editPage?merchantId='
+							+ id,
 					buttons : [ {
 						text : '确定',
 						handler : function() {
@@ -392,16 +339,17 @@
 				});
 		tMerchantManageDataGrid.datagrid("unselectAll");
 	}
-	/**
-	 * 搜索
-	 */
+	// 清除
+	function tMerchantManageCleanFun() {
+		$('#tMerchantManageSearchForm input').val('');
+		tMerchantManageDataGrid.datagrid('load', {});
+	}
+	// 搜索
 	function tMerchantManageSearchFun() {
 		tMerchantManageDataGrid.datagrid('load', $
 				.serializeObject($('#tMerchantManageSearchForm')));
 	}
-	/**
-	 * 导出EXCEL
-	 */
+	// 导出EXCEL
 	function exmportExcelFun() {
 		var createStartTime = "";
 		if ($('#createStartTime').val()) {
@@ -460,16 +408,15 @@
 		<form id="tMerchantManageSearchForm" method="post">
 			<div style="width: 1200px">
 				<div style="border: 0px solid; float: left; width: 350px; height: 35px; font-size: 16px; margin-top: 2px; margin-left: 50px; padding-left: 12px; padding-top: 10px">
-					创建时间&nbsp;&nbsp;
-					<input id="createStartTime" name="createStartTime" class="easyui-datebox" style="width: 100px">
-					&nbsp;至&nbsp;
-					<input id="createEndTime" name="createEndTime" class="easyui-datebox" style="width: 100px">
+					创建时间&nbsp;&nbsp; <input id="createStartTime" name="createStartTime" class="easyui-datebox" style="width: 100px"> &nbsp;至&nbsp; <input id="createEndTime" name="createEndTime" class="easyui-datebox" style="width: 100px">
 				</div>
 				<div style="border: 0px solid; float: left; width: 600px; height: 35px; font-size: 16px; margin-top: 2px; margin-left: 10px; padding-top: 10px">
-					服务商地址&nbsp;&nbsp;
-					<input id="province" name="province" style="width: 150px;">
-					<input id="city" name="city" style="width: 100px;">
-					<input id="country" name="country" style="width: 150px;">
+					<div style="font-size: 16px; float: left; margin-top: 2px">服务商地址&nbsp;&nbsp;</div>
+					<div id="city" class="citys" style="margin-top: 5px; margin-left: 10px; float: left">
+						<select id="province" name="province"></select>
+						<select id="city" name="city"></select>
+						<select id="area" name="country"></select>
+					</div>
 				</div>
 			</div>
 			<hr width=1310px align="left"></hr>
@@ -487,11 +434,10 @@
 					</select>
 				</div>
 				<div style="border: 0px solid; float: left; width: 380px; height: 30px; font-size: 16px; padding-top: 1px">
-					名称搜索&nbsp;&nbsp;
-					<input id="keywordInfo" name="keywordInfo" placeholder="名称搜索" type="text" style="width: 280px; height: 17px">
-					&nbsp;&nbsp;
+					名称搜索&nbsp;&nbsp; <input id="keywordInfo" name="keywordInfo" placeholder="名称搜索" type="text" style="width: 280px; height: 17px"> &nbsp;&nbsp;
 				</div>
 				<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="tMerchantManageSearchFun();">查询</a>
+				<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-x-circle',plain:true" onclick="tMerchantManageCleanFun();">清空</a>
 			</div>
 		</form>
 		<br>

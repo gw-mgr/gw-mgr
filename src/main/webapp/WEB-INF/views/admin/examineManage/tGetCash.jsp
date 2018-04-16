@@ -110,7 +110,7 @@
 									{
 										width : '120',
 										title : '上月车险佣金/元',
-										field : 'cheXian',
+										field : 'beforeMonthCXCommend',
 										align : 'center',
 										sortable : true,
 										formatter : function(value, row, index) {

@@ -3,7 +3,7 @@
 
 //window.base_url = 'http://192.168.1.19:80/gw-mgr';
 
-window.base_url = 'http://localhost:80/gw-mgr';
+window.base_url = 'http://119.29.5.131:8080/gw-mgr';
 
 document.write('<link href="../../css/mui.picker.min.css" rel="stylesheet" />')
 document.write("<script src='../../js/mui.pullToRefresh.js' type='text/javascript'></script>");
