@@ -129,10 +129,7 @@
 		$('#city').citys();
 	});
 
-	/**
-	 * 添加框
-	 * @param url
-	 */
+	// 添加框
 	function yongJinZhengCeAddFun() {
 		parent.$
 				.modalDialog({
@@ -152,9 +149,7 @@
 				});
 	}
 
-	/**
-	 * 编辑
-	 */
+	// 编辑
 	function yongJinZhengCeEditFun(id) {
 		if (id == undefined) {
 			var rows = yongJinZhengCeDataGrid.datagrid('getSelections');
@@ -181,9 +176,7 @@
 				});
 	}
 
-	/**
-	 * 删除
-	 */
+	// 删除
 	function yongJinZhengCeDeleteFun(id) {
 		if (id == undefined) {//点击右键菜单才会触发这个
 			var rows = yongJinZhengCeDataGrid.datagrid('getSelections');
@@ -227,7 +220,8 @@
 			<span style="position: absolute; top: 7px; left: 6px; text-align: center;">搜索</span>
 		</div>
 		<form id="yongJinZhengCeSearchForm">
-			<div id="city" class="citys" style="margin-top: 10px; margin-left: 30px; float: left">
+			<div style="margin-top: 10px; float: left; margin-left: 10px;">有效地区:</div>
+			<div id="city" class="citys" style="margin-top: 10px; margin-left: 10px; float: left">
 				<select id="province" name="province"></select>
 				<select id="city" name="city"></select>
 				<select id="area" name="district"></select>
