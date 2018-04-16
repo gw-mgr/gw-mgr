@@ -19,6 +19,5 @@ public interface IOrderInfoService extends IService<OrderInfo> {
 	long getYesterdayOrderTotalMoney();
 	Map<String,Long> getYesterdayOrderNumOfAllOrderType();
 	void getOrderInsDataGroupByProvince(PageInfo pageInfo);
-	void orderListGroupByProvince(PageInfo pageInfo);
 	List<Map<String, String>> getOrderTypeList();
 }

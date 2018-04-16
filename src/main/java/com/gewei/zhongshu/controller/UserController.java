@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.validation.Valid;
+
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,17 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+
 import com.gewei.commons.base.BaseController;
 import com.gewei.commons.result.PageInfo;
 import com.gewei.commons.shiro.PasswordHash;
 import com.gewei.commons.utils.StringUtils;
 import com.gewei.commons.utils.UUIDUtil;
 import com.gewei.model.Role;
-import com.gewei.model.RoleResource;
 import com.gewei.model.User;
 import com.gewei.model.vo.UserVo;
-import com.gewei.zhongshu.service.IRoleService;
 import com.gewei.zhongshu.service.ITMerchantManageService;
 import com.gewei.zhongshu.service.IUserService;
 

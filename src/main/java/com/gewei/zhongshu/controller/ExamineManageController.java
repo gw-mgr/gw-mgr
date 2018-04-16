@@ -300,7 +300,7 @@ public class ExamineManageController extends BaseController {
 	@ResponseBody
 	public Object passSettleOrCash(String flowId, String orderType) {
 		try {
-			if (orderType == null || !"TX".equals(orderType) || !"JS".equals(orderType))
+			if (orderType == null || (!"TX".equals(orderType) && !"JS".equals(orderType)))
 				return renderError("类型有误");
 			EntityWrapper<TAccountFlow> entityWrapper = new EntityWrapper<TAccountFlow>();
 			entityWrapper.eq("FLOW_ID", flowId);
