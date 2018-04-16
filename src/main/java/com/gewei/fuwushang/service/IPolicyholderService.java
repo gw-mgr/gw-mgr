@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IPolicyholderService extends IService<Policyholder> {
 	Policyholder selectPolicyholder(Policyholder policyholder);
+
+	void updatePolicyHolderStatus(Policyholder policyholder);
 }
