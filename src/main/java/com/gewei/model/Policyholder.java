@@ -1,9 +1,8 @@
 package com.gewei.model;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.activerecord.Model;
 
 public class Policyholder extends Model<Policyholder> {
 	private static final long serialVersionUID = 1L;
