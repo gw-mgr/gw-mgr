@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp"%>
 <script type="text/javascript">
 	var directSellManageDataGrid;
@@ -73,21 +72,39 @@
 										title : '总保费/元',
 										field : 'zbf',
 										align : 'center',
-										sortable : true
+										sortable : true,
+										formatter : function(value, row, index) {
+											value = (value / 100).toFixed(2);
+											if (value == 0)
+												return 0;
+											return value;
+										}
 									},
 									{
 										width : '90',
 										title : '直接推荐奖/元',
 										field : 'zjRecommendAward',
 										align : 'center',
-										sortable : true
+										sortable : true,
+										formatter : function(value, row, index) {
+											value = (value / 100).toFixed(2);
+											if (value == 0)
+												return 0;
+											return value;
+										}
 									},
 									{
 										width : '90',
 										title : '间接推荐奖/元',
 										field : 'jjRecommendAward',
 										align : 'center',
-										sortable : true
+										sortable : true,
+										formatter : function(value, row, index) {
+											value = (value / 100).toFixed(2);
+											if (value == 0)
+												return 0;
+											return value;
+										}
 									},
 									{
 										width : '120',
@@ -197,44 +214,31 @@
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'north',border:false"
-		style="height: 120px; overflow: hidden; background-color: #fff">
-		<div
-			style="border: 0px solid; height: 25px; width: 1300px; background-color: #DBDBDB; font-size: 16px; margin-top: 2px; padding-left: 15px; padding-top: 7px">搜索</div>
+	<div data-options="region:'north',border:false" style="height: 120px; overflow: hidden; background-color: #fff">
+		<div style="border: 0px solid; height: 25px; width: 1300px; background-color: #DBDBDB; font-size: 16px; margin-top: 2px; padding-left: 15px; padding-top: 7px">搜索</div>
 		<form id="tDirectSellManageSearchForm">
 			<div style="width: 1200px; height: 40px; border: 0px solid red;">
-				<div
-					style="border: 0px solid green; float: left; width: 180px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 50px; padding-top: 10px">
-					关键字搜索&nbsp;&nbsp; <select id="editStatus" name="status"
-						class="easyui-combobox"
-						data-options="width:80,height:25,editable:false,panelHeight:'auto'">
-						<option value="0">业务员</option>
-						<option value="1">录单员</option>
-						<option value="2">订单号</option>
+				<div style="border: 0px solid green; float: left; width: 180px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 50px; padding-top: 10px">
+					关键字搜索&nbsp;&nbsp; <select id="editStatus" name="keywordType" class="easyui-combobox" data-options="width:80,height:25,editable:false,panelHeight:'auto'">
+						<option value="SALES_MAN">业务员</option>
+						<option value="RECORDER">录单员</option>
+						<option value="ORDER_ID">订单号</option>
 					</select>
 				</div>
-				<div
-					style="border: 0px solid green; float: left; width: 220px; height: 35px; font-size: 16px; padding-left: 12px; padding-top: 12px">
-					<input name="keywordInfo" type="text"
-						style="width: 220px; height: 18px">
+				<div style="border: 0px solid green; float: left; width: 220px; height: 35px; font-size: 16px; padding-left: 12px; padding-top: 12px">
+					<input name="keywordInfo" type="text" style="width: 220px; height: 18px">
 				</div>
-				<div
-					style="border: 0px solid green; float: left; width: 150px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 12px; padding-top: 8px">
-					<a href="javascript:void(0);" class="easyui-linkbutton"
-						data-options="iconCls:'fi-magnifying-glass',plain:true"
-						onclick="tDirectSellManageSearchFun();">查询</a>
+				<div style="border: 0px solid green; float: left; width: 150px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 12px; padding-top: 8px">
+					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="tDirectSellManageSearchFun();">查询</a>
 				</div>
 			</div>
 		</form>
 		<br>
-		<div
-			style="float: left; border: 0px solid; width: 1300px; height: 35px; background-color: #DBDBDB; padding-left: 15px;">
-			<div
-				style="border: 0px solid; float: left; width: 750px; margin-top: 6px; font-size: 16px;">列表</div>
+		<div style="float: left; border: 0px solid; width: 1300px; height: 35px; background-color: #DBDBDB; padding-left: 15px;">
+			<div style="border: 0px solid; float: left; width: 750px; margin-top: 6px; font-size: 16px;">列表</div>
 		</div>
 	</div>
 	<div data-options="region:'center',border:false">
-		<table id="directSellManageDataGrid"
-			data-options="fit:true,border:false"></table>
+		<table id="directSellManageDataGrid" data-options="fit:true,border:false"></table>
 	</div>
 </div>
