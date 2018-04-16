@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.YongJinZhengCeMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.YongJinZhengCe">
+		<id column="ID" property="id" />
+		<result column="INSURER_NAME" property="insurerName" />
+		<result column="JICHU_YONGJ" property="jichuYongj" />
+		<result column="ZONGHE_JR" property="zongheJr" />
+		<result column="REMARK" property="remark" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="PROVINCE" property="province" />
+		<result column="CITY" property="city" />
+		<result column="COUNTRY" property="country" />
+	</resultMap>
+
+</mapper>

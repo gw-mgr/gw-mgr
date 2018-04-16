@@ -62,7 +62,7 @@
 		LEFT JOIN t_account A ON F.PERSON_ID = A.PERSON_ID
 		LEFT JOIN t_member_basicinfo M ON F.PERSON_ID = M.USER_ID
 		<where>
-			F.PERSON_ID IN (SELECT USER_ID FROM t_member_basicinfo)
+			F.PERSON_ID IN (SELECT USER_ID FROM t_member_basicinfo where TYPE = '01') and ORDER_TYPE = 'TX'
 			<if test=" status != null and status != '' ">
                <![CDATA[ F.STATUS = #{status} ]]>
 			</if>
