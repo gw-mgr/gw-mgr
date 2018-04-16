@@ -23,12 +23,16 @@ import com.gewei.commons.base.BaseController;
 import com.gewei.commons.result.PageInfo;
 import com.gewei.commons.utils.BeanUtils;
 import com.gewei.commons.utils.DateUtil;
+import com.gewei.commons.utils.UUIDUtil;
 import com.gewei.fuwushang.service.IOrderCxService;
 import com.gewei.model.OrderCx;
+import com.gewei.model.TAccount;
 import com.gewei.model.TAccountFlow;
 import com.gewei.model.TMemberBasicinfo;
 import com.gewei.model.TRecommendAward;
 import com.gewei.model.vo.MerchantVo;
+import com.gewei.wx.service.IAccountService;
+import com.gewei.wx.service.IShanJiaFuWuService;
 import com.gewei.wx.service.ITAccountFlowService;
 import com.gewei.wx.service.ITMemberBasicinfoService;
 import com.gewei.zhongshu.service.ITMerchantProductManageService;
@@ -48,7 +52,11 @@ public class ExamineManageController extends BaseController {
 	@Autowired
 	private IUserService userServiceImpl;
 	@Autowired
+	private IAccountService iAccountServiceImpl;
+	@Autowired
 	private IOrderCxService iOrderCxServiceImpl;
+	@Autowired
+	private IShanJiaFuWuService iShanJiaFuWuServiceImpl;
 	@Autowired
 	private ITAccountFlowService iTAccountFlowServiceImpl;
 	@Autowired
@@ -84,18 +92,121 @@ public class ExamineManageController extends BaseController {
 			// 记录操作人
 			Subject currentUser = SecurityUtils.getSubject();
 			PrincipalCollection collection = currentUser.getPrincipals();
+			String operatorId = null;
 			if (null != collection) {
 				String loginName = collection.getPrimaryPrincipal().toString();
-				String operatorId = userServiceImpl.getUserIdByLoginName(loginName);
+				operatorId = userServiceImpl.getUserIdByLoginName(loginName);
 				orderCx.setUpdateUser(operatorId);
 			}
 			// 更新数据库
 			iOrderCxServiceImpl.update(orderCx, entityWrapper);
-			// 添加取消推荐奖的流水
-			
-			
-			
-			// 修改推荐奖账户
+			// 直接推荐奖
+			long jsyx = orderCx.getJsyx().longValue();
+			TRecommendAward recommendAward1 = iTRecommendAwardServiceImpl.selectById("1");
+			float rate1 = recommendAward1.getRate();
+			float zjtjj = jsyx * rate1;
+			// 间接推荐奖
+			TRecommendAward recommendAward2 = iTRecommendAwardServiceImpl.selectById("2");
+			float rate2 = recommendAward2.getRate();
+			float jjtjj = jsyx * rate2;
+			// 取消推荐奖
+			String salesMan = orderCx.getSalesMan();
+			Wrapper<TMemberBasicinfo> wrapper = new EntityWrapper<TMemberBasicinfo>();
+			wrapper.eq("USER_ID", salesMan);
+			TMemberBasicinfo memberBasicinfo = iTMemberBasicinfoServiceImpl.selectOne(wrapper);
+			if (memberBasicinfo != null) {
+				// 1.取消直接推荐奖-直接推荐人
+				String recommender = memberBasicinfo.getRecommender();
+				if (!recommender.isEmpty()) {
+					System.out.println("【直接推荐人】PERSON_ID=" + recommender);
+					// 修改账务信息
+					TAccount tAccount = iShanJiaFuWuServiceImpl.getAccountByPersonId(recommender);
+					if (tAccount == null) {
+						// 插入账务记录
+						tAccount = new TAccount();
+						tAccount.setBalance(0L);
+						tAccount.setPersonId(recommender);
+						tAccount.setBankHostName("");
+						tAccount.setBankCardId("");
+						tAccount.setTotalIncome((long) -zjtjj);
+						tAccount.setSettleApplying(0L);
+						tAccount.setBalance((long) -zjtjj);
+					}
+					// 更新
+					long beforeValue = tAccount.getBalance();
+					long totalIncomeBeforeValue = tAccount.getTotalIncome();
+					long totalIncome = (long) (totalIncomeBeforeValue - zjtjj);
+					long balance = (long) (tAccount.getBalance() - zjtjj);
+					tAccount.setBalance(balance);
+					tAccount.setTotalIncome(totalIncome);
+					tAccount.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
+					System.out.println("【直接推荐奖账务】tAccount=" + tAccount);
+					iAccountServiceImpl.insertOrUpdate(tAccount);
+					// 新增账务流水
+					TAccountFlow tAccountFlow = new TAccountFlow();
+					long currTime = DateUtil.get_Long$yyyyMMddHHmmss(new Date());
+					String uuid = UUIDUtil.getUUID32().substring(0, 10);
+					String flowId = "QZJT" + currTime + uuid;
+					tAccountFlow.setFlowId(flowId);
+					tAccountFlow.setOrderType("QZJT");
+					tAccountFlow.setTradeValue((long) zjtjj);
+					tAccountFlow.setStatus("02");
+					tAccountFlow.setBeforeValue(beforeValue);
+					tAccountFlow.setTradeType("-");
+					tAccountFlow.setAfterValue((long) (beforeValue - zjtjj));
+					tAccountFlow.setBankHostName("");
+					tAccountFlow.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
+					tAccountFlow.setPersonId(operatorId);
+					System.out.println("【直接推荐奖账务流水】tAccountFlow=" + tAccountFlow);
+					iTAccountFlowServiceImpl.insert(tAccountFlow);
+				}
+				String dirRecommender = memberBasicinfo.getDirRecommender();
+				// 2.取消直接推荐奖-间接推荐人
+				if (!dirRecommender.isEmpty()) {
+					System.out.println("【间接推荐人】PERSON_ID=" + dirRecommender);
+					// 修改账务信息
+					// 修改账务信息
+					TAccount tAccount = iShanJiaFuWuServiceImpl.getAccountByPersonId(dirRecommender);
+					if (tAccount == null) {
+						// 插入账务记录
+						tAccount = new TAccount();
+						tAccount.setBalance(0L);
+						tAccount.setPersonId(dirRecommender);
+						tAccount.setBankHostName("");
+						tAccount.setBankCardId("");
+						tAccount.setTotalIncome((long) -jjtjj);
+						tAccount.setSettleApplying(0L);
+						tAccount.setBalance((long) -jjtjj);
+					}
+					// 更新
+					long beforeValue = tAccount.getBalance();
+					long totalIncomeBeforeValue = tAccount.getTotalIncome();
+					long totalIncome = (long) (totalIncomeBeforeValue - jjtjj);
+					long balance = (long) (tAccount.getBalance() - jjtjj);
+					tAccount.setBalance(balance);
+					tAccount.setTotalIncome(totalIncome);
+					tAccount.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
+					System.out.println("【间接推荐奖账务】tAccount=" + tAccount);
+					iAccountServiceImpl.insertOrUpdate(tAccount);
+					// 新增账务流水
+					TAccountFlow tAccountFlow = new TAccountFlow();
+					long currTime = DateUtil.get_Long$yyyyMMddHHmmss(new Date());
+					String uuid = UUIDUtil.getUUID32().substring(0, 10);
+					String flowId = "QJJT" + currTime + uuid;
+					tAccountFlow.setFlowId(flowId);
+					tAccountFlow.setOrderType("QJJT");
+					tAccountFlow.setTradeValue((long) jjtjj);
+					tAccountFlow.setStatus("02");
+					tAccountFlow.setBeforeValue(beforeValue);
+					tAccountFlow.setTradeType("-");
+					tAccountFlow.setAfterValue((long) (beforeValue - jjtjj));
+					tAccountFlow.setBankHostName("");
+					tAccountFlow.setUpdateTime(DateUtil.get_Long$yyyyMMddHHmmss(new Date()).toString());
+					tAccountFlow.setPersonId(operatorId);
+					System.out.println("【间接推荐奖账务流水】tAccountFlow=" + tAccountFlow);
+					iTAccountFlowServiceImpl.insert(tAccountFlow);
+				}
+			}
 			return renderSuccess("修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,7 +255,7 @@ public class ExamineManageController extends BaseController {
 				float zjtjj = jsyx * rate1;
 				map.put("zjRecommendAward", zjtjj);
 				// 间接推荐奖
-				TRecommendAward recommendAward2 = iTRecommendAwardServiceImpl.selectById("1");
+				TRecommendAward recommendAward2 = iTRecommendAwardServiceImpl.selectById("2");
 				float rate2 = recommendAward2.getRate();
 				float jjtjj = jsyx * rate2;
 				map.put("jjRecommendAward", jjtjj);

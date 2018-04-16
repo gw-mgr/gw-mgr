@@ -71,8 +71,6 @@ public class TMerchantManageController extends BaseController {
 	private ITChinaAreaService iTChinaAreaServiceImpl;
 	@Autowired
 	private ITMerchantManageService tMerchantManageServiceImpl;
-	@Autowired
-	private IMessageService iMessageServiceImpl;
 
 	@GetMapping("/manager")
 	public Object manager(String status) {
