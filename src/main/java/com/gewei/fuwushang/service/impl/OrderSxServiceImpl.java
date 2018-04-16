@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 public class OrderSxServiceImpl extends ServiceImpl<OrderSxMapper, OrderSx> implements IOrderSxService {
 	@Autowired
 	private OrderSxMapper mapper;
+	@Override
 	public void selectDataGrid(PageInfo pageInfo) {
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(pageInfo.getNowpage(), pageInfo.getSize());
 		page.setOrderByField(pageInfo.getSort());

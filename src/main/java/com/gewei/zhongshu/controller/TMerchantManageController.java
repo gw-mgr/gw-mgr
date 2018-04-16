@@ -73,6 +73,8 @@ public class TMerchantManageController extends BaseController {
 	private ITChinaAreaService iTChinaAreaServiceImpl;
 	@Autowired
 	private ITMerchantManageService tMerchantManageServiceImpl;
+    @Autowired 
+    private com.gewei.fuwushang.service.IUserService userService;
 
 	@GetMapping("/manager")
 	public Object manager(String status) {
@@ -624,5 +626,74 @@ public class TMerchantManageController extends BaseController {
 		tMerchantManageRe.setBalanceResp(((float) balance / 100) == 0 ? "0" : ((float) balance / 100) + "");
 		model.addAttribute("tMerchantManage", tMerchantManageRe);
 		return "admin/tMerchantManage/tMerchantManageLook";
+	}
+	
+	@GetMapping("/editPageForF")
+	public String editPageForF(Model model) {
+		Subject currentUser = SecurityUtils.getSubject();
+        PrincipalCollection collection = currentUser.getPrincipals();
+        if (null != collection) {
+            String loginName = collection.getPrimaryPrincipal().toString();
+            UserVo userVo = userService.selectUserVoByLoginName(loginName);
+            TMerchantManage tMerchantManage = tMerchantManageServiceImpl.selectById(userVo.getOrganizationId());
+            TMerchantManageRe tMerchantManageRe = new TMerchantManageRe();
+    		BeanUtils.copyProperties(tMerchantManage, tMerchantManageRe);
+    		// 1.授权范围设置
+    		String merchantTypeStr = tMerchantManageRe.getMerchantType();
+    		if (merchantTypeStr != null) {
+    			String[] merchantTypeArray = merchantTypeStr.split(",");
+    			String merchantTypes = "";
+    			for (String merchantType : merchantTypeArray) {
+    				if ("ROOTLC".equals(merchantType)) {
+    					merchantTypes += "理财产品,";
+    				} else if ("ROOTDK".equals(merchantType)) {
+    					merchantTypes += "贷款业务,";
+    				} else if ("ROOTQC".equals(merchantType)) {
+    					merchantTypes += "二手汽车,";
+    				} else if ("ROOTCD".equals(merchantType)) {
+    					merchantTypes += "车务代办,";
+    				} else if ("ROOTCM".equals(merchantType)) {
+    					merchantTypes += "汽车美容,";
+    				}
+    			}
+    			// 去除最后一个逗号
+    			merchantTypes = "".equals(merchantTypes) ? null : merchantTypes.substring(0, merchantTypes.length() - 1);
+    			tMerchantManageRe.setMerchantType(merchantTypes);
+    		}
+    		// 2.授权区域设置
+    		String grantAreaNameRes = "";
+    		String grantAreaStr = tMerchantManageRe.getGrantArea();
+    		if (grantAreaStr != null) {
+    			String[] grantAreaArray = grantAreaStr.split(",");
+    			if (!"".equals(grantAreaArray[0])) {
+    				HashMap<String, Object> columnMap = new HashMap<String, Object>(1);
+    				for (String grantArea : grantAreaArray) {
+    					String grantNameChildRes = "";
+    					String[] grantAreaIdArray = grantArea.split("-");
+    					for (String grantAreaId : grantAreaIdArray) {
+    						columnMap.put("ID", grantAreaId);
+    						List<TChinaArea> list = iTChinaAreaServiceImpl.selectByMap(columnMap);
+    						if (list != null && list.size() > 0) {
+    							String grantName = list.get(0).getName();
+    							grantNameChildRes += grantName + "-";
+    						}
+    					}
+    					grantNameChildRes = "".equals(grantNameChildRes) ? "" : grantNameChildRes.substring(0, grantNameChildRes.length() - 1);
+    					grantAreaNameRes += grantNameChildRes + ",";
+    				}
+    			}
+    		}
+    		grantAreaNameRes = "".equals(grantAreaNameRes) ? "" : grantAreaNameRes.substring(0, grantAreaNameRes.length() - 1);
+    		tMerchantManageRe.setGrantArea(grantAreaNameRes);
+    		// 2.服务商地址
+    		HashMap<String, Object> columnMap = new HashMap<String, Object>(1);
+    		// 服务商余额
+    		columnMap.put("PERSON_ID", userVo.getOrganizationId());
+    		List<TAccount> tAccountList = iAccountServiceImpl.selectByMap(columnMap);
+    		long balance = tAccountList.get(0).getBalance();
+    		tMerchantManageRe.setBalanceResp(((float) balance / 100) == 0 ? "0" : ((float) balance / 100) + "");
+    		model.addAttribute("tMerchantManage", tMerchantManageRe);
+        }
+        return "admin/tMerchantManage/tMerchantManageEditForF";
 	}
 }

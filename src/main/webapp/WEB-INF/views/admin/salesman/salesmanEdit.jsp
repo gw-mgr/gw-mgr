@@ -72,6 +72,7 @@
 		                    <select id="city" name="city"></select>
 		                    <select id="area" name="district"></select>
 						</div>
+						<div style="height: 10px"></div>
                     	<input style="width: 390px" name="linkaddr" type="text" class="easyui-validatebox span2" value="${salesMan.linkaddr}">
                     </td>
                 </tr>

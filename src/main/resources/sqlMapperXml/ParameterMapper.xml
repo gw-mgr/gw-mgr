@@ -12,5 +12,21 @@
 		<result column="TYPE" property="type" />
 		<result column="STATUS" property="status" />
 	</resultMap>
-
+	<select id="selectPage" resultType="Map">
+		SELECT
+			t.ID as id,
+			t.RELATION_ID as relationId,
+			t.NAME as name,
+			t.SEQ as seq,
+			t.DESCRIPTION as description,
+			t.TYPE as type,
+			t.STATUS as status
+		FROM
+			parameter t 
+		<where>
+            <if test=" type != null and type != '' ">
+                  t.type = #{type}
+            </if>
+        </where>
+	</select>
 </mapper>

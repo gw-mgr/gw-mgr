@@ -4,7 +4,7 @@
     var parameterDataGrid;
     $(function() {
         parameterDataGrid = $('#parameterDataGrid').datagrid({
-        url : '${path}/mgr/parameter/dataGrid',
+        url : '${path}/mgr/parameter/dataGrid?type=01',
         striped : true,
         rownumbers : true,
         pagination : true,
@@ -18,53 +18,25 @@
         pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
         frozenColumns : [ [ 
         {
-			field : 'ck',
-			checkbox : true
-		}, {
-            width : '60',
-            title : '编号',
-            field : 'id',
+            width : '400',
+            title : '投保方式',
+            field : 'name',
             align : 'center',
-            sortable : true
-        }, {
-            width : '60',
-            title : '状态',
-            field : 'status',
-            align : 'center',
-            sortable : true,
-            formatter : function(value, row, index) {
-                switch (value) {
-                case 0:
-                    return '正常';
-                case 1:
-                    return '停用';
-                }
-            }
-        }, {
-            width : '140',
-            title : '创建时间',
-            align : 'center',
-            field : 'createTime',
             sortable : true
         }, {
             field : 'action',
             title : '操作',
             align : 'center',
-            width : 200,
+            width : 400,
             formatter : function(value, row, index) {
                 var str = '';
-                <shiro:hasPermission name="/parameter/edit">
-                    str += $.formatString('<a href="javascript:void(0)" class="parameter-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'fi-pencil icon-blue\'" onclick="parameterEditFun(\'{0}\');" >编辑</a>', row.id);
-                </shiro:hasPermission>
                 <shiro:hasPermission name="/parameter/delete">
-                    str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                     str += $.formatString('<a href="javascript:void(0)" class="parameter-easyui-linkbutton-del" data-options="plain:true,iconCls:\'fi-x icon-red\'" onclick="parameterDeleteFun(\'{0}\');" >删除</a>', row.id);
                 </shiro:hasPermission>
                 return str;
             }
         } ] ],
         onLoadSuccess:function(data){
-            $('.parameter-easyui-linkbutton-edit').linkbutton({text:'编辑'});
             $('.parameter-easyui-linkbutton-del').linkbutton({text:'删除'});
         },
         toolbar : '#parameterToolbar'
@@ -78,41 +50,14 @@
 function parameterAddFun() {
     parent.$.modalDialog({
         title : '添加',
-        width : 700,
-        height : 600,
+        width : 400,
+        height : 300,
         href : '${path}/mgr/parameter/addPage',
         buttons : [ {
             text : '确定',
             handler : function() {
                 parent.$.modalDialog.openner_dataGrid = parameterDataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
                 var f = parent.$.modalDialog.handler.find('#parameterAddForm');
-                f.submit();
-            }
-        } ]
-    });
-}
-
-
-/**
- * 编辑
- */
-function parameterEditFun(id) {
-    if (id == undefined) {
-        var rows = parameterDataGrid.datagrid('getSelections');
-        id = rows[0].id;
-    } else {
-        parameterDataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-    }
-    parent.$.modalDialog({
-        title : '编辑',
-        width : 700,
-        height : 600,
-        href :  '${path}/parameter/editPage?id=' + id,
-        buttons : [ {
-            text : '确定',
-            handler : function() {
-                parent.$.modalDialog.openner_dataGrid = parameterDataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                var f = parent.$.modalDialog.handler.find('#parameterEditForm');
                 f.submit();
             }
         } ]
@@ -133,7 +78,7 @@ function parameterEditFun(id) {
      parent.$.messager.confirm('询问', '您是否要删除当前角色？', function(b) {
          if (b) {
              progressLoad();
-             $.post('${path}/parameter/delete', {
+             $.post('${path}/mgr/parameter/delete', {
                  id : id
              }, function(result) {
                  if (result.success) {
@@ -167,20 +112,8 @@ function parameterSearchFun() {
     	<div style="height: 30px;">
 			<img id="u162_img" class="img" width="100%" height="100%"
 				src="${path}/static/style/images/u522.png" /> <span
-				style="position: absolute; top: 7px; left: 6px; text-align: center;">搜索</span>
+				style="position: absolute; top: 7px; left: 6px; text-align: center;"></span>
 		</div>
-        <form id="parameterSearchForm">
-            <table>
-                <tr>
-                    <th>名称:</th>
-                    <td><input name="name" placeholder="搜索条件"/></td>
-                    <td>
-                        <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="parameterSearchFun();">查询</a>
-                        <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-x-circle',plain:true" onclick="parameterCleanFun();">清空</a>
-                    </td>
-                </tr>
-            </table>
-        </form>
      </div>
  
     <div data-options="region:'center',border:false">

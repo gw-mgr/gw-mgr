@@ -17,5 +17,29 @@
 		<result column="PERSON_ID" property="personId" />
 		<result column="UPDATE_TIME" property="updateTime" />
 	</resultMap>
+	<select id="selectPage" resultType="Map">
+		SELECT
+			t.ID as id,
+			t.FLOW_ID as flowId,
+			t.ORDER_TYPE as orderType,
+			t.BEFORE_VALUE as beforeValue,
+			t.TRADE_TYPE as tradeType,
+			t.TRADE_VALUE as tradeValue,
+			t.AFTER_VALUE as afterValue,
+			t.BANK_HOST_NAME as bankHostName,
+			t.BANK_CARD_ID as bankCardId,
+			t.STATUS as status,
+			t.PERSON_ID as personId,
+			t.UPDATE_TIME as updateTime,
+			m.CATEGORY_NAME as orderTypeName
+		FROM
+			t_account_flow t 
+			LEFT JOIN t_merchant_product_category m ON t.ORDER_TYPE = m.category_id
+		<where>
+            <if test=" personId != null and personId != '' ">
+                  t.PERSON_ID = #{personId}
+            </if>
+        </where>
+	</select>
 
 </mapper>
