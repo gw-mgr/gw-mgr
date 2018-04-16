@@ -1,14 +1,19 @@
 package com.gewei.zhongshu.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -143,6 +148,25 @@ public class TMerchantProductManageServiceImpl extends ServiceImpl<TMerchantProd
 		page.setOrderByField(pageInfo.getSort());
 		page.setAsc(pageInfo.getOrder().equalsIgnoreCase("asc"));
 		List<Map<String, Object>> list = tMerchantProductManageMapper.cashDataGrid(page, pageInfo.getCondition());
+		// 上月车险佣金
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -1);
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");
+		String beforeMonth = format.format(c.getTime());
+		for (Map<String, Object> map : list) {
+			String userId = (String) map.get("userId");
+			EntityWrapper<TAccountFlow> wrapper = new EntityWrapper<TAccountFlow>();
+			wrapper.eq("PERSON_ID", userId);
+			wrapper.eq("TRADE_TYPE", "+");
+			wrapper.or("ORDER_TYPE = {0}", "ROOTCCCL");
+			wrapper.like("UPDATE_TIME", beforeMonth, SqlLike.RIGHT);
+			List<TAccountFlow> list2 = iTAccountFlowServiceImpl.selectList(wrapper);
+			long money = 0;// 上月车险佣金
+			for (TAccountFlow tAccountFlow : list2) {
+				money += tAccountFlow.getTradeValue();
+			}
+			map.put("beforeMonthCXCommend", money);
+		}
 		System.out.println("list===" + JSON.toJSONString(list));
 		setID2Name(list);
 		pageInfo.setRows(list);

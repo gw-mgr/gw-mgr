@@ -1,5 +1,6 @@
 package com.gewei.zhongshu.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.gewei.commons.base.BaseController;
 import com.gewei.commons.result.PageInfo;
 import com.gewei.commons.utils.BeanUtils;
+import com.gewei.commons.utils.DateUtil;
 import com.gewei.model.TChinaArea;
 import com.gewei.model.YongJinZhengCe;
 import com.gewei.model.vo.YongJinZhengCeVo;
@@ -96,6 +98,13 @@ public class YongJinZhengCeController extends BaseController {
 			}
 			String areaName = (area.toString()).equals("") ? null : area.toString().substring(0, area.toString().length() - 1);
 			yongJinZhengCe2.setProvince(areaName);
+			// 比率转换
+			float jichuYongj = yongJinZhengCe2.getJichuYongj();
+			float zongheJr = yongJinZhengCe2.getZongheJr();
+			jichuYongj = jichuYongj * 100;
+			zongheJr = zongheJr * 100;
+			yongJinZhengCe2.setJichuYongj(jichuYongj);
+			yongJinZhengCe2.setZongheJr(zongheJr);
 		}
 		pageInfo.setRows(records);
 		pageInfo.setTotal(pages.getTotal());
@@ -116,6 +125,12 @@ public class YongJinZhengCeController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public Object add(@Valid YongJinZhengCe yongJinZhengCe) {
+		String currTime = DateUtil.get_String$yyyyMMddHHmmss(new Date());
+		float jichuYongj = yongJinZhengCe.getJichuYongj();
+		float zongheJr = yongJinZhengCe.getZongheJr();
+		yongJinZhengCe.setJichuYongj(jichuYongj / 100);
+		yongJinZhengCe.setZongheJr(zongheJr / 100);
+		yongJinZhengCe.setCreateTime(currTime.substring(0, 8) + "000000");
 		boolean b = yongJinZhengCeService.insert(yongJinZhengCe);
 		if (b) {
 			return renderSuccess("添加成功！");
@@ -130,6 +145,13 @@ public class YongJinZhengCeController extends BaseController {
 	@GetMapping("/editPage")
 	public String editPage(Model model, Long id) {
 		YongJinZhengCe yongJinZhengCe = yongJinZhengCeService.selectById(id);
+		// 比率转换
+		float jichuYongj = yongJinZhengCe.getJichuYongj();
+		float zongheJr = yongJinZhengCe.getZongheJr();
+		jichuYongj = jichuYongj * 100;
+		zongheJr = zongheJr * 100;
+		yongJinZhengCe.setJichuYongj(jichuYongj);
+		yongJinZhengCe.setZongheJr(zongheJr);
 		model.addAttribute("yongJinZhengCe", yongJinZhengCe);
 		return "admin/yongJinZhengCe/yongJinZhengCeEdit";
 	}
@@ -140,7 +162,14 @@ public class YongJinZhengCeController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public Object edit(@Valid YongJinZhengCe yongJinZhengCe) {
-		// yongJinZhengCe.setUpdateTime(new Date());
+		System.out.println("【编辑】yongJinZhengCe" + JSON.toJSONString(yongJinZhengCe));
+		String currTime = DateUtil.get_String$yyyyMMddHHmmss(new Date());
+		yongJinZhengCe.setCreateTime(currTime.substring(0, 8) + "000000");
+		float jichuYongj = yongJinZhengCe.getJichuYongj();
+		float zongheJr = yongJinZhengCe.getZongheJr();
+		yongJinZhengCe.setJichuYongj(jichuYongj / 100);
+		yongJinZhengCe.setZongheJr(zongheJr / 100);
+		System.out.println("【编辑】yongJinZhengCe" + JSON.toJSONString(yongJinZhengCe));
 		boolean b = yongJinZhengCeService.updateById(yongJinZhengCe);
 		if (b) {
 			return renderSuccess("编辑成功！");
