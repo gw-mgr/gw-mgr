@@ -208,16 +208,12 @@
 		});
 	}
 
-	/**
-	 * 清除
-	 */
+	// 清除
 	function yongJinZhengCeCleanFun() {
 		$('#yongJinZhengCeSearchForm input').val('');
 		yongJinZhengCeDataGrid.datagrid('load', {});
 	}
-	/**
-	 * 搜索
-	 */
+	// 搜索
 	function yongJinZhengCeSearchFun() {
 		yongJinZhengCeDataGrid.datagrid('load', $
 				.serializeObject($('#yongJinZhengCeSearchForm')));
