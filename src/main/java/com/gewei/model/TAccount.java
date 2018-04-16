@@ -16,6 +16,12 @@ public class TAccount extends Model<TAccount> {
 	private String bankCardId;
 	private String updateTime;
 
+	@Override
+	public String toString() {
+		return "TAccount [id=" + id + ", personId=" + personId + ", totalIncome=" + totalIncome + ", settleApplying=" + settleApplying + ", balance=" + balance + ", bankHostName=" + bankHostName + ", bankCardId="
+				+ bankCardId + ", updateTime=" + updateTime + "]";
+	}
+
 	public String getBankHostName() {
 		return bankHostName;
 	}

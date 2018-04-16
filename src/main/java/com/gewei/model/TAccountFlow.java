@@ -120,4 +120,10 @@ public class TAccountFlow extends Model<TAccountFlow> {
 	protected Serializable pkVal() {
 		return this.id;
 	}
+
+	@Override
+	public String toString() {
+		return "TAccountFlow [id=" + id + ", flowId=" + flowId + ", orderType=" + orderType + ", beforeValue=" + beforeValue + ", tradeType=" + tradeType + ", tradeValue=" + tradeValue + ", afterValue=" + afterValue
+				+ ", bankHostName=" + bankHostName + ", bankCardId=" + bankCardId + ", status=" + status + ", personId=" + personId + ", updateTime=" + updateTime + "]";
+	}
 }

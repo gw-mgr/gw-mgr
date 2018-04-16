@@ -94,8 +94,6 @@ public class AuthController extends BaseController {
 	protected Object telLogin(String telphone, String smsCode, String code) {
 		Result result = new Result();
 		try {
-			String openId = WchatUtil.getOpenId(AppUtil.getPropertie("wxConfig.appid"), code, AppUtil.getPropertie("wxConfig.appid"));
-			System.out.println("openId=" + openId);
 			// 短信验证码校验
 			SmsCode code2 = commonMapper.getSMSCodeByTelephone(telphone);
 			String flag = code2.getFlag();
@@ -132,13 +130,15 @@ public class AuthController extends BaseController {
 				HashMap<String, String> hashMap = new HashMap<String, String>(2);
 				hashMap.put("userId", memberBasicinfo.getUserId());
 				hashMap.put("merchantId", merchantId);
+				result.setSuccess(true);
 				result.setObj(hashMap);
 			}
-			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return renderError("登录失败");
+			result.setObj("登录失败");
+			result.setSuccess(false);
 		}
+		return result;
 	}
 
 	// 第一次登录补充信息
@@ -177,15 +177,16 @@ public class AuthController extends BaseController {
 			memberBasicinfo.setTelephone(telphone);
 			memberBasicinfo.setMobilePhone(telphone);
 			iTMemberBasicinfoServiceImpl.insert(memberBasicinfo);
-			result.setSuccess(true);
 			HashMap<String, String> hashMap = new HashMap<String, String>(2);
 			hashMap.put("userId", memberBasicinfo.getUserId());
 			hashMap.put("merchantId", null);
 			result.setObj(hashMap);
-			return result;
+			result.setSuccess(true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return renderError("添加失败");
+			result.setObj("添加失败");
+			result.setSuccess(false);
 		}
+		return result;
 	}
 }
