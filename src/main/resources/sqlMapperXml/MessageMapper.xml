@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.MessageMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.Message">
+		<id column="ID" property="id" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="OPERATOR_ID" property="operatorId" />
+		<result column="CONTENT" property="content" />
+		<result column="STATUS" property="status" />
+		<result column="TYPE" property="type" />
+		<result column="USER_ID" property="userId" />
+		<result column="PRODUCT_ID" property="productId" />
+		<result column="ORDER_ID" property="orderId" />
+		<result column="ORDER_TYPE" property="orderType" />
+	</resultMap>
+
+</mapper>

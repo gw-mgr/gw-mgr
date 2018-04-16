@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商家详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content " >
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="todo" v-cloak>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" :src="todo.merchantPhotoUrl" onerror="src=\'../../images/2x2.png\'">
+						<div class="mui-media-body line20">
+							{{todo.merchantName}}
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					电话：{{todo.telphone}}
+					<a class="mui-pull-right update" :href="thistel"><span class="mui-icon mui-icon-phone"></span></a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="mui-icon mui-icon-location"></span>{{todo.merchantAddr}}
+					</a>
+				</li>
+				<li class="mui-table-view-divider">商家介绍</li>
+				<li class="mui-table-view-cell">
+					{{todo.merchantDescript}}
+				</li>
+			</ul>
+			<div class="line"></div>
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>全部服务</label>
+				</div>
+			</div>
+			<div class="line"></div>
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="pullrefresh">
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script>
+			$$(function() {
+				$$.ajax({                
+					type:   "POST",
+					url: base_url + '/xianshangyewu/getMerchantInfo',
+					data: {merchantId:getUrlParam('merchantId')},
+					dataType: 'json',
+					success:   function(response)  {
+						console.log(response)
+						hide();
+						if(response.success) {
+							response.obj.merchantPhotoUrl = base_url+response.obj.merchantPhotoUrl;
+							var app = new Vue({
+								el: '#todo',
+								data: {
+									todo: response.obj,
+									thistel:"tel:"+response.obj.telphone
+								}
+							});
+						} else {
+							_errors();
+						}
+					},
+					error:   function(result)  {
+						_errors();
+					}            
+				});
+				queryProduct();
+			});
+			
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var orderTypePicker = new $.PopPicker({
+						layer: "",
+						title: "服务类型"
+					});
+					/*证件类型*/
+					orderTypePicker.setData(orderTypeData);
+					$$(".orderType").click(function(event) { //投保人证件类型
+						var _this = $$(this);
+						orderTypePicker.show(function(items) {
+							$$(_this).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_this).next(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("#pullrefresh").html("");
+							queryProduct();
+						});
+					});
+				});
+			})(mui, document);
+		</script>
+		<script>
+			
+			function queryProduct() {
+				var orderType =  $$("input[name=orderType]").val();
+				var param ={
+						merchantId: getUrlParam('merchantId'),
+						orderType: orderType
+				}
+				console.log(param)
+				var table = document.body.querySelector('#pullrefresh');
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/xianshangyewu/getProductListByMerchantId',
+					data:param,
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						if(response.success) {
+							$$("#count").html(response.totalCount);
+							var item = response.obj;
+							//if(response.totalCount > 0 && item.length>0) {
+							if(item.length>0) {
+								for(var i = 0; i < item.length; i++) {
+									var statusVal,color;
+									var li = document.createElement('li');
+									li.setAttribute("data-productId",item[i].productId);
+									li.className = 'mui-table-view-cell';
+									li.innerHTML = '<div class="mui-table">'
+									+'<div class="mui-table-cell mui-col-xs-6">'
+									+'<p class="mui-ellipsis black">'+item[i].productName+'</p>'
+									+'</div>'
+									+'<div class="mui-table-cell mui-col-xs-6 mui-text-right">'
+									+'<div><span class="red mui-h3">￥'+((item[i].currPrice)*0.01).toFixed(2)+'</span>&nbsp;<u class="gray">¥'+((item[i].origPrice)*0.01).toFixed(2)+'</u></div>'
+									+'</div>'
+									+'</div>';
+									table.appendChild(li);
+									//进度条显示
+									mui(".mui-progressbar").each(function() {
+										mui(this).progressbar({
+											progress: this.getAttribute("data-progress")
+										}).show();
+									});
+								}
+							} else {
+								$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+															+'<div class="data-icon icon-none"></div>'
+															+'<p class="data-title">暂无相关服务</p>'
+															+'</div>');
+							}
+						} else {
+							$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+														+'<div class="data-icon icon-none"></div>'
+														+'<p class="data-title">暂无相关服务</p>'
+														+'</div>');
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			}
+			
+			//详情
+			mui('#pullrefresh').on('tap', '.mui-table-view li', function () {  
+				var productId = $$(this).attr("data-productid");
+				window.location.href= 'online-cm-shop-pro.html?productId='+productId;
+	       	});
+		</script>
+	</body>
+
+</html>

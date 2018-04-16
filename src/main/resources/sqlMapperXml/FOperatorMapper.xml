@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.FOperatorMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.mapper.FOperatorMapper">
+		<id column="OPER_ID" property="operId" />
+		<result column="ROOTDK_COMMISSION_TYPE" property="rootdkCommissionType" />
+		<result column="ROOTDK_COMMISSION_VALUE" property="rootdkCommissionValue" />
+		<result column="ROOTCC_COMMISSION_TYPE" property="rootccCommissionType" />
+		<result column="ROOTCC_COMMISSION_VALUE" property="rootccCommissionValue" />
+		<result column="ROOTRS_COMMISSION_TYPE" property="rootrsCommissionType" />
+		<result column="ROOTRS_COMMISSION_VALUE" property="rootrsCommissionValue" />
+		<result column="BANK_NAME" property="bankName" />
+		<result column="BANK_HOST" property="bankHost" />
+		<result column="BANK_CARD" property="bankCard" />
+		<result column="MAIL" property="mail" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="REMARK1" property="remark1" />
+		<result column="REMARK2" property="remark2" />
+		<result column="REMARK3" property="remark3" />
+	</resultMap>
+	<select id="selectPage" resultType="Map">
+		select
+			t.oper_id as operId,
+			t.rootdk_commission_type as rootdkCommissionType,
+			t.rootdk_commission_value as rootdkCommissionValue ,
+			t.rootcc_commission_type as rootccCommissionType,
+			t.rootcc_commission_value as rootccCommissionValue,
+			t.rootrs_commission_type as rootrsCommissionType,
+			t.rootrs_commission_value as rootrsCommissionValue,
+			t.bank_name as bankName,
+			t.bank_host as bankHost,
+			t.bank_card as bankCard,
+			t.mail,
+			t.update_time as updateTime,
+			t.description,
+			t.remark1,
+			t.remark2,
+			t.remark3,
+			u.phone as phone,
+			u.name as userName,
+			u.status as status,
+			ur.role_id as roleId,
+			r.name as roleName
+		from
+			operator t
+			LEFT JOIN user u ON u.id = t.oper_id
+			LEFT JOIN user_role ur ON ur.user_id = t.oper_id
+			LEFT JOIN role r ON r.id = ur.role_id
+		<where>
+            <if test=" userName != null and userName != '' ">
+                u.name like CONCAT('%',#{userName},'%' )
+            </if>
+            <if test=" telphone != null and telphone != '' ">
+                u.phone = #{telphone}
+            </if>
+        </where>
+        GROUP BY t.oper_id
+    </select>
+    <select id="selectByOpId" resultType="FOperatorVo">
+		select
+			t.oper_id as operId,
+			t.rootdk_commission_type as rootdkCommissionType,
+			t.rootdk_commission_value as rootdkCommissionValue ,
+			t.rootcc_commission_type as rootccCommissionType,
+			t.rootcc_commission_value as rootccCommissionValue,
+			t.rootrs_commission_type as rootrsCommissionType,
+			t.rootrs_commission_value as rootrsCommissionValue,
+			t.bank_name as bankName,
+			t.bank_host as bankHost,
+			t.bank_card as bankCard,
+			t.mail,
+			t.update_time as updateTime,
+			t.description,
+			t.remark1,
+			t.remark2,
+			t.remark3,
+			u.phone as telephone,
+			u.name as userName,
+			ur.role_id as roleId,
+			r.name as roleName
+		from
+			operator t
+			LEFT JOIN user u ON u.id = t.oper_id
+			LEFT JOIN user_role ur ON ur.user_id = t.oper_id
+			LEFT JOIN role r ON r.id = ur.role_id
+		<where>
+            t.oper_id = #{id}
+        </where>
+    </select>
+    <update id="updateById" parameterType="com.gewei.model.Operator">
+		update operator set 
+			<if test="operId != null"> oper_id=#{operId}</if>
+			<if test="rootdkCommissionType != null">,rootdk_commission_type=#{rootdkCommissionType}</if>
+			<if test="rootdkCommissionValue != null">,rootdk_commission_value=#{rootdkCommissionValue }</if>
+			<if test="rootccCommissionType != null">,rootcc_commission_type=#{rootccCommissionType}</if>
+			<if test="rootccCommissionValue != null">,rootcc_commission_value=#{rootccCommissionValue}</if>
+			<if test="rootrsCommissionType != null">,rootrs_commission_type=#{rootrsCommissionType}</if>
+			<if test="rootrsCommissionValue != null">,rootrs_commission_value=#{rootrsCommissionValue}</if>
+			<if test="bankName != null">,bank_name=#{bankName}</if>
+			<if test="bankHost != null">,bank_host=#{bankHost}</if>
+			<if test="bankCard != null">,bank_card=#{bankCard}</if>
+			<if test="mail != null">,mail=#{mail}</if>
+			<if test="updateTime != null">,update_time=#{updateTime}</if>
+			<if test="description != null">,description=#{description}</if>
+			<if test="remark1 != null">,remark1=#{remark1}</if>
+			<if test="remark2 != null">,remark2=#{remark2}</if>
+			<if test="remark3 != null">,remark3=#{remark3}</if>
+		where oper_id=#{operId}
+	</update>
+	<delete id="deleteById" parameterType="java.lang.String">
+        delete from operator where oper_id = #{id}
+    </delete>
+</mapper>

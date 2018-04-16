@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.OrderSxMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.mapper.OrderSxMapper">
+		<id column="ORDER_ID" property="orderId" />
+		<result column="ORDER_NO" property="orderNo" />
+		<result column="ORDER_TYPE" property="orderType" />
+		<result column="TB_START_TIME" property="tbStartTime" />
+		<result column="TB_END_TIME" property="tbEndTime" />
+		<result column="ORDER_FLAG" property="orderFlag" />
+		<result column="MERCHANT_ID" property="merchantId" />
+		<result column="PRINT_FLAG" property="printFlag" />
+		<result column="COMMISSION_FLAG" property="commissionFlag" />
+		<result column="CHECKOUT_FLAG" property="checkoutFlag" />
+		<result column="GIFT_FLAG" property="giftFlag" />
+		<result column="BXGSZXSQYJBL" property="bxgszxsqyjbl" />
+		<result column="BXGSZXSQYJ" property="bxgszxsqyj" />
+		<result column="BXGSFX1SQYJBL" property="bxgsfx1sqyjbl" />
+		<result column="BXGSFX1SQYJ" property="bxgsfx1sqyj" />
+		<result column="BXGSFX2SQYJBL" property="bxgsfx2sqyjbl" />
+		<result column="BXGSFX2SQYJ" property="bxgsfx2sqyj" />
+		<result column="BXGSKPYJBL" property="bxgskpyjbl" />
+		<result column="BXGSKPYJ" property="bxgskpyj" />
+		<result column="GSGLFJE" property="gsglfje" />
+		<result column="GSGLFBL" property="gsglfbl" />
+		<result column="GSTCJE" property="gstcje" />
+		<result column="GSTCBL" property="gstcbl" />
+		<result column="GSJSJE" property="gsjsje" />
+		<result column="GSJSBL" property="gsjsbl" />
+		<result column="POLICYHOLDER_ID" property="policyholderId" />
+		<result column="INSURED_ID" property="insuredId" />
+		<result column="BENEFICIARY_ID" property="beneficiaryId" />
+		<result column="JFPL" property="jfpl" />
+		<result column="SFZDXJ" property="sfzdxj" />
+		<result column="SQJFFS" property="sqjffs" />
+		<result column="XQJFFS" property="xqjffs" />
+		<result column="KHHMC" property="khhmc" />
+		<result column="YHZH" property="yhzh" />
+		<result column="BFHJ" property="bfhj" />
+		<result column="HLLQFS" property="hllqfs" />
+		<result column="LQFS" property="lqfs" />
+		<result column="HLLQNL" property="hllqnl" />
+		<result column="HLLQSJ" property="hllqsj" />
+		<result column="HLLQLX" property="hllqlx" />
+		<result column="SFZDZF" property="sfzdzf" />
+		<result column="TZLJBXTX" property="tzljbxtx" />
+		<result column="TBRSG" property="tbrsg" />
+		<result column="TBRTZ" property="tbrtz" />
+		<result column="BBRSG" property="bbrsg" />
+		<result column="BBRTZ" property="bbrtz" />
+		<result column="MTXY" property="mtxy" />
+		<result column="XYSJ" property="xysj" />
+		<result column="YJZL" property="yjzl" />
+		<result column="MTYJ" property="mtyj" />
+		<result column="YJSJ" property="yjsj" />
+		<result column="HYSJ" property="hysj" />
+		<result column="CSSG" property="cssg" />
+		<result column="CSTZ" property="cstz" />
+		<result column="SPGSMC" property="spgsmc" />
+		<result column="SPRQ" property="sprq" />
+		<result column="SPJE" property="spje" />
+		<result column="SPSY" property="spsy" />
+		<result column="JZLX" property="jzlx" />
+		<result column="JZQFRQ" property="jzqfrq" />
+		<result column="JZJL" property="jzjl" />
+		<result column="CLYT" property="clyt" />
+		<result column="CLLX" property="cllx" />
+		<result column="JZGJ" property="jzgj" />
+		<result column="JZYY" property="jzyy" />
+		<result column="JZZLSJ" property="jzzlsj" />
+		<result column="TXWSX1" property="txwsx1" />
+		<result column="BXWSX1" property="bxwsx1" />
+		<result column="TXWSX2" property="txwsx2" />
+		<result column="BXWSX2" property="bxwsx2" />
+		<result column="TXWSX3" property="txwsx3" />
+		<result column="BXWSX3" property="bxwsx3" />
+		<result column="TXWSX4" property="txwsx4" />
+		<result column="BXWSX4" property="bxwsx4" />
+		<result column="TXWSX6" property="txwsx6" />
+		<result column="BXWSX6" property="bxwsx6" />
+		<result column="TXWSX7" property="txwsx7" />
+		<result column="BXWSX7" property="bxwsx7" />
+		<result column="TXWSX8" property="txwsx8" />
+		<result column="TXWSX9" property="txwsx9" />
+		<result column="TXWSX11" property="txwsx11" />
+		<result column="TXWSX12" property="txwsx12" />
+		<result column="TXWSX13" property="txwsx13" />
+		<result column="TXWSX14" property="txwsx14" />
+		<result column="TXWSX15" property="txwsx15" />
+		<result column="TXWSX16" property="txwsx16" />
+		<result column="TXWSX17" property="txwsx17" />
+		<result column="TXWSX18" property="txwsx18" />
+		<result column="TXWSX19" property="txwsx19" />
+		<result column="TXWSX20" property="txwsx20" />
+		<result column="BXWSX8" property="bxwsx8" />
+		<result column="BXWSX9" property="bxwsx9" />
+		<result column="BXWSX11" property="bxwsx11" />
+		<result column="BXWSX12" property="bxwsx12" />
+		<result column="BXWSX13" property="bxwsx13" />
+		<result column="BXWSX14" property="bxwsx14" />
+		<result column="BXWSX15" property="bxwsx15" />
+		<result column="BXWSX16" property="bxwsx16" />
+		<result column="BXWSX17" property="bxwsx17" />
+		<result column="BXWSX18" property="bxwsx18" />
+		<result column="BXWSX19" property="bxwsx19" />
+		<result column="BXWSX20" property="bxwsx20" />
+		<result column="TXWSX5A" property="txwsx5a" />
+		<result column="TXWSX5B" property="txwsx5b" />
+		<result column="TXWSX5C" property="txwsx5c" />
+		<result column="TXWSX5D" property="txwsx5d" />
+		<result column="TXWSX5E" property="txwsx5e" />
+		<result column="TXWSX5F" property="txwsx5f" />
+		<result column="TXWSX5G" property="txwsx5g" />
+		<result column="TXWSX5H" property="txwsx5h" />
+		<result column="TXWSX5I" property="txwsx5i" />
+		<result column="TXWSX5J" property="txwsx5j" />
+		<result column="TXWSX5K" property="txwsx5k" />
+		<result column="BXWSX5A" property="bxwsx5a" />
+		<result column="BXWSX5B" property="bxwsx5b" />
+		<result column="BXWSX5C" property="bxwsx5c" />
+		<result column="BXWSX5D" property="bxwsx5d" />
+		<result column="BXWSX5E" property="bxwsx5e" />
+		<result column="BXWSX5F" property="bxwsx5f" />
+		<result column="BXWSX5G" property="bxwsx5g" />
+		<result column="BXWSX5H" property="bxwsx5h" />
+		<result column="BXWSX5I" property="bxwsx5i" />
+		<result column="BXWSX5J" property="bxwsx5j" />
+		<result column="BXWSX5K" property="bxwsx5k" />
+		<result column="TXWSX10A" property="txwsx10a" />
+		<result column="TXWSX10B" property="txwsx10b" />
+		<result column="TXWSX10C" property="txwsx10c" />
+		<result column="BXWSX10A" property="bxwsx10a" />
+		<result column="BXWSX10B" property="bxwsx10b" />
+		<result column="BXWSX10C" property="bxwsx10c" />
+		<result column="TXWSX11A" property="txwsx11a" />
+		<result column="TXWSX11B" property="txwsx11b" />
+		<result column="BXWSX11A" property="bxwsx11a" />
+		<result column="BXWSX11B" property="bxwsx11b" />
+		<result column="TBRNSR" property="tbrnsr" />
+		<result column="TBRSRLY" property="tbrsrly" />
+		<result column="BBRNSR" property="bbrnsr" />
+		<result column="BBRSRLY" property="bbrsrly" />
+		<result column="INSURANCE_COMPANY_ID" property="insuranceCompanyId" />
+		<result column="OPERATOR" property="operator" />
+		<result column="TBFS" property="tbfs" />
+		<result column="JZX" property="jzx" />
+		<result column="ZXS" property="zxs" />
+		<result column="JFX1" property="jfx1" />
+		<result column="FXS1" property="fxs1" />
+		<result column="JFX2" property="jfx2" />
+		<result column="FXS2" property="fxs2" />
+		<result column="SALES_MAN_COMMISSION" property="salesManCommission" />
+		<result column="SALES_MAN" property="salesMan" />
+		<result column="YJZFDX" property="yjzfdx" />
+		<result column="ZXYJBL" property="zxyjbl" />
+		<result column="ZXYJJE" property="zxyjje" />
+		<result column="FXYJBL1" property="fxyjbl1" />
+		<result column="FXYJJE1" property="fxyjje1" />
+		<result column="FXYJBL2" property="fxyjbl2" />
+		<result column="FXYJJE2" property="fxyjje2" />
+		<result column="ZHJRJBL" property="zhjrjbl" />
+		<result column="ZHJRJJE" property="zhjrjje" />
+		<result column="BXGSDQJL" property="bxgsdqjl" />
+		<result column="SFYLP" property="sfylp" />
+		<result column="LPNR" property="lpnr" />
+		<result column="RECORDER" property="recorder" />
+		<result column="RECORDERID" property="recorderid" />
+		<result column="RECORDERTC" property="recordertc" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="UPDATE_USER" property="updateUser" />
+		<result column="REMARK1" property="remark1" />
+		<result column="REMARK2" property="remark2" />
+		<result column="REMARK3" property="remark3" />
+		<result column="DDR" property="ddr" />
+		<result column="DD_DATE" property="ddDate" />
+		<result column="BGSML" property="bgsml" />
+		<result column="SJZFYJ" property="sjzfyj" />
+		<result column="YJZFSJ" property="yjzfsj" />
+		<result column="YJZFR" property="yjzfr" />
+	</resultMap>
+	<select id="selectPage" resultType="Map">
+		SELECT
+			t.ORDER_ID AS orderId,
+			t.ORDER_NO AS orderNo,
+			t.ORDER_TYPE AS orderType,
+			t.TB_START_TIME AS tbStartTime,
+			t.TB_END_TIME AS tbEndTime,
+			t.ORDER_FLAG AS orderFlag,
+			t.MERCHANT_ID AS merchantId,
+			t.PRINT_FLAG AS printFlag,
+			t.COMMISSION_FLAG AS commissionFlag,
+			t.CHECKOUT_FLAG AS checkoutFlag,
+			t.GIFT_FLAG AS giftFlag,
+			t.BXGSZXSQYJBL AS bxgszxsqyjbl,
+			t.BXGSZXSQYJ AS bxgszxsqyj,
+			t.BXGSFX1SQYJBL AS bxgsfx1sqyjbl,
+			t.BXGSFX1SQYJ AS bxgsfx1sqyj,
+			t.BXGSFX2SQYJBL AS bxgsfx2sqyjbl,
+			t.BXGSFX2SQYJ AS bxgsfx2sqyj,
+			t.BXGSKPYJBL AS bxgskpyjbl,
+			t.BXGSKPYJ AS bxgskpyj,
+			t.GSGLFJE AS gsglfje,
+			t.GSGLFBL AS gsglfbl,
+			t.GSTCJE AS gstcje,
+			t.GSTCBL AS gstcbl,
+			t.GSJSJE AS gsjsje,
+			t.GSJSBL AS gsjsbl,
+			t.POLICYHOLDER_ID AS policyholderId,
+			t.INSURED_ID AS insuredId,
+			t.BENEFICIARY_ID AS beneficiaryId,
+			t.JFPL AS jfpl,
+			t.SFZDXJ AS sfzdxj,
+			t.SQJFFS AS sqjffs,
+			t.XQJFFS AS xqjffs,
+			t.KHHMC AS khhmc,
+			t.YHZH AS yhzh,
+			t.BFHJ AS bfhj,
+			t.HLLQFS AS hllqfs,
+			t.LQFS AS lqfs,
+			t.HLLQNL AS hllqnl,
+			t.HLLQSJ AS hllqsj,
+			t.HLLQLX AS hllqlx,
+			t.SFZDZF AS sfzdzf,
+			t.TZLJBXTX AS tzljbxtx,
+			t.TBRSG AS tbrsg,
+			t.TBRTZ AS tbrtz,
+			t.BBRSG AS bbrsg,
+			t.BBRTZ AS bbrtz,
+			t.MTXY AS mtxy,
+			t.XYSJ AS xysj,
+			t.YJZL AS yjzl,
+			t.MTYJ AS mtyj,
+			t.YJSJ AS yjsj,
+			t.HYSJ AS hysj,
+			t.CSSG AS cssg,
+			t.CSTZ AS cstz,
+			t.SPGSMC AS spgsmc,
+			t.SPRQ AS sprq,
+			t.SPJE AS spje,
+			t.SPSY AS spsy,
+			t.JZLX AS jzlx,
+			t.JZQFRQ AS jzqfrq,
+			t.JZJL AS jzjl,
+			t.CLYT AS clyt,
+			t.CLLX AS cllx,
+			t.JZGJ AS jzgj,
+			t.JZYY AS jzyy,
+			t.JZZLSJ AS jzzlsj,
+			t.TXWSX1 AS txwsx1,
+			t.BXWSX1 AS bxwsx1,
+			t.TXWSX2 AS txwsx2,
+			t.BXWSX2 AS bxwsx2,
+			t.TXWSX3 AS txwsx3,
+			t.BXWSX3 AS bxwsx3,
+			t.TXWSX4 AS txwsx4,
+			t.BXWSX4 AS bxwsx4,
+			t.TXWSX6 AS txwsx6,
+			t.BXWSX6 AS bxwsx6,
+			t.TXWSX7 AS txwsx7,
+			t.BXWSX7 AS bxwsx7,
+			t.TXWSX8 AS txwsx8,
+			t.TXWSX9 AS txwsx9,
+			t.TXWSX11 AS txwsx11,
+			t.TXWSX12 AS txwsx12,
+			t.TXWSX13 AS txwsx13,
+			t.TXWSX14 AS txwsx14,
+			t.TXWSX15 AS txwsx15,
+			t.TXWSX16 AS txwsx16,
+			t.TXWSX17 AS txwsx17,
+			t.TXWSX18 AS txwsx18,
+			t.TXWSX19 AS txwsx19,
+			t.TXWSX20 AS txwsx20,
+			t.BXWSX8 AS bxwsx8,
+			t.BXWSX9 AS bxwsx9,
+			t.BXWSX11 AS bxwsx11,
+			t.BXWSX12 AS bxwsx12,
+			t.BXWSX13 AS bxwsx13,
+			t.BXWSX14 AS bxwsx14,
+			t.BXWSX15 AS bxwsx15,
+			t.BXWSX16 AS bxwsx16,
+			t.BXWSX17 AS bxwsx17,
+			t.BXWSX18 AS bxwsx18,
+			t.BXWSX19 AS bxwsx19,
+			t.BXWSX20 AS bxwsx20,
+			t.TXWSX5A AS txwsx5a,
+			t.TXWSX5B AS txwsx5b,
+			t.TXWSX5C AS txwsx5c,
+			t.TXWSX5D AS txwsx5d,
+			t.TXWSX5E AS txwsx5e,
+			t.TXWSX5F AS txwsx5f,
+			t.TXWSX5G AS txwsx5g,
+			t.TXWSX5H AS txwsx5h,
+			t.TXWSX5I AS txwsx5i,
+			t.TXWSX5J AS txwsx5j,
+			t.TXWSX5K AS txwsx5k,
+			t.BXWSX5A AS bxwsx5a,
+			t.BXWSX5B AS bxwsx5b,
+			t.BXWSX5C AS bxwsx5c,
+			t.BXWSX5D AS bxwsx5d,
+			t.BXWSX5E AS bxwsx5e,
+			t.BXWSX5F AS bxwsx5f,
+			t.BXWSX5G AS bxwsx5g,
+			t.BXWSX5H AS bxwsx5h,
+			t.BXWSX5I AS bxwsx5i,
+			t.BXWSX5J AS bxwsx5j,
+			t.BXWSX5K AS bxwsx5k,
+			t.TXWSX10A AS txwsx10a,
+			t.TXWSX10B AS txwsx10b,
+			t.TXWSX10C AS txwsx10c,
+			t.BXWSX10A AS bxwsx10a,
+			t.BXWSX10B AS bxwsx10b,
+			t.BXWSX10C AS bxwsx10c,
+			t.TXWSX11A AS txwsx11a,
+			t.TXWSX11B AS txwsx11b,
+			t.BXWSX11A AS bxwsx11a,
+			t.BXWSX11B AS bxwsx11b,
+			t.TBRNSR AS tbrnsr,
+			t.TBRSRLY AS tbrsrly,
+			t.BBRNSR AS bbrnsr,
+			t.BBRSRLY AS bbrsrly,
+			t.INSURANCE_COMPANY_ID AS insuranceCompanyId,
+			t.OPERATOR AS operator,
+			t.TBFS AS tbfs,
+			t.JZX AS jzx,
+			t.ZXS AS zxs,
+			t.JFX1 AS jfx1,
+			t.FXS1 AS fxs1,
+			t.JFX2 AS jfx2,
+			t.FXS2 AS fxs2,
+			t.SALES_MAN_COMMISSION AS salesManCommission,
+			t.SALES_MAN AS salesMan,
+			t.YJZFDX AS yjzfdx,
+			t.ZXYJBL AS zxyjbl,
+			t.ZXYJJE AS zxyjje,
+			t.FXYJBL1 AS fxyjbl1,
+			t.FXYJJE1 AS fxyjje1,
+			t.FXYJBL2 AS fxyjbl2,
+			t.FXYJJE2 AS fxyjje2,
+			t.ZHJRJBL AS zhjrjbl,
+			t.ZHJRJJE AS zhjrjje,
+			t.BXGSDQJL AS bxgsdqjl,
+			t.SFYLP AS sfylp,
+			t.LPNR AS lpnr,
+			t.RECORDER AS recorder,
+			t.RECORDERID AS recorderid,
+			t.RECORDERTC AS recordertc,
+			t.CREATE_TIME AS createTime,
+			t.UPDATE_TIME AS updateTime,
+			t.UPDATE_USER AS updateUser,
+			t.REMARK1 AS remark1,
+			t.REMARK2 AS remark2,
+			t.REMARK3 AS remark3,
+			t.DDR AS ddr,
+			t.DD_DATE AS ddDate,
+			t.BGSML AS bgsml,
+			t.SJZFYJ AS sjzfyj,
+			t.YJZFSJ AS yjzfsj,
+			t.YJZFR AS yjzfr,
+			i.insurer_name as insuranceCompany,
+			i.insurer_phone as insuranceCompanyTel,
+			o.user_name as policyholder,
+			s.user_name as salesManName,
+			b.name as operatorName,
+			p.name as updateUserName,
+			pa.name as tbfsName
+		FROM
+		order_sx t
+		LEFT JOIN policyholder o ON t.policyholder_id = o.pid
+		LEFT JOIN t_insurer i ON t.insurance_company_id = i.id
+		LEFT JOIN sales_man s ON t.sales_man = s.id
+		LEFT JOIN user b ON t.OPERATOR = b.id
+		LEFT JOIN user p ON t.update_user = p.id
+		LEFT JOIN parameter pa ON t.tbfs = pa.id
+		<where>
+            <if test=" orderFlag != null and orderFlag != '' ">
+                  <![CDATA[ t.order_flag <> #{orderFlag} ]]>
+            </if>
+        </where>
+	</select>
+	<select id="selectOrderByOrderId" resultType="OrderSxVo">
+		SELECT
+			t.ORDER_ID AS orderId,
+			t.ORDER_NO AS orderNo,
+			t.ORDER_TYPE AS orderType,
+			t.TB_START_TIME AS tbStartTime,
+			t.TB_END_TIME AS tbEndTime,
+			t.ORDER_FLAG AS orderFlag,
+			t.MERCHANT_ID AS merchantId,
+			t.PRINT_FLAG AS printFlag,
+			t.COMMISSION_FLAG AS commissionFlag,
+			t.CHECKOUT_FLAG AS checkoutFlag,
+			t.GIFT_FLAG AS giftFlag,
+			t.BXGSZXSQYJBL AS bxgszxsqyjbl,
+			t.BXGSZXSQYJ AS bxgszxsqyj,
+			t.BXGSFX1SQYJBL AS bxgsfx1sqyjbl,
+			t.BXGSFX1SQYJ AS bxgsfx1sqyj,
+			t.BXGSFX2SQYJBL AS bxgsfx2sqyjbl,
+			t.BXGSFX2SQYJ AS bxgsfx2sqyj,
+			t.BXGSKPYJBL AS bxgskpyjbl,
+			t.BXGSKPYJ AS bxgskpyj,
+			t.GSGLFJE AS gsglfje,
+			t.GSGLFBL AS gsglfbl,
+			t.GSTCJE AS gstcje,
+			t.GSTCBL AS gstcbl,
+			t.GSJSJE AS gsjsje,
+			t.GSJSBL AS gsjsbl,
+			t.POLICYHOLDER_ID AS policyholderId,
+			t.INSURED_ID AS insuredId,
+			t.BENEFICIARY_ID AS beneficiaryId,
+			t.JFPL AS jfpl,
+			t.SFZDXJ AS sfzdxj,
+			t.SQJFFS AS sqjffs,
+			t.XQJFFS AS xqjffs,
+			t.KHHMC AS khhmc,
+			t.YHZH AS yhzh,
+			t.BFHJ AS bfhj,
+			t.HLLQFS AS hllqfs,
+			t.LQFS AS lqfs,
+			t.HLLQNL AS hllqnl,
+			t.HLLQSJ AS hllqsj,
+			t.HLLQLX AS hllqlx,
+			t.SFZDZF AS sfzdzf,
+			t.TZLJBXTX AS tzljbxtx,
+			t.TBRSG AS tbrsg,
+			t.TBRTZ AS tbrtz,
+			t.BBRSG AS bbrsg,
+			t.BBRTZ AS bbrtz,
+			t.MTXY AS mtxy,
+			t.XYSJ AS xysj,
+			t.YJZL AS yjzl,
+			t.MTYJ AS mtyj,
+			t.YJSJ AS yjsj,
+			t.HYSJ AS hysj,
+			t.CSSG AS cssg,
+			t.CSTZ AS cstz,
+			t.SPGSMC AS spgsmc,
+			t.SPRQ AS sprq,
+			t.SPJE AS spje,
+			t.SPSY AS spsy,
+			t.JZLX AS jzlx,
+			t.JZQFRQ AS jzqfrq,
+			t.JZJL AS jzjl,
+			t.CLYT AS clyt,
+			t.CLLX AS cllx,
+			t.JZGJ AS jzgj,
+			t.JZYY AS jzyy,
+			t.JZZLSJ AS jzzlsj,
+			t.TXWSX1 AS txwsx1,
+			t.BXWSX1 AS bxwsx1,
+			t.TXWSX2 AS txwsx2,
+			t.BXWSX2 AS bxwsx2,
+			t.TXWSX3 AS txwsx3,
+			t.BXWSX3 AS bxwsx3,
+			t.TXWSX4 AS txwsx4,
+			t.BXWSX4 AS bxwsx4,
+			t.TXWSX6 AS txwsx6,
+			t.BXWSX6 AS bxwsx6,
+			t.TXWSX7 AS txwsx7,
+			t.BXWSX7 AS bxwsx7,
+			t.TXWSX8 AS txwsx8,
+			t.TXWSX9 AS txwsx9,
+			t.TXWSX11 AS txwsx11,
+			t.TXWSX12 AS txwsx12,
+			t.TXWSX13 AS txwsx13,
+			t.TXWSX14 AS txwsx14,
+			t.TXWSX15 AS txwsx15,
+			t.TXWSX16 AS txwsx16,
+			t.TXWSX17 AS txwsx17,
+			t.TXWSX18 AS txwsx18,
+			t.TXWSX19 AS txwsx19,
+			t.TXWSX20 AS txwsx20,
+			t.BXWSX8 AS bxwsx8,
+			t.BXWSX9 AS bxwsx9,
+			t.BXWSX11 AS bxwsx11,
+			t.BXWSX12 AS bxwsx12,
+			t.BXWSX13 AS bxwsx13,
+			t.BXWSX14 AS bxwsx14,
+			t.BXWSX15 AS bxwsx15,
+			t.BXWSX16 AS bxwsx16,
+			t.BXWSX17 AS bxwsx17,
+			t.BXWSX18 AS bxwsx18,
+			t.BXWSX19 AS bxwsx19,
+			t.BXWSX20 AS bxwsx20,
+			t.TXWSX5A AS txwsx5a,
+			t.TXWSX5B AS txwsx5b,
+			t.TXWSX5C AS txwsx5c,
+			t.TXWSX5D AS txwsx5d,
+			t.TXWSX5E AS txwsx5e,
+			t.TXWSX5F AS txwsx5f,
+			t.TXWSX5G AS txwsx5g,
+			t.TXWSX5H AS txwsx5h,
+			t.TXWSX5I AS txwsx5i,
+			t.TXWSX5J AS txwsx5j,
+			t.TXWSX5K AS txwsx5k,
+			t.BXWSX5A AS bxwsx5a,
+			t.BXWSX5B AS bxwsx5b,
+			t.BXWSX5C AS bxwsx5c,
+			t.BXWSX5D AS bxwsx5d,
+			t.BXWSX5E AS bxwsx5e,
+			t.BXWSX5F AS bxwsx5f,
+			t.BXWSX5G AS bxwsx5g,
+			t.BXWSX5H AS bxwsx5h,
+			t.BXWSX5I AS bxwsx5i,
+			t.BXWSX5J AS bxwsx5j,
+			t.BXWSX5K AS bxwsx5k,
+			t.TXWSX10A AS txwsx10a,
+			t.TXWSX10B AS txwsx10b,
+			t.TXWSX10C AS txwsx10c,
+			t.BXWSX10A AS bxwsx10a,
+			t.BXWSX10B AS bxwsx10b,
+			t.BXWSX10C AS bxwsx10c,
+			t.TXWSX11A AS txwsx11a,
+			t.TXWSX11B AS txwsx11b,
+			t.BXWSX11A AS bxwsx11a,
+			t.BXWSX11B AS bxwsx11b,
+			t.TBRNSR AS tbrnsr,
+			t.TBRSRLY AS tbrsrly,
+			t.BBRNSR AS bbrnsr,
+			t.BBRSRLY AS bbrsrly,
+			t.INSURANCE_COMPANY_ID AS insuranceCompanyId,
+			t.OPERATOR AS operator,
+			t.TBFS AS tbfs,
+			t.JZX AS jzx,
+			t.ZXS AS zxs,
+			t.JFX1 AS jfx1,
+			t.FXS1 AS fxs1,
+			t.JFX2 AS jfx2,
+			t.FXS2 AS fxs2,
+			t.SALES_MAN_COMMISSION AS salesManCommission,
+			t.SALES_MAN AS salesMan,
+			t.YJZFDX AS yjzfdx,
+			t.ZXYJBL AS zxyjbl,
+			t.ZXYJJE AS zxyjje,
+			t.FXYJBL1 AS fxyjbl1,
+			t.FXYJJE1 AS fxyjje1,
+			t.FXYJBL2 AS fxyjbl2,
+			t.FXYJJE2 AS fxyjje2,
+			t.ZHJRJBL AS zhjrjbl,
+			t.ZHJRJJE AS zhjrjje,
+			t.BXGSDQJL AS bxgsdqjl,
+			t.SFYLP AS sfylp,
+			t.LPNR AS lpnr,
+			t.RECORDER AS recorder,
+			t.RECORDERID AS recorderid,
+			t.RECORDERTC AS recordertc,
+			t.CREATE_TIME AS createTime,
+			t.UPDATE_TIME AS updateTime,
+			t.UPDATE_USER AS updateUser,
+			t.REMARK1 AS remark1,
+			t.REMARK2 AS remark2,
+			t.REMARK3 AS remark3,
+			t.DDR AS ddr,
+			t.DD_DATE AS ddDate,
+			t.BGSML AS bgsml,
+			t.SJZFYJ AS sjzfyj,
+			t.YJZFSJ AS yjzfsj,
+			t.YJZFR AS yjzfr,
+			o.user_name as userName,
+			o.sex,
+			o.marry_flag as marryFlag,
+			o.birth_date as birthDate,
+			o.cert_type as certType,
+			o.cert_no as certNo,
+			o.nationality,
+			o.household,
+			o.validity_date as validityDate,
+			o.insured_relationship as insuredRelationship,
+			o.resident_type as residentType,
+			o.pprovince,
+			o.pcity,
+			o.pdistrict,
+			o.postal_address as postalAddress,
+			o.rprovince,
+			o.rcity,
+			o.rdistrict,
+			o.residential_address as residentialAddress,
+			o.telphone,
+			o.mtelphone,
+			o.mail,
+			o.work_unit as workUnit,
+			o.job_content as jobContent,
+			o.industry,
+			o.occupation,
+			b.user_name as userNameB,
+			b.sex as sexB,
+			b.marry_flag as marryFlagB,
+			b.birth_date as birthDateB,
+			b.cert_type as certTypeB,
+			b.cert_no as certNoB,
+			b.nationality as nationalityB,
+			b.household as householdB,
+			b.validity_date as validityDateB,
+			b.resident_type as residentTypeB,
+			b.rprovince as provinceB,
+			b.rcity as cityB,
+			b.rdistrict as districtB,
+			b.residential_address as residentialAddressB,
+			b.telphone as telphoneB,
+			b.mtelphone as mtelphoneB,
+			b.mail as mailB,
+			b.work_unit as workUnitB,
+			b.job_content as jobContentB,
+			b.industry as industryB,
+			b.occupation as occupationB,
+			be.beneficial_rate as beneficialRate,
+			be.beneficial_name as beneficialName,
+			be.sex as sexS,
+			be.birth_date as birthDateS,
+			be.relationship as relationship,
+			be.cert_type as certTypeS,
+			be.cert_no as certNoS,
+			be.validity_date as validityDateS,
+			be.residential_address as residentialAddressS,
+			be.beneficiary_order as beneficiaryOrder,
+			be.description,
+			i.insurer_name as insuranceCompany,
+			i.insurer_phone as insuranceCompanyTel,
+			o.user_name as policyholder,
+			s.user_name as salesManName,
+			op.name as operatorName
+		FROM
+		order_sx t
+		LEFT JOIN policyholder o ON t.policyholder_id = o.pid
+		LEFT JOIN policyholder b ON t.insured_id = b.pid
+		LEFT JOIN beneficial be ON t.beneficiary_id = be.person_id
+		LEFT JOIN t_insurer i ON t.insurance_company_id = i.id
+		LEFT JOIN sales_man s ON t.sales_man = s.id
+		LEFT JOIN user op ON t.OPERATOR = op.id
+		<where>
+            t.order_id = #{id}
+        </where>
+	</select>
+	<update id="updateById" parameterType="com.gewei.model.OrderSx">
+		update order_sx set 
+			<if test="orderId != null"> ORDER_ID=#{orderId}</if>
+			<if test="orderNo != null"> ,ORDER_NO=#{orderNo}</if>
+			<if test="orderType != null"> ,ORDER_TYPE=#{orderType}</if>
+			<if test="tbStartTime != null"> ,TB_START_TIME=#{tbStartTime}</if>
+			<if test="tbEndTime != null"> ,TB_END_TIME=#{tbEndTime}</if>
+			<if test="orderFlag != null"> ,ORDER_FLAG=#{orderFlag}</if>
+			<if test="merchantId != null"> ,MERCHANT_ID=#{merchantId}</if>
+			<if test="printFlag != null"> ,PRINT_FLAG=#{printFlag}</if>
+			<if test="commissionFlag != null"> ,COMMISSION_FLAG=#{commissionFlag}</if>
+			<if test="checkoutFlag != null"> ,CHECKOUT_FLAG=#{checkoutFlag}</if>
+			<if test="giftFlag != null"> ,GIFT_FLAG=#{giftFlag}</if>
+			<if test="bxgszxsqyjbl != null"> ,BXGSZXSQYJBL=#{bxgszxsqyjbl}</if>
+			<if test="bxgszxsqyj != null"> ,BXGSZXSQYJ=#{bxgszxsqyj}</if>
+			<if test="bxgsfx1sqyjbl != null"> ,BXGSFX1SQYJBL=#{bxgsfx1sqyjbl}</if>
+			<if test="bxgsfx1sqyj != null"> ,BXGSFX1SQYJ=#{bxgsfx1sqyj}</if>
+			<if test="bxgsfx2sqyjbl != null"> ,BXGSFX2SQYJBL=#{bxgsfx2sqyjbl}</if>
+			<if test="bxgsfx2sqyj != null"> ,BXGSFX2SQYJ=#{bxgsfx2sqyj}</if>
+			<if test="bxgskpyjbl != null"> ,BXGSKPYJBL=#{bxgskpyjbl}</if>
+			<if test="bxgskpyj != null"> ,BXGSKPYJ=#{bxgskpyj}</if>
+			<if test="gsglfje != null"> ,GSGLFJE=#{gsglfje}</if>
+			<if test="gsglfbl != null"> ,GSGLFBL=#{gsglfbl}</if>
+			<if test="gstcje != null"> ,GSTCJE=#{gstcje}</if>
+			<if test="gstcbl != null"> ,GSTCBL=#{gstcbl}</if>
+			<if test="gsjsje != null"> ,GSJSJE=#{gsjsje}</if>
+			<if test="gsjsbl != null"> ,GSJSBL=#{gsjsbl}</if>
+			<if test="policyholderId != null"> ,POLICYHOLDER_ID=#{policyholderId}</if>
+			<if test="insuredId != null"> ,INSURED_ID=#{insuredId}</if>
+			<if test="beneficiaryId != null"> ,BENEFICIARY_ID=#{beneficiaryId}</if>
+			<if test="jfpl != null"> ,JFPL=#{jfpl}</if>
+			<if test="sfzdxj != null"> ,SFZDXJ=#{sfzdxj}</if>
+			<if test="sqjffs != null"> ,SQJFFS=#{sqjffs}</if>
+			<if test="xqjffs != null"> ,XQJFFS=#{xqjffs}</if>
+			<if test="khhmc != null"> ,KHHMC=#{khhmc}</if>
+			<if test="yhzh != null"> ,YHZH=#{yhzh}</if>
+			<if test="bfhj != null"> ,BFHJ=#{bfhj}</if>
+			<if test="hllqfs != null"> ,HLLQFS=#{hllqfs}</if>
+			<if test="lqfs != null"> ,LQFS=#{lqfs}</if>
+			<if test="hllqnl != null"> ,HLLQNL=#{hllqnl}</if>
+			<if test="hllqsj != null"> ,HLLQSJ=#{hllqsj}</if>
+			<if test="hllqlx != null"> ,HLLQLX=#{hllqlx}</if>
+			<if test="sfzdzf != null"> ,SFZDZF=#{sfzdzf}</if>
+			<if test="tzljbxtx != null"> ,TZLJBXTX=#{tzljbxtx}</if>
+			<if test="tbrsg != null"> ,TBRSG=#{tbrsg}</if>
+			<if test="tbrtz != null"> ,TBRTZ=#{tbrtz}</if>
+			<if test="bbrsg != null"> ,BBRSG=#{bbrsg}</if>
+			<if test="bbrtz != null"> ,BBRTZ=#{bbrtz}</if>
+			<if test="mtxy != null"> ,MTXY=#{mtxy}</if>
+			<if test="xysj != null"> ,XYSJ=#{xysj}</if>
+			<if test="yjzl != null"> ,YJZL=#{yjzl}</if>
+			<if test="mtyj != null"> ,MTYJ=#{mtyj}</if>
+			<if test="yjsj != null"> ,YJSJ=#{yjsj}</if>
+			<if test="hysj != null"> ,HYSJ=#{hysj}</if>
+			<if test="cssg != null"> ,CSSG=#{cssg}</if>
+			<if test="cstz != null"> ,CSTZ=#{cstz}</if>
+			<if test="spgsmc != null"> ,SPGSMC=#{spgsmc}</if>
+			<if test="sprq != null"> ,SPRQ=#{sprq}</if>
+			<if test="spje != null"> ,SPJE=#{spje}</if>
+			<if test="spsy != null"> ,SPSY=#{spsy}</if>
+			<if test="jzlx != null"> ,JZLX=#{jzlx}</if>
+			<if test="jzqfrq != null"> ,JZQFRQ=#{jzqfrq}</if>
+			<if test="jzjl != null"> ,JZJL=#{jzjl}</if>
+			<if test="clyt != null"> ,CLYT=#{clyt}</if>
+			<if test="cllx != null"> ,CLLX=#{cllx}</if>
+			<if test="jzgj != null"> ,JZGJ=#{jzgj}</if>
+			<if test="jzyy != null"> ,JZYY=#{jzyy}</if>
+			<if test="jzzlsj != null"> ,JZZLSJ=#{jzzlsj}</if>
+			<if test="txwsx1 != null"> ,TXWSX1=#{txwsx1}</if>
+			<if test="bxwsx1 != null"> ,BXWSX1=#{bxwsx1}</if>
+			<if test="txwsx2 != null"> ,TXWSX2=#{txwsx2}</if>
+			<if test="bxwsx2 != null"> ,BXWSX2=#{bxwsx2}</if>
+			<if test="txwsx3 != null"> ,TXWSX3=#{txwsx3}</if>
+			<if test="bxwsx3 != null"> ,BXWSX3=#{bxwsx3}</if>
+			<if test="txwsx4 != null"> ,TXWSX4=#{txwsx4}</if>
+			<if test="bxwsx4 != null"> ,BXWSX4=#{bxwsx4}</if>
+			<if test="txwsx6 != null"> ,TXWSX6=#{txwsx6}</if>
+			<if test="bxwsx6 != null"> ,BXWSX6=#{bxwsx6}</if>
+			<if test="txwsx7 != null"> ,TXWSX7=#{txwsx7}</if>
+			<if test="bxwsx7 != null"> ,BXWSX7=#{bxwsx7}</if>
+			<if test="txwsx8 != null"> ,TXWSX8=#{txwsx8}</if>
+			<if test="txwsx9 != null"> ,TXWSX9=#{txwsx9}</if>
+			<if test="txwsx11 != null"> ,TXWSX11=#{txwsx11}</if>
+			<if test="txwsx12 != null"> ,TXWSX12=#{txwsx12}</if>
+			<if test="txwsx13 != null"> ,TXWSX13=#{txwsx13}</if>
+			<if test="txwsx14 != null"> ,TXWSX14=#{txwsx14}</if>
+			<if test="txwsx15 != null"> ,TXWSX15=#{txwsx15}</if>
+			<if test="txwsx16 != null"> ,TXWSX16=#{txwsx16}</if>
+			<if test="txwsx17 != null"> ,TXWSX17=#{txwsx17}</if>
+			<if test="txwsx18 != null"> ,TXWSX18=#{txwsx18}</if>
+			<if test="txwsx19 != null"> ,TXWSX19=#{txwsx19}</if>
+			<if test="txwsx20 != null"> ,TXWSX20=#{txwsx20}</if>
+			<if test="bxwsx8 != null"> ,BXWSX8=#{bxwsx8}</if>
+			<if test="bxwsx9 != null"> ,BXWSX9=#{bxwsx9}</if>
+			<if test="bxwsx11 != null"> ,BXWSX11=#{bxwsx11}</if>
+			<if test="bxwsx12 != null"> ,BXWSX12=#{bxwsx12}</if>
+			<if test="bxwsx13 != null"> ,BXWSX13=#{bxwsx13}</if>
+			<if test="bxwsx14 != null"> ,BXWSX14=#{bxwsx14}</if>
+			<if test="bxwsx15 != null"> ,BXWSX15=#{bxwsx15}</if>
+			<if test="bxwsx16 != null"> ,BXWSX16=#{bxwsx16}</if>
+			<if test="bxwsx17 != null"> ,BXWSX17=#{bxwsx17}</if>
+			<if test="bxwsx18 != null"> ,BXWSX18=#{bxwsx18}</if>
+			<if test="bxwsx19 != null"> ,BXWSX19=#{bxwsx19}</if>
+			<if test="bxwsx20 != null"> ,BXWSX20=#{bxwsx20}</if>
+			<if test="txwsx5a != null"> ,TXWSX5A=#{txwsx5a}</if>
+			<if test="txwsx5b != null"> ,TXWSX5B=#{txwsx5b}</if>
+			<if test="txwsx5c != null"> ,TXWSX5C=#{txwsx5c}</if>
+			<if test="txwsx5d != null"> ,TXWSX5D=#{txwsx5d}</if>
+			<if test="txwsx5e != null"> ,TXWSX5E=#{txwsx5e}</if>
+			<if test="txwsx5f != null"> ,TXWSX5F=#{txwsx5f}</if>
+			<if test="txwsx5g != null"> ,TXWSX5G=#{txwsx5g}</if>
+			<if test="txwsx5h != null"> ,TXWSX5H=#{txwsx5h}</if>
+			<if test="txwsx5i != null"> ,TXWSX5I=#{txwsx5i}</if>
+			<if test="txwsx5j != null"> ,TXWSX5J=#{txwsx5j}</if>
+			<if test="txwsx5k != null"> ,TXWSX5K=#{txwsx5k}</if>
+			<if test="bxwsx5a != null"> ,BXWSX5A=#{bxwsx5a}</if>
+			<if test="bxwsx5b != null"> ,BXWSX5B=#{bxwsx5b}</if>
+			<if test="bxwsx5c != null"> ,BXWSX5C=#{bxwsx5c}</if>
+			<if test="bxwsx5d != null"> ,BXWSX5D=#{bxwsx5d}</if>
+			<if test="bxwsx5e != null"> ,BXWSX5E=#{bxwsx5e}</if>
+			<if test="bxwsx5f != null"> ,BXWSX5F=#{bxwsx5f}</if>
+			<if test="bxwsx5g != null"> ,BXWSX5G=#{bxwsx5g}</if>
+			<if test="bxwsx5h != null"> ,BXWSX5H=#{bxwsx5h}</if>
+			<if test="bxwsx5i != null"> ,BXWSX5I=#{bxwsx5i}</if>
+			<if test="bxwsx5j != null"> ,BXWSX5J=#{bxwsx5j}</if>
+			<if test="bxwsx5k != null"> ,BXWSX5K=#{bxwsx5k}</if>
+			<if test="txwsx10a != null"> ,TXWSX10A=#{txwsx10a}</if>
+			<if test="txwsx10b != null"> ,TXWSX10B=#{txwsx10b}</if>
+			<if test="txwsx10c != null"> ,TXWSX10C=#{txwsx10c}</if>
+			<if test="bxwsx10a != null"> ,BXWSX10A=#{bxwsx10a}</if>
+			<if test="bxwsx10b != null"> ,BXWSX10B=#{bxwsx10b}</if>
+			<if test="bxwsx10c != null"> ,BXWSX10C=#{bxwsx10c}</if>
+			<if test="txwsx11a != null"> ,TXWSX11A=#{txwsx11a}</if>
+			<if test="txwsx11b != null"> ,TXWSX11B=#{txwsx11b}</if>
+			<if test="bxwsx11a != null"> ,BXWSX11A=#{bxwsx11a}</if>
+			<if test="bxwsx11b != null"> ,BXWSX11B=#{bxwsx11b}</if>
+			<if test="tbrnsr != null"> ,TBRNSR=#{tbrnsr}</if>
+			<if test="tbrsrly != null"> ,TBRSRLY=#{tbrsrly}</if>
+			<if test="bbrnsr != null"> ,BBRNSR=#{bbrnsr}</if>
+			<if test="bbrsrly != null"> ,BBRSRLY=#{bbrsrly}</if>
+			<if test="insuranceCompanyId != null"> ,INSURANCE_COMPANY_ID=#{insuranceCompanyId}</if>
+			<if test="operator != null"> ,OPERATOR=#{operator}</if>
+			<if test="tbfs != null"> ,TBFS=#{tbfs}</if>
+			<if test="jzx != null"> ,JZX=#{jzx}</if>
+			<if test="zxs != null"> ,ZXS=#{zxs}</if>
+			<if test="jfx1 != null"> ,JFX1=#{jfx1}</if>
+			<if test="fxs1 != null"> ,FXS1=#{fxs1}</if>
+			<if test="jfx2 != null"> ,JFX2=#{jfx2}</if>
+			<if test="fxs2 != null"> ,FXS2=#{fxs2}</if>
+			<if test="salesManCommission != null"> ,SALES_MAN_COMMISSION=#{salesManCommission}</if>
+			<if test="salesMan != null"> ,SALES_MAN=#{salesMan}</if>
+			<if test="yjzfdx != null"> ,YJZFDX=#{yjzfdx}</if>
+			<if test="zxyjbl != null"> ,ZXYJBL=#{zxyjbl}</if>
+			<if test="zxyjje != null"> ,ZXYJJE=#{zxyjje}</if>
+			<if test="fxyjbl1 != null"> ,FXYJBL1=#{fxyjbl1}</if>
+			<if test="fxyjje1 != null"> ,FXYJJE1=#{fxyjje1}</if>
+			<if test="fxyjbl2 != null"> ,FXYJBL2=#{fxyjbl2}</if>
+			<if test="fxyjje2 != null"> ,FXYJJE2=#{fxyjje2}</if>
+			<if test="zhjrjbl != null"> ,ZHJRJBL=#{zhjrjbl}</if>
+			<if test="zhjrjje != null"> ,ZHJRJJE=#{zhjrjje}</if>
+			<if test="bxgsdqjl != null"> ,BXGSDQJL=#{bxgsdqjl}</if>
+			<if test="sfylp != null"> ,SFYLP=#{sfylp}</if>
+			<if test="lpnr != null"> ,LPNR=#{lpnr}</if>
+			<if test="recorder != null"> ,RECORDER=#{recorder}</if>
+			<if test="recorderid != null"> ,RECORDERID=#{recorderid}</if>
+			<if test="recordertc != null"> ,RECORDERTC=#{recordertc}</if>
+			<if test="createTime != null"> ,CREATE_TIME=#{createTime}</if>
+			<if test="updateTime != null"> ,UPDATE_TIME=#{updateTime}</if>
+			<if test="updateUser != null"> ,UPDATE_USER=#{updateUser}</if>
+			<if test="remark1 != null"> ,REMARK1=#{remark1}</if>
+			<if test="remark2 != null"> ,REMARK2=#{remark2}</if>
+			<if test="remark3 != null"> ,REMARK3=#{remark3}</if>
+			<if test="ddr != null"> ,DDR=#{ddr}</if>
+			<if test="ddDate != null"> ,DD_DATE=#{ddDate}</if>
+			<if test="bgsml != null"> ,BGSML=#{bgsml}</if>
+			<if test="sjzfyj != null"> ,SJZFYJ=#{sjzfyj}</if>
+			<if test="yjzfsj != null"> ,YJZFSJ=#{yjzfsj}</if>
+			<if test="yjzfr != null"> ,YJZFR=#{yjzfr}</if>
+		where order_id=#{orderId}
+	</update>
+</mapper>

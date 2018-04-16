@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;编&nbsp;&nbsp;辑&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;删&nbsp;&nbsp;除&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">申请赎回</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						状态<span class="mui-pull-right blue">未成交</span>
+					</li>
+				</ul>
+				<div class="line"></div>
+				<div id="slider" class="mui-slider mui-fullscreen">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" href="#item2mobile">
+								订单详情
+							</a>
+							<a class="mui-control-item" href="#item3mobile">
+								产品信息
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-group">
+						<div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>下单日期</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>订单号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="line"></div>
+										<div class="mui-input-row">
+											<label>用户姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>联系电话</label>
+											<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>证件类型</label>
+												<input type="text" name="creTypeName" id="creTypeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="creType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>证件号码</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item3mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>理财产品</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投资金额</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>到期时间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="line"></div>
+										<div class="mui-input-row">
+											<label>备注</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			_showcar();
+			(function($, doc) {
+				$.init();
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							up: {
+								callback: function() {
+									var self = this;
+									self.endPullUpToRefresh(true);
+								},
+								contentinit: '&nbsp;', //可以上拉提示信息
+								contentdown: '&nbsp;', //上拉结束提示信息
+								contentrefresh: '&nbsp;', //上拉进行中提示信息
+								contentnomore: '&nbsp;' //上拉无更多信息时提示信息
+							}
+						});
+					});
+				});
+			})(mui, document);
+		</script>
+		<script>
+			mui.init();
+			(function($) {
+				$.ready(function() {
+					var creTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "证件类型"
+					});
+					
+					/*证件类型*/
+					creTypeNamePicker.setData(creTypedata);
+					$$("#creTypeName").click(function(event) { //
+						creTypeNamePicker.show(function(items) {
+							$$("input[name='creType']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='creTypeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+				});
+			})(mui);
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+			})
+		</script>
+	</body>
+</html>

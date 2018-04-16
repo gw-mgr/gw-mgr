@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.TMerchantManageMapper">
+
+	<select id="selectMerchantPage" resultType="Map">
+		SELECT
+			M.MERCHANT_ID as merchantId, M.MERCHANT_NAME as merchantName, M.MERCHANT_TYPE as merchantType, M.GRANT_AREA as grantArea,
+			C.BALANCE as balance, M.STATUS as status, M.CREATE_TIME as createTime, M.MERCHANT_DESCRIPT as merchantDescript, M.PROVINCE as province,
+			M.CITY as city, M.COUNTRY as country, M.MERCHANT_ADDR as merchantAddr, M.TELPHONE as telphone
+		FROM
+			t_merchant_manage M
+		LEFT JOIN t_account C ON M.MERCHANT_ID = C.PERSON_ID
+		<where>
+			<if test=" createStartTime != null and createStartTime != '' ">
+               <![CDATA[ M.CREATE_TIME >= #{createStartTime} ]]>
+			</if>
+			<if test=" createEndTime != null and createEndTime != '' ">
+                <![CDATA[ and M.CREATE_TIME <= #{createEndTime} ]]>
+			</if>
+			<if test=" province != null and province != '' ">
+                 <![CDATA[ and M.province = #{province} ]]>
+			</if>
+			<if test=" city != null and city != '' ">
+                <![CDATA[ and M.city = #{city} ]]>
+			</if>
+			<if test=" country != null and country != '' ">
+                 <![CDATA[ and M.country = #{country} ]]>
+			</if>
+			<if test=" merchantType != null and merchantType != '' ">
+                 <![CDATA[ and find_in_set(#{merchantType},M.MERCHANT_TYPE) ]]>
+			</if>
+			<if test=" keywordInfo != null and keywordInfo != '' ">
+                 <![CDATA[ and M.MERCHANT_NAME like CONCAT('%',#{keywordInfo},'%') ]]>
+			</if>
+		</where>
+	</select>
+
+	<!-- 添加or编辑服务商，服务类型列表 -->
+	<select id="selectMerchantTypeList" resultType="java.util.HashMap" >
+		SELECT
+			CATEGORY_ID,CATEGORY_NAME
+		FROM
+			t_merchant_product_category
+		WHERE
+			STATUS = '01' AND PARENT_CATEGORY_ID in ('ROOTCP','0') AND CATEGORY_ID != 'ROOTCP'
+	</select>
+	
+	<!-- 查询服务商，服务类型列表 -->
+	<select id="getMerchantTypeList" resultType="java.util.HashMap" parameterType="java.lang.String">
+		SELECT
+			CATEGORY_ID,CATEGORY_NAME
+		FROM
+			t_merchant_product_category
+		WHERE
+			STATUS = '01' AND PARENT_CATEGORY_ID = #{pid}
+	</select>
+	
+	<select id="getMerchantTypeList" resultType="java.util.HashMap" >
+		SELECT
+			CATEGORY_ID,CATEGORY_NAME
+		FROM
+			t_merchant_product_category
+		WHERE
+			STATUS = '01' AND PARENT_CATEGORY_ID IN ('0','ROOTCP')
+	</select>
+	
+	<select id="selectById" resultType="com.gewei.model.TMerchantManage" parameterType="java.lang.String">
+		SELECT
+			M.MERCHANT_ID as merchantId, M.MERCHANT_NAME as merchantName, M.MERCHANT_PHOTO_URL as merchantPhotoUrl,
+			M.MERCHANT_TYPE as merchantType, M.GRANT_AREA as grantArea, C.BALANCE as balance, M.STATUS as status, M.CREATE_TIME as createTime,
+			M.MERCHANT_DESCRIPT as merchantDescript, M.PROVINCE as province, M.CITY as city, M.COUNTRY as country, M.MERCHANT_ADDR as merchantAddr,
+			M.TELPHONE as telphone
+		FROM
+			t_merchant_manage M
+		LEFT JOIN t_account C ON M.MERCHANT_ID = C.PERSON_ID
+		where 
+			M.MERCHANT_ID = #{merchantId} 
+	</select>
+
+	<update id="updateById" parameterType="com.gewei.model.TMerchantManage">
+		UPDATE t_merchant_manage
+		<trim prefix="set" suffixOverrides=",">
+			<if test=" merchantName != null and merchantName != '' ">
+				MERCHANT_NAME = #{merchantName},
+			</if>
+			<if test=" merchantPhotoUrl != null and merchantPhotoUrl != '' ">
+				MERCHANT_PHOTO_URL = #{merchantPhotoUrl},
+			</if>
+			<if test=" merchantType != null and merchantType != '' ">
+				MERCHANT_TYPE = #{merchantType},
+			</if>
+			<if test=" grantArea != null and grantArea != '' ">
+				GRANT_AREA = #{grantArea},
+			</if>
+			<if test=" province != null and province != '' ">
+				PROVINCE = #{province},
+			</if>
+			<if test=" city != null and city != '' ">
+				CITY = #{city},
+			</if>
+			<if test=" country != null and country != '' ">
+				COUNTRY = #{country},
+			</if>
+			<if test=" merchantAddr != null and merchantAddr != '' ">
+				MERCHANT_ADDR = #{merchantAddr},
+			</if>
+			<if test=" telphone != null and telphone != '' ">
+				TELPHONE = #{telphone},
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				UPDATE_TIME = #{updateTime},
+			</if>
+			<if test=" merchantDescript != null and merchantDescript != '' ">
+				MERCHANT_DESCRIPT = #{merchantDescript},
+			</if>
+			<if test=" operatorId != null and operatorId != '' ">
+				OPERATOR_ID = #{operatorId},
+			</if>
+		</trim>
+		where
+			MERCHANT_ID = #{merchantId}
+	</update>
+
+	<select id="getMerchantInfoById" resultType="com.gewei.model.TMerchantManage" parameterType="java.lang.String">
+		SELECT
+			MERCHANT_ID as merchantId,MERCHANT_NAME as merchantName,MERCHANT_PHOTO_URL as merchantPhotoUrl,GRANT_AREA as grantArea,
+			MERCHANT_DESCRIPT as merchantDescript,MERCHANT_ADDR as merchantAddr,TELPHONE as telphone
+		FROM
+			t_merchant_manage
+		where MERCHANT_ID = #{merchantId}
+	</select>
+
+</mapper>

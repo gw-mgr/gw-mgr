@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>支付</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">立即付款</button>
+			</div>
+		</nav>
+		<div class="mui-content ">
+			<form>
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="todo" v-cloak>
+					<input :value="todo.currPrice" type="hidden" name="orderMoney" />
+					<input :value="todo.productId" type="hidden" name="productId" />
+					<input :value="todo.productType" type="hidden" name="orderType" />
+					<input :value="todo.merchantId" type="hidden" name="merchantId" />
+					
+					
+					<li class="mui-table-view-cell">{{todo.productName}}</li>
+					<li class="mui-table-view-cell">
+						付款金额
+						<span class="red mui-pull-right">￥{{todo.currPriceVal}}</span>
+					</li>
+	
+				</ul>
+				<div class="line15">支付方式</div>
+				<ul class="mui-table-view pay">
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left" src="../../images/wechat.png">
+							<div class="mui-media-body line15">
+								微信支付
+							</div>
+						</a>
+					</li>
+				</ul>
+				<div class="mui-content-padded">
+					<span class="check" id="check">需要发送短信给接受服务方,如果需要,请提供手机号码。</span>
+					<p class="gray mui-h6 mui-text-justify">发送的短信样本：<br /> 尊敬的客户您好，**您预约的***服务，由服务人员****，电话****为您提供本次服务，请注意接听电话，谢谢！
+						</span>
+					</p>
+				</div>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="tel" name="conTel" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="11">
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(function() {
+				$$.ajax({                
+					type:   "POST",
+					url: base_url + '/xianshangyewu/getProductInfoById',
+					data: {
+						productId:getUrlParam('productId'),
+						longitude:'0',
+						latitude:'0',
+					},
+					dataType: 'json',
+					success:   function(response)  {
+						console.log(response)
+						hide();
+						if(response.success) {
+							
+							response.obj.currPriceVal = (response.obj.currPrice*0.01).toFixed(2);
+							var app = new Vue({
+								el: '#todo',
+								data: {
+									todo: response.obj,
+									thistel:"tel:"+response.obj.telphone
+								}
+							});
+						} else {
+							_errors();
+						}
+					},
+					error:   function(result)  {
+						_errors();
+					}            
+				});
+			});
+			
+			var orderId ="";
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				
+				if(isNull(datas.conTel))return mui.toast("请输入电话号码");
+				if(checkPhone(datas.conTel))return mui.toast("电话号码输入有误");
+				if(!isNull(sessionStorage.getItem("userId"))){
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/xianshangyewu/createCommonOrder',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					console.log(response)
+					hide();
+						if(response.success) {
+							orderId = response.obj;
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("创建订单失败，请重试");
+					}
+	            });
+			});
+			
+			
+			
+		</script>
+
+	</body>
+
+</html>

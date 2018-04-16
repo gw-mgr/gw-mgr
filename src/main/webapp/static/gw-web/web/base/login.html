@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>登录</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="mui-content login">
+			<div class="logo-nav"><img src="../../images/logo.jpg" alt=""></div>
+			<div class="mui-text-center">
+				<p id="sendmsg"></p>
+			</div>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<em class="icon-tel"></em>
+					<input id="telephone" name="telphone" type="tel" class="mui-input-clear" placeholder="请输入手机号" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+				</div>
+				<div class="mui-input-row code">
+					<em class="icon-pwd"></em>
+					<input id="code" name="smsCode" type="tel" maxlength="6" placeholder="请输入动态密码">
+					<button onclick="_sendcode()" id="sendcode" type="button" class="mui-btn mui-btn-primary mui-btn-outlined sendcode">获取验证码</button>
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button type="button" id="apply" class="mui-btn mui-btn-primary mui-btn-block">快速登录</button>
+				<span class="check" id="check">已阅读并同意《使用协议》</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="../../js/commom.base.js" ></script>
+		<script>
+			 /**
+			  * 发送验证码
+			  * type 1短信2语音
+			  */
+			function _sendcode(){
+				
+				
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				if(isNull(datas.telphone))return mui.toast("请输入手机号");
+				if(checkPhone(datas.telphone))return mui.toast("手机号输入有误");
+				if($$("#sendcode").attr("disabled") !="disabled"){
+					show('正在获取');
+					$$.ajax({
+		                type: "POST",
+		                url: base_url + '/common/sendSMSCode',
+		                data: {'telphone': datas.telphone},
+						dataType: 'json',
+		                success: function(response) {
+							console.log(response)
+							hide();
+							if(response.success) {
+								mui.toast("短信验证码已发送");
+								Time();
+							} else {
+								mui.toast(response.msg);	
+							}
+						},
+						error: function(result) {
+							hide();
+							mui.toast("发送短信失败，请重试");
+						}
+		            });
+				}else{
+					return mui.toast("短信已发送，请稍后再试");
+				}
+			}
+			$$("#apply").click(function(){
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				if(isNull(datas.telphone))return mui.toast("请输入手机号");
+				if(checkPhone(datas.telphone))return mui.toast("手机号输入有误");
+				if(isNull(datas.smsCode))return mui.toast("请输入动态验证码");
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/security/telLogin',
+	                data: {
+						'telphone': datas.telphone,
+						'smsCode': datas.smsCode
+					},
+					dataType: 'json',
+	                success: function(response) {
+						console.log(response)
+						hide();
+						if(response.success) {
+							if(isNull(response.obj)){
+								location.href = "address.html?telphone="+datas.telphone+'&smsCode='+datas.smsCode;
+							}else{
+								sessionStorage.setItem('merchantId',response.obj.merchantId);
+								sessionStorage.setItem('userId',response.obj.userId);
+								//location.href = "../member/index.html";
+							}
+						} else {
+							mui.toast(response.msg);	
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("登录失败，请重新登录");
+					}
+	            });
+			});
+		</script>
+	</body>
+
+</html>

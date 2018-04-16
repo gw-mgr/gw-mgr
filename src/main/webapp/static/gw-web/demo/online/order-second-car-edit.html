@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>车辆详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;取&nbsp;&nbsp;消&nbsp;&nbsp;</div>
+			</a>
+		</nav>
+		<div class="mui-content car">
+			<form>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						状态<span class="mui-pull-right blue">未成交</span>
+					</li>
+				</ul>
+				<div class="line"></div>
+				<div class="mui-input-group">
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="11">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>买/卖地址</label>
+							<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+							<input name="censusProvince" type="hidden">
+							<input name="censusCity" type="hidden">
+							<input name="censusDistrict" type="hidden">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>详细地址</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+						<input type="text" name="carNo" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;">
+					</div>
+					<div class="mui-input-row">
+						<label>车架号</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="17">
+					</div>
+					<div class="mui-input-row">
+						<label>发动机号</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>厂牌类型</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>初登日期</label>
+							<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>商业险起保日</label>
+							<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>车辆类型</label>
+							<input type="text" name="carTpyeName" id="carTpyeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="carTpye" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>行驶里程</label>
+						<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-table-view-divider none"></div>
+				</div>
+			</form>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			_showcar();
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					$$(".date").click(function(event) { //
+						var _self = this;
+						if(_self.picker) {
+							_self.picker.show(function(rs) {
+								$$(_self).val(rs.text);
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						} else {
+							var optionsJson = this.getAttribute('data-options') || '{}';
+							var options = JSON.parse(optionsJson);
+							var id = this.getAttribute('id');
+							_self.picker = new $.DtPicker(options);
+							_self.picker.show(function(rs) {
+								$$(_self).val(rs.text);
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						}
+					});
+					var carTpyePicker = new $.PopPicker({
+						layer: "",
+						title: "车辆类型"
+					});
+					carTpyePicker.setData(carTypeData);
+					$$("#carTpyeName").click(function(event) { //
+						carTpyePicker.show(function(items) {
+							$$("input[name='carTpyeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='carTpye']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

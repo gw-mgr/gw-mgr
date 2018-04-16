@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>佣金政策</title>
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content car-bro">
+			<div class="line15 mui-h5">本平台佣金按商业险全部保险计算佣金（商业险不出于1.06）</div>
+			<!--
+            	作者：296508188@qq.com
+            	时间：2018-03-16
+            	描述：显示所在地区服务商的佣金设置。
+					多个服务商并列显示
+					无服务商显示为：暂无服务商提供数据
+            -->
+			<div class="mui-card">
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-3">
+								<h4 class="mui-ellipsis">人寿保险</h4>
+							</div>
+							<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+								<h2 class="mui-ellipsis">50%</h2>
+							</div>
+							<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+								<p class="mui-h5">基础佣金</p>
+								<p class="mui-h5">20%</p>
+							</div>
+							<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+								<p class="mui-h5">综合金融奖</p>
+								<p class="mui-h5">30%</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mui-card-footer">备注:&nbsp;只要2017年生效的车</div>
+			</div>
+			<div class="line"></div>
+			<!--
+            	作者：296508188@qq.com
+            	时间：2018-03-16
+            	描述：数据只显示当天的，(从发布开始到当天的23：00有效)
+            	数据当天没有更新，或者已失效，显示为今天的政策还没有出来
+
+            -->
+			<div class="mui-card">
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-3">
+								<h4 class="mui-ellipsis">平安保险</h4>
+							</div>
+							<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+								<h2 class="mui-ellipsis">50%</h2>
+							</div>
+							<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+								<p class="mui-h5">基础佣金</p>
+								<p class="mui-h5">20%</p>
+							</div>
+							<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+								<p class="mui-h5">综合金融奖</p>
+								<p class="mui-h5">30%</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mui-card-footer">备注:&nbsp;限渝ABD车</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$('.iphone-keyboard li button').click(function() {
+				$$(this).addClass('on').siblings().removeClass('on');
+			});
+			mui('body').on('tap', '.mui-popover-action a', function() {
+				var a = this,
+					parent;
+				//根据点击按钮，反推当前是哪个actionsheet
+				for(parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+					if(parent.classList.contains('mui-popover-action')) {
+						break;
+					}
+				}
+				if($$(a).attr("data-value") === "1") {
+					mui('.iphone-keyboard button').each(function() {
+						if($$(this).hasClass("on")) {
+							$$(".cartext").html($$(this).html())
+						}
+					});
+				} else {}
+				//关闭
+				mui('#' + parent.id).popover('toggle');
+
+			});
+			$$("#apply").click(function() {
+
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+
+				var carNo = "";
+				if($$("#cartext").html() == "新车无牌") {
+					carNo = "";
+				} else {
+					carNo = $$("#cartext").html() + datas.carNo;
+					if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(carNo)) {
+						return mui.toast("车牌号输入错误，请重新输入");
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

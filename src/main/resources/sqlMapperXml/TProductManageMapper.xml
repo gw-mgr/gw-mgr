@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.TProductManageMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.TProductManage">
+		<id column="PRODUCT_ID" property="productId"/>
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="STATUS" property="status" />
+		<result column="PRODUCT_TYPE" property="productType" />
+		<result column="MERCHANT_ID" property="merchantId" />
+		<result column="CURR_PRICE" property="currPrice" />
+		<result column="ORIG_PRICE" property="origPrice" />
+		<result column="SOLD_QUANTITY" property="soldQuantity" />
+		<result column="TOCK_QUANTITY" property="tockQuantity" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="PRODUCT_DESCRIPT" property="productDescript" />
+		<result column="HANDLE_ID" property="handleId" />
+		<result column="COMMISSION" property="commission" />
+		<result column="L_NUMBER_OF_PERSON" property="lNumberOfPerson" />
+		<result column="L_MIX_BUY_MONEY" property="lMixBuyMoney" />
+		<result column="L_RISK_GRADE" property="lRiskGrade" />
+		<result column="L_INVEST_DAYS" property="lInvestDays" />
+		<result column="L_GOAL_INCOME" property="lGoalIncome" />
+		<result column="D_MONEY" property="dMoney" />
+		<result column="D_INCOME" property="dIncome" />
+		<result column="D_CAR_FLAG" property="dCarFlag" />
+		<result column="D_SOCIAL_FLAG" property="dSocialFlag" />
+		<result column="D_HOUSE_FLAG" property="dHouseFlag" />
+		<result column="D_MARRY_FLAG" property="dMarryFlag" />
+		<result column="REMARK1" property="remark1" />
+		<result column="REMARK2" property="remark2" />
+		<result column="REMARK3" property="remark3" />
+	</resultMap>
+	<select id="selectPage" resultType="Map">
+		SELECT
+		t_product_manage.product_id as productId,
+		t_product_manage.product_name as productName,
+		t_product_manage.`status`,
+		t_product_manage.product_type as productType,
+		t_product_manage.merchant_id as merchantId,
+		t_product_manage.curr_price as currPrice,
+		t_product_manage.orig_price as origPrice,
+		t_product_manage.sold_quantity as soldQuantity,
+		t_product_manage.tock_quantity as tockQuantity,
+		t_product_manage.create_time as createTime,
+		t_product_manage.update_time as updateTime,
+		t_product_manage.product_descript as productDescript,
+		t_product_manage.handle_id as handleId,
+		t_product_manage.commission as commission,
+		t_product_manage.l_number_of_person as lNumberOfPerson,
+		t_product_manage.l_mix_buy_money as lMixBuyMoney,
+		t_product_manage.l_risk_grade as lRiskGrade,
+		t_product_manage.l_invest_days as lInvestDays,
+		t_product_manage.l_goal_income as lGoalIncome,
+		t_product_manage.d_car_flag as dCarFlag,
+		t_product_manage.d_money as dMoney,
+		t_product_manage.d_income as dIncome,
+		t_product_manage.d_social_flag as dSocialFlag,
+		t_product_manage.d_house_flag as dHouseFlag,
+		t_product_manage.d_marry_flag as dMarryFlag,
+		t_product_manage.d_work_type as dWorkType,
+		t_product_manage.remark1,
+		t_product_manage.remark2,
+		t_product_manage.remark3
+		from
+		t_product_manage
+		<where>
+			t_product_manage.product_type = #{productType}
+            <if test=" productName != null and productName != '' ">
+              and  t_product_manage.product_name like CONCAT('%',#{productName},'%' )
+            </if>
+            <if test=" productId != null and productId != '' ">
+              and  t_product_manage.product_id = #{productId}
+            </if>
+        </where>
+	</select>
+	<select id="selectProductByProductId" resultType="TProductManage">
+	SELECT
+		t_product_manage.product_id as productId,
+		t_product_manage.product_name as productName,
+		t_product_manage.`status`,
+		t_product_manage.product_type as productType,
+		t_product_manage.merchant_id as merchantId,
+		t_product_manage.curr_price as currPrice,
+		t_product_manage.orig_price as origPrice,
+		t_product_manage.sold_quantity as soldQuantity,
+		t_product_manage.tock_quantity as tockQuantity,
+		t_product_manage.create_time as createTime,
+		t_product_manage.update_time as updateTime,
+		t_product_manage.product_descript as productDescript,
+		t_product_manage.handle_id as handleId,
+		t_product_manage.commission as commission,
+		t_product_manage.commission_rate as commissionRate,
+		t_product_manage.l_number_of_person as lNumberOfPerson,
+		t_product_manage.l_mix_buy_money as lMixBuyMoney,
+		t_product_manage.l_risk_grade as lRiskGrade,
+		t_product_manage.l_invest_days as lInvestDays,
+		t_product_manage.l_goal_income as lGoalIncome,
+		t_product_manage.d_car_flag as dCarFlag,
+		t_product_manage.d_money as dMoney,
+		t_product_manage.d_income as dIncome,
+		t_product_manage.d_social_flag as dSocialFlag,
+		t_product_manage.d_house_flag as dHouseFlag,
+		t_product_manage.d_marry_flag as dMarryFlag,
+		t_product_manage.remark1,
+		t_product_manage.remark2,
+		t_product_manage.remark3
+		from
+		t_product_manage
+		<where>
+            t_product_manage.product_id = #{id}
+        </where>
+	</select>
+	<update id="updateByProductId" parameterType="com.gewei.model.TProductManage">  
+        UPDATE t_product_manage  
+            SET t_product_manage.product_name=#{productName},
+			t_product_manage.`status`=#{status},
+			t_product_manage.product_type=#{productType},
+			t_product_manage.merchant_id=#{merchantId},
+			t_product_manage.curr_price=#{currPrice},
+			t_product_manage.orig_price=#{origPrice},
+			t_product_manage.sold_quantity=#{soldQuantity},
+			t_product_manage.tock_quantity=#{tockQuantity},
+			t_product_manage.create_time=#{createTime},
+			t_product_manage.update_time=#{updateTime},
+			t_product_manage.product_descript=#{productDescript},
+			t_product_manage.handle_id=#{handleId},
+			t_product_manage.commission=#{commission},
+			t_product_manage.l_number_of_person=#{lNumberOfPerson},
+			t_product_manage.l_mix_buy_money=#{lMixBuyMoney},
+			t_product_manage.l_risk_grade=#{lRiskGrade},
+			t_product_manage.l_invest_days=#{lInvestDays},
+			t_product_manage.l_goal_income=#{lGoalIncome},
+			t_product_manage.d_car_flag=#{dCarFlag},
+			t_product_manage.d_money=#{dMoney},
+			t_product_manage.d_income=#{dIncome},
+			t_product_manage.d_social_flag=#{dSocialFlag},
+			t_product_manage.d_house_flag=#{dHouseFlag},
+			t_product_manage.d_marry_flag=#{dMarryFlag},
+			t_product_manage.remark1=#{remark1},
+			t_product_manage.remark2=#{remark2},
+			t_product_manage.remark3=#{remark3}  
+         WHERE t_product_manage.product_id = #{productId};     
+	</update>
+</mapper>

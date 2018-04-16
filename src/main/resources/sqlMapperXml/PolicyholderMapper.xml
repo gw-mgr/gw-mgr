@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.PolicyholderMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.mapper.PolicyholderMapper">
+		<id column="PID" property="pid" />
+		<result column="USER_NAME" property="userName" />
+		<result column="SEX" property="sex" />
+		<result column="MARRY_FLAG" property="marryFlag" />
+		<result column="AGE" property="age" />
+		<result column="BIRTH_DATE" property="birthDate" />
+		<result column="CERT_TYPE" property="certType" />
+		<result column="CERT_NO" property="certNo" />
+		<result column="NATIONALITY" property="nationality" />
+		<result column="HOUSEHOLD" property="household" />
+		<result column="VALIDITY_DATE" property="validityDate" />
+		<result column="INSURED_RELATIONSHIP" property="insuredRelationship" />
+		<result column="RESIDENT_TYPE" property="residentType" />
+		<result column="POSTAL_ADDRESS" property="postalAddress" />
+		<result column="RESIDENTIAL_ADDRESS" property="residentialAddress" />
+		<result column="TELPHONE" property="telphone" />
+		<result column="MTELPHONE" property="mtelphone" />
+		<result column="MAIL" property="mail" />
+		<result column="WORK_UNIT" property="workUnit" />
+		<result column="JOB_CONTENT" property="jobContent" />
+		<result column="INDUSTRY" property="industry" />
+		<result column="OCCUPATION" property="occupation" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="STATUS" property="status" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="REMARK1" property="remark1" />
+		<result column="REMARK2" property="remark2" />
+		<result column="REMARK3" property="remark3" />
+	</resultMap>
+	<select id="selectPolicyholder" parameterType="com.gewei.model.Policyholder" resultType="Policyholder">
+		SELECT
+			t.pid,
+			t.user_name as userName,
+			t.sex ,
+			t.marry_flag AS marryFlag,
+			t.age,
+			t.birth_date AS birthDate,
+			t.cert_type AS certType,
+			t.cert_no AS certNo,
+			t.nationality,
+			t.household,
+			t.validity_date AS validityDate,
+			t.insured_relationship AS insuredRelationship,
+			t.resident_type AS residentType,
+			t.postal_address AS postalAddress,
+			t.residential_address AS residentialAddress,
+			t.telphone,
+			t.mtelphone,
+			t.mail,
+			t.work_unit AS workUnit,
+			t.job_content AS jobContent,
+			t.industry,
+			t.occupation,
+			t.create_time AS createTime,
+			t.`status`,
+			t.description,
+			t.remark1,
+			t.remark2,
+			t.remark3
+		FROM
+			policyholder t
+		<where>
+			<if test=" pid != null and pid != '' ">
+              and  t.pid = #{pid}
+            </if>
+            <if test=" userName != null and userName != '' ">
+              and  t.user_name = #{userName}
+            </if>
+            <if test=" certType != null and certType != '' ">
+              and  t.cert_type = #{certType}
+            </if>
+            <if test=" certNo != null and certNo != '' ">
+              and  t.cert_no = #{certNo}
+            </if>
+        </where>
+	</select>
+	<update id="updateById" parameterType="com.gewei.model.Policyholder">
+	 update policyholder set 
+		<if test="pid != null"> pid=#{pid}</if>
+		<if test="userName != null">, user_name=#{userName}</if>
+		<if test="sex != null">,  sex=#{sex}</if>
+		<if test="marryFlag != null">,  marry_flag=#{marryFlag}</if>
+		<if test="age != null">,  age=#{age}</if>
+		<if test="birthDate != null">,  birth_date=#{birthDate}</if>
+		<if test="certType != null">,  cert_type=#{certType}</if>
+		<if test="certNo != null"> , cert_no=#{certNo}</if>
+		<if test="nationality != null">,  nationality=#{nationality}</if>
+		<if test="household != null">,  household=#{household}</if>
+		<if test="validityDate != null"> , validity_date=#{validityDate}</if>
+		<if test="insuredRelationship != null">,  insured_relationship=#{insuredRelationship}</if>
+		<if test="residentType != null">,  resident_type=#{residentType}</if>
+		<if test="pprovince != null">,  pprovince=#{pprovince}</if>
+		<if test="pcity != null">,  pcity=#{pcity}</if>
+		<if test="pdistrict != null">,  pdistrict=#{pdistrict}</if>
+		<if test="postalAddress != null">,  postal_address=#{postalAddress}</if>
+		<if test="rprovince != null">,  rprovince=#{rprovince}</if>
+		<if test="rcity != null">,  rcity=#{rcity}</if>
+		<if test="rdistrict != null">,  rdistrict=#{rdistrict}</if>
+		<if test="residentialAddress != null">,  residential_address=#{residentialAddress}</if>
+		<if test="telphone != null">,  telphone=#{telphone}</if>
+		<if test="mtelphone != null">,  mtelphone=#{mtelphone}</if>
+		<if test="mail != null">,  mail=#{mail}</if>
+		<if test="workUnit != null">,  work_unit=#{workUnit}</if>
+		<if test="jobContent != null">,  job_content=#{jobContent}</if>
+		<if test="industry != null">,  industry=#{industry}</if>
+		<if test="occupation != null"> , occupation=#{occupation}</if>
+		<if test="createTime != null">,  create_time=#{createTime}</if>
+		<if test="status != null"> , status=#{status}</if>
+		<if test="description != null">,  description=#{description}</if>
+		<if test="remark1 != null">,  remark1=#{remark1}</if>
+		<if test="remark2 != null">,  remark2=#{remark2}</if>
+		<if test="remark3 != null">,  remark3=#{remark3}</if>
+		where pid=#{pid}
+	</update>
+</mapper>

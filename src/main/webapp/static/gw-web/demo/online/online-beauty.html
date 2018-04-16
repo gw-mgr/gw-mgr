@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>汽修美容</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content ">
+			<div class="line"></div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="../../images/2x2.png">
+								<div class="mui-media-body">
+									<div class="mui-table">
+										<div class="mui-table-cell mui-col-xs-6">
+											<p class="mui-ellipsis black">这里是服务商名称</p>
+											<div class="mui-ellipsis black">上线年检代办</div>
+										</div>
+										<div class="mui-table-cell mui-col-xs-6 mui-text-right">
+											<span class="red mui-h4">￥2000</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="../../images/2x2.png">
+								<div class="mui-media-body">
+									<div class="mui-table">
+										<div class="mui-table-cell mui-col-xs-6">
+											<p class="mui-ellipsis black">这里是服务商名称</p>
+											<div class="mui-ellipsis black">上线年检代办</div>
+										</div>
+										<div class="mui-table-cell mui-col-xs-6 mui-text-right">
+											<span class="red mui-h4">￥2000</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="../../images/2x2.png">
+								<div class="mui-media-body">
+									<div class="mui-table">
+										<div class="mui-table-cell mui-col-xs-6">
+											<p class="mui-ellipsis black">这里是服务商名称</p>
+											<div class="mui-ellipsis black">上线年检代办</div>
+										</div>
+										<div class="mui-table-cell mui-col-xs-6 mui-text-right">
+											<span class="red mui-h4">￥2000</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$('#date .mui-table-view li').click(function() {
+				$$(this).addClass('blue').siblings().removeClass('blue');
+			});
+
+			mui('body').on('tap', '.mui-popover-action li', function() {
+				var a = this,
+					parent;
+				//根据点击按钮，反推当前是哪个actionsheet
+				for(parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+					if(parent.classList.contains('mui-popover-action')) {
+						break;
+					}
+				}
+				//关闭
+				mui('#' + parent.id).popover('toggle');
+
+			});
+
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for(var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for(var i = cells.length, len = i + 5; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
+			$$("#apply").click(function() {})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.SalesManMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.SalesMan">
+		<id column="ID" property="id" />
+		<result column="USER_NAME" property="userName" />
+		<result column="CERT_TYPE" property="certType" />
+		<result column="CERT_NO" property="certNo" />
+		<result column="TELPHONE" property="telphone" />
+		<result column="MTELPHONE" property="mtelphone" />
+		<result column="MAIL" property="mail" />
+		<result column="QQ" property="qq" />
+		<result column="WECHAT" property="wechat" />
+		<result column="DISTRICT" property="district" />
+		<result column="CITY" property="city" />
+		<result column="PROVINCE" property="province" />
+		<result column="LINKADDR" property="linkaddr" />
+		<result column="INSURANCE_COMPANY" property="insuranceCompany" />
+		<result column="INSURANCE_COMPANY_ID" property="insuranceCompanyId" />
+		<result column="BANK_NAME" property="bankName" />
+		<result column="BANK_USER_NAME" property="bankUserName" />
+		<result column="BANK_NO" property="bankNo" />
+		<result column="COMMENT" property="comment" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="STATUS" property="status" />
+		<result column="REMARK1" property="remark1" />
+		<result column="REMARK2" property="remark2" />
+		<result column="REMARK3" property="remark3" />
+	</resultMap>
+	<select id="selectPage" resultType="Map">
+        SELECT
+		t.id,
+		t.user_name AS userName,
+		t.cert_type AS certType,
+		t.cert_no AS certNo,
+		t.telphone,
+		t.mtelphone,
+		t.mail,
+		t.qq,
+		t.wechat,
+		t.district,
+		t.city,
+		t.province,
+		t.linkaddr,
+		t.insurance_company AS insuranceCompany,
+		t.insurance_company_id AS insuranceCompanyId,
+		t.bank_name AS bankName,
+		t.bank_user_name AS bankUserName,
+		t.bank_no AS bankNo,
+		t.`comment`,
+		t.create_time AS createTime,
+		t.`status`,
+		t.remark1,
+		t.remark2,
+		t.remark3
+		FROM
+		sales_man t
+        <where>
+            <if test=" user_name != null and user_name != '' ">
+                t.user_name like CONCAT('%',#{user_name},'%' )
+            </if>
+            <if test=" mtelphone != null and mtelphone != '' ">
+                t.mtelphone = #{mtelphone}
+            </if>
+            <if test=" wechat != null and wechat != '' ">
+                t.wechat like CONCAT('%',#{wechat},'%' )
+            </if>
+        </where>
+        GROUP BY t.id
+    </select>
+</mapper>

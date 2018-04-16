@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.BaoXianDangAnMapper">
+	<!-- 人寿档案列表 -->
+	<select id="getSXDangAnList" resultType="Map">
+		SELECT 
+			X.ORDER_ID orderId,P.USER_NAME insuredCumstomerName,X.ORDER_FLAG status,O.INSURER_NAME insCompanyName,X.CREATE_TIME createTime,X.ORDER_TYPE orderType
+		FROM 
+			order_sx X
+		LEFT JOIN t_insurer O ON X.INSURANCE_COMPANY_ID = O.ID
+		LEFT JOIN policyholder P ON X.INSURED_ID = P.PID
+		WHERE
+			X.SALES_MAN = #{SALES_MAN}
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND X.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND X.ORDER_FLAG = #{status} ]]>
+			</if>
+			ORDER BY X.UPDATE_TIME ASC limit #{start},#{rows}
+	</select>
+	
+	<!-- 人寿档案数量 -->
+	<select id="getSXDangAnCount" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_sx X
+		LEFT JOIN t_insurer O ON X.INSURANCE_COMPANY_ID = O.ID
+		LEFT JOIN policyholder P ON X.INSURED_ID = P.PID
+		WHERE
+			X.SALES_MAN = #{SALES_MAN}
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND X.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND X.ORDER_FLAG = #{status} ]]>
+			</if>
+	</select>
+	
+	<!-- 财险档案列表 -->
+	<select id="getCXDangAnList" resultType="Map">
+		SELECT 
+			X.ORDER_ID orderId,X.CREATE_TIME createTime,X.CAR_OWNER carOwner,X.CAR_NUM carNum,X.ZBF zbf,ORDER_TYPE orderType
+		FROM 
+			order_cx X
+		WHERE 
+			X.SALES_MAN = #{SALES_MAN} 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND X.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND X.ORDER_FLAG = #{status} ]]>
+			</if>
+			ORDER BY X.UPDATE_TIME ASC limit #{start},#{rows}
+	</select>
+	
+	<!-- 财险档案数量 -->
+	<select id="getCXDangAnCount" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_cx X
+		WHERE 
+			X.SALES_MAN = #{SALES_MAN} 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND X.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND X.ORDER_FLAG = #{status} ]]>
+			</if>
+	</select>
+	
+</mapper>

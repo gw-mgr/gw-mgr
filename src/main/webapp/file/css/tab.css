@@ -1,0 +1,36 @@
+.order_details{margin-top:25px;}
+.order_details ul{margin:0px;padding:0px;border-bottom: 1px solid #b4b4b4;position: relative;}
+.order_details ul li{float: left;display: block;width: 100px;position: absolute;top:-20px;text-align: center;font-size: 14px;color: #2077d6; cursor:pointer;}
+.order_details .checked{background-color: #CCCCCC;color: #636363;border:1px solid #b4b4b4;border-bottom:0 ;}
+.prepaids{position: absolute;background-color: #E6E6E6;left:0px;}
+.prepaids2{position: absolute;background-color: #E6E6E6;left:100px;}
+.prepaids3{position: absolute;background-color: #E6E6E6;left:200px;}
+.hidedomdiv{display: none}.showdomdiv{display: block;}
+.showsss{border:1px solid #CCCCCC;text-align: center;line-height: 100px;font-size:40px;}
+.ordercx_details{margin-top:25px;}
+.ordercx_details ul{margin:0px;padding:0px;border-bottom: 1px solid #b4b4b4;position: relative;}
+.ordercx_details ul li{float: left;display: block;width: 100px;position: absolute;top:-20px;text-align: center;font-size: 14px;color: #2077d6; cursor:pointer;}
+.ordercx_details .checked{background-color: #CCCCCC;color: #636363;border:1px solid #b4b4b4;border-bottom:0 ;}
+.cxprepaids{position: absolute;background-color: #E6E6E6;left:0px;}
+.cxprepaids2{position: absolute;background-color: #E6E6E6;left:100px;}
+.cxprepaids3{position: absolute;background-color: #E6E6E6;left:200px;}
+.cxprepaids4{position: absolute;background-color: #E6E6E6;left:300px;}
+.cxprepaids5{position: absolute;background-color: #E6E6E6;left:400px;}
+.cxhidedomdiv{display: none}
+.cxshowdomdiv{display: block;}
+.cxshowsss{border:1px solid #CCCCCC;text-align: center;line-height: 400px;font-size:40px;}
+
+.ordersx_details{margin-top:25px;}
+.ordersx_details ul{margin:0px;padding:0px;border-bottom: 1px solid #b4b4b4;position: relative;}
+.ordersx_details ul li{float: left;display: block;width: 100px;position: absolute;top:-20px;text-align: center;font-size: 14px;color: #2077d6; cursor:pointer;}
+.ordersx_details .checked{background-color: #CCCCCC;color: #636363;border:1px solid #b4b4b4;border-bottom:0 ;}
+.sxprepaids{position: absolute;background-color: #E6E6E6;left:0px;}
+.sxprepaids2{position: absolute;background-color: #E6E6E6;left:100px;}
+.sxprepaids3{position: absolute;background-color: #E6E6E6;left:200px;}
+.sxprepaids4{position: absolute;background-color: #E6E6E6;left:300px;}
+.sxprepaids5{position: absolute;background-color: #E6E6E6;left:400px;}
+.sxprepaids6{position: absolute;background-color: #E6E6E6;left:500px;}
+.sxprepaids7{position: absolute;background-color: #E6E6E6;left:600px;}
+.sxhidedomdiv{display: none}
+.sxshowdomdiv{display: block;}
+.sxshowsss{border:1px solid #CCCCCC;text-align: center;line-height: 400px;font-size:40px;}

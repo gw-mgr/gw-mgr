@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>贷款业务-详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+		<style>
+			.mui-bar .mui-btn{padding: 6px 36px 7px;}
+		</style>
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item"  id="edit">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;编&nbsp;&nbsp;辑&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item" id="del">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;删&nbsp;&nbsp;除&nbsp;&nbsp;</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<input type="hidden" name="status" />
+				<input type="hidden" name="orderId" />
+				<div class="mui-table-view">
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>状态</label>
+							<input type="text" name="statusText" class=" mui-text-right mui-input-clear"  maxlength="8">						
+						</div>
+					</div>
+				</div>
+				<div class="line"></div>
+				<div id="slider" class="mui-slider mui-fullscreen">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" href="#item2mobile">
+								订单详情
+							</a>
+							<a class="mui-control-item" href="#item3mobile">
+								产品信息
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-group">
+						<div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>下单日期</label>
+											<input type="text" name="createTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="mui-input-row">
+											<label>代办类型</label>
+											<input type="text" name="productName" class=" mui-text-right mui-input-clear" placeholder="买车" maxlength="32">
+										</div>
+										<div class="mui-input-row">
+											<label>订单号</label>
+											<input type="text" name="orderId" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="line"></div>
+										<div class="mui-input-row">
+											<label>姓名</label>
+											<input type="text" name="userName" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="mui-input-row">
+											<label>电话</label>
+											<input type="tel" name="telephone" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+
+										<div class="mui-input-row">
+											<label>证件类型</label>
+											<input type="text" name="cardType" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="mui-input-row">
+											<label>证件号</label>
+											<input type="tel" name="cardId" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无社保</label>
+												<input type="text" name="marryFlagName" class=" mui-text-right is" placeholder="无" maxlength="50" readonly="readonly">
+												<input type="hidden" name="marryFlag" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无社保</label>
+												<input type="text" name="socialFlagName" class=" mui-text-right is" placeholder="无" maxlength="50" readonly="readonly">
+												<input type="hidden" name="socialFlag" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无房产</label>
+												<input type="text" name="houseFlagName"  class=" mui-text-right isT" placeholder="无" maxlength="50" readonly="readonly">
+												<input type="hidden" name="houseFlag" />
+											</div>
+										</div>
+										<div id="houseFlag">
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>房产区域</label>
+													<input name="provincename" type="text" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+													<input name="HOUSE_AREA_PROVINCE" type="hidden">
+													<input name="HOUSE_AREA_CITY" type="hidden">
+													<input name="HOUSE_AREA_COUNTRY" type="hidden">
+												</div>
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>每月收入</label>
+												<input type="text" name="inComeName" class=" mui-text-right dIncome" placeholder="无" maxlength="50" readonly="readonly">
+												<input type="hidden" name="income" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>工作性质</label>
+												<input type="text" name="workTypeName" class=" mui-text-right dWorkType" placeholder="无" maxlength="50" readonly="readonly">
+												<input type="hidden" name="workType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无车辆</label>
+												<input type="text" name="carFlagName" class=" mui-text-right isT" placeholder="无" maxlength="50" readonly="readonly">
+												<input type="hidden" name="carFlag" />
+											</div>
+										</div>
+										<div id="carFlag">
+											<div class="mui-table-view-divider none"></div>
+											<div class="mui-input-row">
+												<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+												<input type="text" name="carNum" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+											</div>
+											<div class="mui-input-row">
+												<label>车架号</label>
+												<input type="text" name="carFrameNum" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="17">
+											</div>
+											<div class="mui-input-row">
+												<label>发动机号</label>
+												<input type="text" name="engineNum" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="17">
+											</div>
+											<div class="mui-input-row">
+												<label>厂牌类型</label>
+												<input type="text" name="changType" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+											</div>
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>车辆类型</label>
+													<input type="text" name="carType" class=" mui-text-right carType" placeholder="无" maxlength="50" readonly="readonly">
+												</div>
+											</div>
+											<div class="mui-table-view-divider none"></div>
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>初登日期</label>
+													<input type="text" name="registerTime" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="无" maxlength="50" readonly="readonly">
+												</div>
+											</div>
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>商业险起保日</label>
+													<input type="text" name="businessInsStartTime" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="无" maxlength="50" readonly="readonly">
+												</div>
+											</div>
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>交强险起保日</label>
+													<input type="text" name="trafficInsStartTime" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="无" maxlength="50" readonly="readonly">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item3mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>贷款产品</label>
+											<input type="text" name="productName" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>贷款金额</label>
+												<input type="text" name="orderMoney" class=" mui-text-right cardType" placeholder="无" maxlength="50" readonly="readonly">
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>到期时间</label>
+											<input type="text" name="endDate" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="30">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>备注</label>
+											<input type="text" name="remark" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$("input").attr("disabled", "disabled");
+			$$(".mui-navigate-right").parent().addClass("hand");
+			$$(".check").hide();
+			$$(".creValid input").css("margin-right", "0");
+				
+			$$(function(){
+				show();
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/dingdanzhuizong/getOrderDetailInfoByOrderId',
+					data:{
+							orderId:getUrlParam('orderId')
+						},
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						hide();
+						if(response.success) {
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							for(var j = 0;j<orderFlagData.length;j++){
+								if(data.status === orderFlagData[j].value){
+									data.statusText = orderFlagData[j].text;
+									$$("input[name=statusText]").addClass(orderFlagData[j].color);
+									break;
+								}
+							}
+							if(data.status ==="02"){//02 未放款
+								$$("#del").remove();
+							}else if(data.status ==="04"){//04 已回收
+								$$("#edit").remove();
+							}else if(data.status ==="03"){//03   已放款
+							}else{
+								$$("nav").remove();
+							}
+							if(!isNull(data.carNum))$$(".cartext").html(data.carNum.substr(0,1));
+							if(!isNull(data.carNum))data.carNum = data.carNum.substr(1,data.carNum.length);
+							if(!isNull(data.createTime))data.createTime = getYear(data.createTime);
+							if(!isNull(data.examineTime))data.examineTime = getYear(data.examineTime);
+							if(!isNull(data.businessInsStartTime))data.businessInsStartTime = getYear(data.businessInsStartTime);
+							if(!isNull(data.registerTime))data.registerTime = getYear(data.registerTime);
+							if(!isNull(data.trafficInsStartTime))data.trafficInsStartTime = getYear(data.trafficInsStartTime);
+							if(!isNull(data.endDate))data.endDate = getYear(data.endDate);
+							if(!isNull(data.orderMoney))data.orderMoney = (data.orderMoney*0.01).toFixed(2);
+							for(var i = 0; i < areaData.length; i++) {
+								if(areaData[i].value === data.HOUSE_AREA_PROVINCE) {
+									for(var j = 0; j < areaData[i].children.length; j++) {
+										if(areaData[i].children[j].value === data.HOUSE_AREA_CITY) {
+											var erea = areaData[i].children[j].children;
+											for(var k = 0; k < erea.length; k++) {
+												if(erea[k].value === data.HOUSE_AREA_COUNTRY) {
+													$$("input[name=provincename]").val(areaData[i].text + " " + areaData[i].children[j].text + " " + erea[k].text);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							for(var j = 0; j < wedlockdata.length; j++) { //婚姻状况 
+								if(data.marryFlag === wedlockdata[j].value) {
+									data.marryFlagName = wedlockdata[j].text;
+									break;
+								}
+							}
+							for(var j = 0; j < ishavedata.length; j++) { //有无社保 
+								if(data.socialFlag === ishavedata[j].value) {
+									data.socialFlagName = ishavedata[j].text;
+									break;
+								}
+							}
+							for(var j = 0; j < loandata.length; j++) { //有无房产 
+								if(data.houseFlag === loandata[j].value) {
+									data.houseFlagName = loandata[j].text;
+									break;
+								}
+							}
+							if(data.houseFlag === "0"){//有无房产
+						        $$("#houseFlag").hide();
+							}else{
+								$$("#houseFlag").show();
+							}
+							for(var j = 0; j < monthIncomedata.length; j++) { //每月收入 
+								if(data.inCome === monthIncomedata[j].value) {
+									data.inComeName = monthIncomedata[j].text;
+									console.log("-----------")
+									break;
+								}
+							}
+							for(var j = 0; j < workdata.length; j++) { //工作性质 
+								if(data.workType === workdata[j].value) {
+									data.workTypeName = workdata[j].text;
+									break;
+								}
+							}
+
+							for(var j = 0; j < loandata.length; j++) { //有无车辆 
+								if(data.carFlag === loandata[j].value) {
+									data.carFlagName = loandata[j].text;
+									break;
+								}
+							}
+							if(data.carFlag === "0"){//无车
+						        $$("#carFlag").hide();
+							}else{
+								$$("#carFlag").show();
+							}
+							console.log(data)
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			
+			(function($, doc) {
+				$.init();
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+		
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							up: {
+								callback: function() {
+									var self = this;
+									self.endPullUpToRefresh(true);
+								},
+								contentinit: '&nbsp;', //可以上拉提示信息
+								contentdown: '&nbsp;', //上拉结束提示信息
+								contentrefresh: '&nbsp;', //上拉进行中提示信息
+								contentnomore: '&nbsp;' //上拉无更多信息时提示信息
+							}
+						});
+					});
+				});
+			})(mui, document);
+			$$("#edit").click(function(){
+				var orderId = $$("input[name=orderId]").val();
+				window.location.href= 'order-dk-edit.html?orderId='+orderId
+			});
+			$$("#del").click(function(){
+				var btnArray = ['取消', '确定'];
+				mui.confirm('订单删除后不可恢复，确认删除？', '温馨提示', btnArray, function(e) {
+					if (e.index == 1) {
+						$$.ajax({
+				                type: "POST",
+				                url: base_url + '/dingdanzhuizong/updateOrderStatusByOrderId',
+								data: {
+										orderId:$$("input[name=orderId]").val(),
+										orderFlag:"13",
+										userId:sessionStorage.getItem("userId")
+									},
+								dataType: 'json',
+								success: function(response) {
+									console.log(response)
+									if(response.success) {
+										 mui.toast("删除成功");
+										  setTimeout(function(){
+											 history.back(-1);
+										 },500);
+									} else {
+										mui.toast("删除失败");
+									}
+								},
+								error: function(result) {
+									mui.toast("删除失败");
+								}
+				            });
+					} else {
+					}
+				})
+			});
+		</script>
+	</body>
+</html>

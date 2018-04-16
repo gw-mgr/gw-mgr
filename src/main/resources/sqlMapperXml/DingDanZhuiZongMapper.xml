@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.DingDanZhuiZongMapper">
+
+	<!-- 查询用户的-订单追踪概述信息 -->
+	<select id="getOrderSummaryByUserId" resultType="Map">
+		SELECT
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '03' AND ORDER_TYPE = 'ROOTDK' ) cj_dkyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG in ('01','02') AND ORDER_TYPE = 'ROOTDK' ) db_dkyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '07' AND ORDER_TYPE = 'ROOTLC' ) cj_lcyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '06' AND ORDER_TYPE = 'ROOTLC' ) db_lcyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '10' AND ORDER_TYPE LIKE 'ROOTQC%' ) cj_esc,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE LIKE 'ROOTQC%' ) db_esc,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '12' AND ORDER_TYPE = 'ROOTCD' ) cj_cwdb,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG in ('01','02') AND ORDER_TYPE = 'ROOTCD' ) db_cwdb,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '12' AND ORDER_TYPE = 'ROOTCM' ) cj_qcmr,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG in ('01','02') AND ORDER_TYPE = 'ROOTCM' ) db_qcmr
+	</select>
+	
+	<!-- 不同类型的订单列表+条件筛选 -->
+	<select id="getOrderListByOrderTypeAndUserId" resultType="Map">
+		SELECT 
+			O.ORDER_ID orderId, P.PRODUCT_NAME productName, O.ORDER_MONEY orderMoney, O.CREATE_TIME createTime, O.ORDER_FLAG status, P.PRODUCT_DESCRIPT productDescript,ORDER_TYPE orderType
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		WHERE 
+			O.SALES_MAN = #{userId} AND O.ORDER_TYPE like CONCAT('',#{orderType},'%') AND O.ORDER_FLAG != '13'<!-- 车务代办有很多子类 -->
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND O.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND O.ORDER_FLAG = #{status} ]]>
+			</if>
+			ORDER BY O.UPDATE_TIME ASC
+			limit #{start},#{rows}
+	</select>
+	
+	<!-- 不同类型的订单数量+条件筛选 -->
+	<select id="getOrderCountByOrderTypeAndUserId" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		WHERE 
+			O.SALES_MAN = #{userId} AND O.ORDER_TYPE like CONCAT('',#{orderType},'%')<!-- 车务代办有很多子类 -->
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND O.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND O.ORDER_FLAG = #{status} ]]>
+			</if>
+			ORDER BY O.UPDATE_TIME ASC
+	</select>
+	
+	<!-- 根据订单ID获取订单类型 -->
+	<select id="getOrderTypeByOrderId" resultType="String">
+		SELECT 
+			O.ORDER_TYPE orderType
+		FROM 
+			order_info O
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 订单详细信息，类型：车务代办 -->
+	<select id="getCDOrderDetailInfoByOrderId" resultType="Map">
+		SELECT 
+			O.ORDER_FLAG status, O.ORDER_ID orderId, T.CATEGORY_NAME orderTypeName, O.CREATE_TIME createTime, 
+			P.PRODUCT_NAME productName, O.ORDER_MONEY orderMoney, P.PRODUCT_DESCRIPT productDescript, 
+			C.USER_ID userId, C.USER_NAME userName, C.TELEPHONE telephone, O.TRADE_ADDR tradeAddr, C.CAR_NUM carNum, C.CAR_FRAME_NUM carFrameNum, 
+			C.DETAIL_ADDR detailAddr,C.PROVINCE province,C.CITY city,C.COUNTRY country,
+			C.ENGINE_NUM engineNum, C.CHANG_TYPE changType, C.REGISTER_TIME registerTime, C.EXAMINE_TIME examineTime, 
+			C.TRAFFIC_INS_START_TIME trafficInsStartTime, C.BUSINESS_INS_START_TIME businessInsStartTime, C.CAR_TYPE carType
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		LEFT JOIN t_customer_basicinfo C ON O.USER_ID = C.USER_ID
+		LEFT JOIN t_merchant_product_category T ON O.ORDER_TYPE = T.CATEGORY_ID
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 订单详细信息，类型：贷款 -->
+	<select id="getDKOrderDetailInfoByOrderId" resultType="Map">
+		SELECT 
+			O.ORDER_FLAG status, O.ORDER_ID orderId, O.ORDER_TYPE orderType, O.CREATE_TIME createTime, O.END_DATE endDate,
+			P.PRODUCT_NAME productName, O.ORDER_MONEY orderMoney, P.PRODUCT_DESCRIPT productDescript, 
+			C.USER_ID userId, C.USER_NAME userName, C.TELEPHONE telephone, C.CARD_TYPE cardType, C.CARD_ID cardId, C.MARRY_FLAG marryFlag,
+			C.SOCIAL_FLAG socialFlag, C.HOUSE_FLAG houseFlag, C.INCOME inCome, C.WORK_TYPE workType,
+			C.DETAIL_ADDR detailAddr,C.PROVINCE province,C.CITY city,C.COUNTRY country,C.HOUSE_AREA_PROVINCE,C.HOUSE_AREA_CITY,C.HOUSE_AREA_COUNTRY,
+			C.CAR_FLAG carFlag, C.CAR_NUM carNum, C.CAR_FRAME_NUM carFrameNum, C.ENGINE_NUM engineNum, C.CHANG_TYPE changType,C.CAR_TYPE carType,
+			C.REGISTER_TIME registerTime, C.EXAMINE_TIME examineTime, C.TRAFFIC_INS_START_TIME trafficInsStartTime, C.BUSINESS_INS_START_TIME businessInsStartTime
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		LEFT JOIN t_customer_basicinfo C ON O.USER_ID = C.USER_ID
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 订单详细信息，类型：汽车美容 -->
+	<select id="getCMOrderDetailInfoByOrderId" resultType="Map">
+		SELECT 
+			O.ORDER_FLAG status, O.ORDER_ID orderId, P.PRODUCT_NAME productName, O.CREATE_TIME createTime, 
+			C.USER_ID userId, C.USER_NAME userName, C.TELEPHONE telephone,  O.TRADE_ADDR tradeAddr,
+			C.DETAIL_ADDR detailAddr,C.PROVINCE province,C.CITY city,C.COUNTRY country
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		LEFT JOIN t_customer_basicinfo C ON O.USER_ID = C.USER_ID
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 订单详细信息，类型：二手汽车 -->
+	<select id="getESCOrderDetailInfoByOrderId" resultType="Map">
+		SELECT 
+			O.ORDER_FLAG status, O.ORDER_ID orderId, T.CATEGORY_NAME orderTypeName, O.CREATE_TIME createTime, O.TRADE_ADDR tradeAddr,
+			C.USER_ID userId, C.USER_NAME userName, C.TELEPHONE telephone, C.CAR_NUM carNum, C.CAR_FRAME_NUM carFrameNum, 
+			C.ENGINE_NUM engineNum, C.CHANG_TYPE changType, C.REGISTER_TIME registerTime, C.EXAMINE_TIME examineTime, 
+			C.DETAIL_ADDR detailAddr,C.PROVINCE province,C.CITY city,C.COUNTRY country,
+			C.TRAFFIC_INS_START_TIME trafficInsStartTime, C.BUSINESS_INS_START_TIME businessInsStartTime, C.CAR_TYPE carType, C.CAR_DISTANCE carDistance
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		LEFT JOIN t_customer_basicinfo C ON O.USER_ID = C.USER_ID
+		LEFT JOIN t_merchant_product_category T ON O.ORDER_TYPE = T.CATEGORY_ID
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 订单详细信息，类型：订单 -->
+	<update id="editOrderDetailInfo" >
+		UPDATE order_info SET UPDATE_TIME = #{updateTime}
+			<if test=" orderMoney != null and orderMoney != '' ">
+				<![CDATA[ ,ORDER_MONEY = #{orderMoney} ]]>
+			</if>
+			<if test=" tradeAddr != null and tradeAddr != '' ">
+				<![CDATA[ ,TRADE_ADDR = #{tradeAddr} ]]>
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				<![CDATA[ ,UPDATE_TIME = #{updateTime} ]]>
+			</if>
+			where ORDER_ID = #{orderId}
+	</update>
+	
+</mapper>

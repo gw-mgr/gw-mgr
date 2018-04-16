@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.OrderSxBxsxMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.OrderSxBxsx">
+		<id column="ID" property="id" />
+		<result column="ORDER_ID" property="orderId" />
+		<result column="ORDER" property="order" />
+		<result column="NAME" property="name" />
+		<result column="CODE" property="code" />
+		<result column="BX_DATE" property="bxDate" />
+		<result column="JF_DATE" property="jfDate" />
+		<result column="BX_MONEY" property="bxMoney" />
+		<result column="BX_FEE" property="bxFee" />
+		<result column="ZJBF" property="zjbf" />
+		<result column="BFXJ" property="bfxj" />
+	</resultMap>
+
+</mapper>

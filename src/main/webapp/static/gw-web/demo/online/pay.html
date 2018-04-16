@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>支付</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">立即付款</button>
+			</div>
+		</nav>
+		<div class="mui-content ">
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+				<li class="mui-table-view-cell">3M车蜡汽车蜡正品 钻石水晶硬蜡 划痕蜡新车蜡 汽车打蜡抛光蜡</li>
+				<li class="mui-table-view-cell">
+					付款金额
+					<span class="red mui-pull-right">￥125</span>
+				</li>
+
+			</ul>
+			<div class="line15">支付方式</div>
+			<ul class="mui-table-view pay">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../../images/wechat.png">
+						<div class="mui-media-body line15">
+							微信支付
+						</div>
+					</a>
+				</li>
+			</ul>
+			<div class="mui-content-padded">
+				<span class="check" id="check">需要发送短信给接受服务方,如果需要,请提供手机号码。</span>
+				<p class="gray mui-h6 mui-text-justify">发送的短信样本：<br /> 尊敬的客户您好，**您预约的***服务，由服务人员****，电话****为您提供本次服务，请注意接听电话，谢谢！
+					</span>
+				</p>
+			</div>
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>电话</label>
+					<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					sexPicker.setData(sexdata);
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+				});
+			})(mui, document);
+		</script>
+
+	</body>
+
+</html>

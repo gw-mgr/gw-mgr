@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.BaoXianDingDanMapper">
+
+	<!-- 微信会员（业务员）保险订单统计 -->
+	<select id="getBXOrderSummaryById" resultType="Map">
+		SELECT
+		(SELECT COUNT(*) FROM order_sx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' ) cj_rsbx,
+		(SELECT COUNT(*) FROM order_sx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' ) db_rsbx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE = 'ROOTCCCL' ) cj_clbx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' AND ORDER_TYPE = 'ROOTCCCL' ) db_clbx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE = 'ROOTCCTY' ) cj_tygzx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' AND ORDER_TYPE = 'ROOTCCTY' ) db_tygzx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE = 'ROOTCCGC' ) cj_gcjxx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' AND ORDER_TYPE = 'ROOTCCGC' ) db_gcjxx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE = 'ROOTCCJZ' ) cj_jzgcx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' AND ORDER_TYPE = 'ROOTCCJZ' ) db_jzgcx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE = 'ROOTCCGZ' ) cj_gzzrx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' AND ORDER_TYPE = 'ROOTCCGZ' ) db_gzzrx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE = 'ROOTCCDQ' ) cj_dqywx,
+		(SELECT COUNT(*) FROM order_cx O WHERE O.SALES_MAN = #{userId} AND O.ORDER_FLAG = '01' AND ORDER_TYPE = 'ROOTCCDQ' ) db_dqywx
+	</select>
+	
+	<!-- 人寿保险，订单列表（业务员） -->
+	<select id="getRSOrderListOfSaleManByOrderType" resultType="Map">
+		SELECT 
+			X.ORDER_ID orderId,P.USER_NAME policyHolder,X.CREATE_TIME createTime,X.ORDER_FLAG status,X.ORDER_TYPE orderType,BFHJ bfhj
+		FROM 
+			order_sx X
+		LEFT JOIN policyholder P ON X.POLICYHOLDER_ID = P.PID
+		WHERE 
+			X.SALES_MAN = #{userId} 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND X.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND X.ORDER_FLAG = #{status} ]]>
+			</if>
+			ORDER BY X.UPDATE_TIME ASC
+			limit #{start},#{rows}
+	</select>
+	
+	<!-- 人寿保险，订单数量（业务员） -->
+	<select id="getRSOrderCountOfSaleManByOrderType" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_sx 
+		WHERE 
+			SALES_MAN = #{userId} 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]>
+			</if>
+	</select>
+	
+	<!-- 财产保险，订单列表（业务员） -->
+	<select id="getCXOrderListOfSaleManByOrderType" resultType="Map">
+		SELECT 
+			ORDER_ID orderId,POLICYHOLDER policyHolder,CREATE_TIME createTime,ORDER_FLAG status,ZBF zbf,ORDER_TYPE orderType,CAR_NUM carNum
+		FROM 
+			order_cx 
+		WHERE 
+			SALES_MAN = #{userId} AND ORDER_TYPE = #{orderType}
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]>
+			</if>
+			AND ORDER_FLAG != '03'
+			ORDER BY UPDATE_TIME ASC
+			limit #{start},#{rows}
+	</select>
+	
+	<!-- 财产保险，订单数量（业务员） -->
+	<select id="getCXOrderCountOfSaleManByOrderType" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_cx 
+		WHERE 
+			SALES_MAN = #{userId} AND ORDER_TYPE = #{orderType}
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]>
+			</if>
+	</select>
+
+	<!-- 财产保险订单详细信息编辑，主要编辑：车主信息，车辆信息 -->
+	<select id="editCXOrderCarInfoByOrderId">
+		UPDATE order_cx SET
+			<if test=" carNum != null and carNum != '' ">
+				<![CDATA[  CAR_NUM = #{carNum}, ]]>
+			</if>
+			<if test=" carFrameNum != null and carFrameNum != '' ">
+				<![CDATA[ CAR_FRAME_NUM = #{carFrameNum}, ]]>
+			</if>
+			<if test=" engineNum != null and engineNum != '' ">
+				<![CDATA[ ENGINE_NUM = #{engineNum}, ]]>
+			</if>
+			<if test=" changType != null and changType != '' ">
+				<![CDATA[ CHANG_TYPE = #{changType}, ]]>
+			</if>
+			<if test=" carType != null and carType != '' ">
+				<![CDATA[ CAR_TYPE = #{carType}, ]]>
+			</if>
+			<if test=" registerTime != null and registerTime != '' ">
+				<![CDATA[ REGISTER_TIME = #{registerTime}, ]]>
+			</if>
+			<if test=" businessInsStartTime != null and businessInsStartTime != '' ">
+				<![CDATA[ BUSINESS_INS_START_TIME = #{businessInsStartTime}, ]]>
+			</if>
+			<if test=" trafficInsStartTime != null and trafficInsStartTime != '' ">
+				<![CDATA[ TRAFFIC_INS_START_TIME = #{trafficInsStartTime}, ]]>
+			</if>
+			<if test=" carOwner != null and carOwner != '' ">
+				<![CDATA[ CAR_OWNER = #{carOwner}, ]]>
+			</if>
+			<if test=" ownerCardType != null and ownerCardType != '' ">
+				<![CDATA[ OWNER_CARD_TYPE = #{ownerCardType}, ]]>
+			</if>
+			<if test=" ownerCardId != null and ownerCardId != '' ">
+				<![CDATA[ OWNER_CARD_ID = #{ownerCardId}, ]]>
+			</if>
+			<if test=" tbrId != null and tbrId != '' ">
+				<![CDATA[ OWNER_CARD_TYPE = #{tbrId}, ]]>
+			</if>
+			<if test=" tbr != null and tbr != '' ">
+				<![CDATA[ POLICYHOLDER = #{tbr}, ]]>
+			</if>
+			<if test=" tbrCardType != null and tbrCardType != '' ">
+				<![CDATA[ TBR_CARD_TYPE = #{tbrCardType}, ]]>
+			</if>
+			<if test=" tbrCardId != null and tbrCardId != '' ">
+				<![CDATA[ TBR_CARD_ID = #{tbrCardId}, ]]>
+			</if>
+			<if test=" beneficiary != null and beneficiary != '' ">
+				<![CDATA[ BENEFICIARY = #{beneficiary}, ]]>
+			</if>
+			<if test=" bbrCardType != null and bbrCardType != '' ">
+				<![CDATA[ BBR_CARD_TYPE = #{bbrCardType}, ]]>
+			</if>
+			<if test=" bbrCardId != null and bbrCardId != '' ">
+				<![CDATA[ BBR_CARD_ID = #{bbrCardId}, ]]>
+			</if>
+			<if test=" userId != null and userId != '' ">
+				<![CDATA[ UPDATE_USER = #{userId}, ]]>
+			</if>
+			<if test=" updateTime != null and updateTime != '' ">
+				<![CDATA[ UPDATE_TIME = #{updateTime} ]]>
+			</if>
+		WHERE 
+			ORDER_ID = #{orderId}
+	</select>
+	
+</mapper>

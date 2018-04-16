@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>车险详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<form>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						状态<span class="mui-pull-right blue">未成交</span>
+					</li>
+				</ul>
+				<div class="line"></div>
+				<div id="slider" class="mui-slider mui-fullscreen">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" href="#item1mobile">
+								订单信息
+							</a>
+							<a class="mui-control-item" href="#item2mobile">
+								车辆信息
+							</a>
+							<a class="mui-control-item" href="#item3mobile">
+								车主信息
+							</a>
+							<a class="mui-control-item" href="#item7mobile">
+								保险情况
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-group">
+						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+							<div class="mui-input-group">
+								<div class="mui-input-row">
+									<label>下单日期</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+								</div>
+								<div class="mui-input-row">
+									<label>产险类型</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="车辆保险" maxlength="8">
+								</div>
+								<div class="mui-input-row">
+									<label>保单号</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+							</div>
+						</div>
+						<div id="item2mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>车牌号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>车架号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>发动机号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>厂牌类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>车辆类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>初登日期</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>商业险起保日</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>交强险起保日</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item3mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>车主姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>车主证件类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>车主证件号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>投保人姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人证件类型
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人证件号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>被保险人姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被投保人证件类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被投保人证件号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="item7mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-input-group">
+								<div class="mui-input-row">
+									<label>保险公司</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+								</div>
+								<div class="mui-input-row">
+									<label>保险公司报案电话</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+								<div class="mui-table-view-divider none"></div>
+								<div class="mui-input-row">
+									<label>商业险（总额）</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+								<div class="mui-input-row">
+									<label>交强险（总额）</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+								<div class="mui-input-row">
+									<label>车船税</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+								<div class="mui-table-view-divider none"></div>
+								<div class="mui-input-row">
+									<label>总保费</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+								<div class="mui-table-view-divider none"></div>
+								<div class="mui-input-row">
+									<label>礼品内容</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;编&nbsp;&nbsp;辑&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;删&nbsp;&nbsp;除&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">申请报价</div>
+			</a>
+		</nav>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			mui.init();
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							up: {
+								callback: function() {
+									var self = this;
+									self.endPullUpToRefresh(true);
+								},
+								contentinit: '&nbsp;', //可以上拉提示信息
+								contentdown: '&nbsp;', //上拉结束提示信息
+								contentrefresh: '&nbsp;', //上拉进行中提示信息
+								contentnomore: '&nbsp;' //上拉无更多信息时提示信息
+							}
+						});
+					});
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>

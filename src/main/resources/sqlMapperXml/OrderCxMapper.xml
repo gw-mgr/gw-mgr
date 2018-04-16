@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.OrderCxMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.OrderCx">
+		<id column="ORDER_ID" property="orderId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="ORDER_TYPE" property="orderType" />
+		<result column="MERCHANT_ID" property="merchantId" />
+		<result column="OPERATOR" property="operator" />
+		<result column="ORDER_NO" property="orderNo" />
+		<result column="TB_START_TIME" property="tbStartTime" />
+		<result column="TB_END_TIME" property="tbEndTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="UPDATE_USER" property="updateUser" />
+		<result column="ORDER_FLAG" property="orderFlag" />
+		<result column="GIFT_FLAG" property="giftFlag" />
+		<result column="COMMISSION_FLAG" property="commissionFlag" />
+		<result column="PRINT_FLAG" property="printFlag" />
+		<result column="CHECKOUT_FLAG" property="checkoutFlag" />
+		<result column="DDR" property="ddr" />
+		<result column="DD_DATE" property="ddDate" />
+		<result column="BXGSSQJQYJBL" property="bxgssqjqyjbl" />
+		<result column="BXGSSQYJBL" property="bxgssqyjbl" />
+		<result column="BXGSSQJQYJ" property="bxgssqjqyj" />
+		<result column="BXGSSQYJ" property="bxgssqyj" />
+		<result column="BXGSKPYJBL" property="bxgskpyjbl" />
+		<result column="BXGSKPYJ" property="bxgskpyj" />
+		<result column="GSGLFBL" property="gsglfbl" />
+		<result column="GSGLFJE" property="gsglfje" />
+		<result column="GSJSBL" property="gsjsbl" />
+		<result column="GSJSJE" property="gsjsje" />
+		<result column="GSTCBL" property="gstcbl" />
+		<result column="GSTCJE" property="gstcje" />
+		<result column="BGSML" property="bgsml" />
+		<result column="CAR_NUM" property="carNum" />
+		<result column="CAR_FRAME_NUM" property="carFrameNum" />
+		<result column="ENGINE_NUM" property="engineNum" />
+		<result column="CHANG_TYPE" property="changType" />
+		<result column="REGISTER_TIME" property="registerTime" />
+		<result column="EXAMINE_TIME" property="examineTime" />
+		<result column="BUSINESS_INS_START_TIME" property="businessInsStartTime" />
+		<result column="CAR_TYPE" property="carType" />
+		<result column="TRAFFIC_INS_START_TIME" property="trafficInsStartTime" />
+		<result column="CAR_REMARK" property="carRemark" />
+		<result column="CAR_OWNER" property="carOwner" />
+		<result column="OWNER_CARD_TYPE" property="ownerCardType" />
+		<result column="OWNER_CARD_ID" property="ownerCardId" />
+		<result column="POLICYHOLDER_ID" property="policyholderId" />
+		<result column="POLICYHOLDER" property="policyholder" />
+		<result column="TBR_CARD_TYPE" property="tbrCardType" />
+		<result column="TBR_CARD_ID" property="tbrCardId" />
+		<result column="BENEFICIARY" property="beneficiary" />
+		<result column="BBR_SEX" property="bbrSex" />
+		<result column="BBR_AGE" property="bbrAge" />
+		<result column="BBR_CARD_TYPE" property="bbrCardType" />
+		<result column="BBR_CARD_ID" property="bbrCardId" />
+		<result column="TELPHONE" property="telphone" />
+		<result column="MTELPHONE" property="mtelphone" />
+		<result column="MAIL" property="mail" />
+		<result column="QQ" property="qq" />
+		<result column="DISTRICT" property="district" />
+		<result column="CITY" property="city" />
+		<result column="PROVINCE" property="province" />
+		<result column="LINKADDR" property="linkaddr" />
+		<result column="OWNER_REMARK" property="ownerRemark" />
+		<result column="INSURANCE_COMPANY_ID" property="insuranceCompanyId" />
+		<result column="INSURANCE_COMPANY" property="insuranceCompany" />
+		<result column="INSURANCE_COMPANY_TEL" property="insuranceCompanyTel" />
+		<result column="TBDW" property="tbdw" />
+		<result column="TBFS" property="tbfs" />
+		<result column="JSYX" property="jsyx" />
+		<result column="SYXS" property="syxs" />
+		<result column="ZSYX" property="zsyx" />
+		<result column="JJQX" property="jjqx" />
+		<result column="JQXS" property="jqxs" />
+		<result column="ZJQ" property="zjq" />
+		<result column="CCS" property="ccs" />
+		<result column="ZBF" property="zbf" />
+		<result column="SALES_MAN" property="salesMan" />
+		<result column="YJZFDX" property="yjzfdx" />
+		<result column="SYXYJBL" property="syxyjbl" />
+		<result column="SYXYJ" property="syxyj" />
+		<result column="ZHJRJBL" property="zhjrjbl" />
+		<result column="ZHJRJJE" property="zhjrjje" />
+		<result column="JJXYJBL" property="jjxyjbl" />
+		<result column="JJXYJ" property="jjxyj" />
+		<result column="CCSYJBL" property="ccsyjbl" />
+		<result column="CCSYJ" property="ccsyj" />
+		<result column="BXGSDQJL" property="bxgsdqjl" />
+		<result column="GIFT_SF" property="giftSf" />
+		<result column="GIFT_COMMENT" property="giftComment" />
+		<result column="SJZFYJ" property="sjzfyj" />
+		<result column="YJZFSJ" property="yjzfsj" />
+		<result column="YJZFR" property="yjzfr" />
+		<result column="RECORDER" property="recorder" />
+		<result column="RECORDERID" property="recorderid" />
+		<result column="RECORDERYJ" property="recorderyj" />
+		<result column="JDCSSXBE" property="jdcssxbe" />
+		<result column="JDCSSXBF" property="jdcssxbf" />
+		<result column="DSZRXBE" property="dszrxbe" />
+		<result column="DSZRXBF" property="dszrxbf" />
+		<result column="QCDQX" property="qcdqx" />
+		<result column="SJZRXBE" property="sjzrxbe" />
+		<result column="SJZRXBF" property="sjzrxbf" />
+		<result column="CKZRXBE" property="ckzrxbe" />
+		<result column="CKZRXBF" property="ckzrxbf" />
+		<result column="BLDDPSX" property="blddpsx" />
+		<result column="ZRSSX" property="zrssx" />
+		<result column="CSHHX" property="cshhx" />
+		<result column="FDCSSSSX" property="fdcssssx" />
+		<result column="JDCSSTYX" property="jdcsstyx" />
+		<result column="BJMP" property="bjmp" />
+		<result column="REMARK" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ORDER_ID AS orderId, CREATE_TIME AS createTime, ORDER_TYPE AS orderType, MERCHANT_ID AS merchantId, ORDER_NO AS orderNo, UPDATE_TIME AS updateTime, UPDATE_USER AS updateUser, ORDER_FLAG AS orderFlag, GIFT_FLAG AS giftFlag, PRINT_FLAG AS printFlag, CHECKOUT_FLAG AS checkoutFlag, DDR AS ddr, DD_DATE AS ddDate, BXGSSQYJBL AS bxgssqyjbl, BXGSSQYJ AS bxgssqyj, BXGSKPYJBL AS bxgskpyjbl, BXGSKPYJ AS bxgskpyj, GSGLFBL AS gsglfbl, GSGLFJE AS gsglfje, GSJSBL AS gsjsbl, GSJSJE AS gsjsje, GSTCBL AS gstcbl, GSTCJE AS gstcje, BGSML AS bgsml, CAR_NUM AS carNum, CAR_FRAME_NUM AS carFrameNum, ENGINE_NUM AS engineNum, CHANG_TYPE AS changType, REGISTER_TIME AS registerTime, EXAMINE_TIME AS examineTime, BUSINESS_INS_START_TIME AS businessInsStartTime, CAR_TYPE AS carType, TRAFFIC_INS_START_TIME AS trafficInsStartTime, CAR_REMARK AS carRemark, CAR_OWNER AS carOwner, OWNER_CARD_TYPE AS ownerCardType, OWNER_CARD_ID AS ownerCardId, POLICYHOLDER_ID AS policyholderId, POLICYHOLDER AS policyholder, TBR_CARD_TYPE AS tbrCardType, TBR_CARD_ID AS tbrCardId, BENEFICIARY AS beneficiary, BENEFICIARY_ID AS beneficiaryId, BBR_CARD_TYPE AS bbrCardType, BBR_CARD_ID AS bbrCardId, TELPHONE AS telphone, MTELPHONE AS mtelphone, MAIL AS mail, QQ AS qq, DISTRICT AS district, CITY AS city, PROVINCE AS province, LINKADDR AS linkaddr, OWNER_REMARK AS ownerRemark, INSURANCE_COMPANY_ID AS insuranceCompanyId, INSURANCE_COMPANY AS insuranceCompany, INSURANCE_COMPANY_TEL AS insuranceCompanyTel, OPERATOR AS operator, TBFS AS tbfs, JSYX AS jsyx, SYXS AS syxs, ZSYX AS zsyx, JJQX AS jjqx, JQXS AS jqxs, ZJQ AS zjq, CCS AS ccs, ZBF AS zbf, SALES_MAN AS salesMan, YJZFDX AS yjzfdx, SYXYJBL AS syxyjbl, SYXYJ AS syxyj, ZHJRJBL AS zhjrjbl, ZHJRJJE AS zhjrjje, JJXYJBL AS jjxyjbl, JJXYJ AS jjxyj, CCSYJBL AS ccsyjbl, CCSYJ AS ccsyj, BXGSDQJL AS bxgsdqjl, GIFT_SF AS giftSf, GIFT_COMMENT AS giftComment, SJZFYJ AS sjzfyj, YJZFSJ AS yjzfsj, YJZFR AS yjzfr, RECORDER AS recorder, RECORDERID AS recorderid, RECORDERYJ AS recorderyj, JDCSSXBE AS jdcssxbe, JDCSSXBF AS jdcssxbf, DSZRXBE AS dszrxbe, DSZRXBF AS dszrxbf, QCDQX AS qcdqx, SJZRXBE AS sjzrxbe, SJZRXBF AS sjzrxbf, CKZRXBE AS ckzrxbe, CKZRXBF AS ckzrxbf, BLDDPSX AS blddpsx, ZRSSX AS zrssx, CSHHX AS cshhx, FDCSSSSX AS fdcssssx, JDCSSTYX AS jdcsstyx, BJMP AS bjmp, REMARK AS remark
+    </sql>
+	<select id="selectPage" resultType="Map">
+		SELECT
+			t.ORDER_ID AS orderId,
+			t.CREATE_TIME AS createTime,
+			t.ORDER_TYPE AS orderType,
+			t.MERCHANT_ID AS merchantId,
+			t.OPERATOR AS operator,
+			t.ORDER_NO AS orderNo,
+			t.TB_START_TIME AS tbStartTime,
+			t.TB_END_TIME AS tbEndTime,
+			t.UPDATE_TIME AS updateTime,
+			t.UPDATE_USER AS updateUser,
+			t.ORDER_FLAG AS orderFlag,
+			t.GIFT_FLAG AS giftFlag,
+			t.COMMISSION_FLAG AS commissionFlag,
+			t.PRINT_FLAG AS printFlag,
+			t.CHECKOUT_FLAG AS checkoutFlag,
+			t.DDR AS ddr,
+			t.DD_DATE AS ddDate,
+			t.BXGSSQJQYJBL AS bxgssqjqyjbl,
+			t.BXGSSQYJBL AS bxgssqyjbl,
+			t.BXGSSQJQYJ AS bxgssqjqyj,
+			t.BXGSSQYJ AS bxgssqyj,
+			t.BXGSKPYJBL AS bxgskpyjbl,
+			t.BXGSKPYJ AS bxgskpyj,
+			t.GSGLFBL AS gsglfbl,
+			t.GSGLFJE AS gsglfje,
+			t.GSJSBL AS gsjsbl,
+			t.GSJSJE AS gsjsje,
+			t.GSTCBL AS gstcbl,
+			t.GSTCJE AS gstcje,
+			t.BGSML AS bgsml,
+			t.CAR_NUM AS carNum,
+			t.CAR_FRAME_NUM AS carFrameNum,
+			t.ENGINE_NUM AS engineNum,
+			t.CHANG_TYPE AS changType,
+			t.REGISTER_TIME AS registerTime,
+			t.EXAMINE_TIME AS examineTime,
+			t.BUSINESS_INS_START_TIME AS businessInsStartTime,
+			t.CAR_TYPE AS carType,
+			t.TRAFFIC_INS_START_TIME AS trafficInsStartTime,
+			t.CAR_REMARK AS carRemark,
+			t.CAR_OWNER AS carOwner,
+			t.OWNER_CARD_TYPE AS ownerCardType,
+			t.OWNER_CARD_ID AS ownerCardId,
+			t.POLICYHOLDER_ID AS policyholderId,
+			t.POLICYHOLDER AS policyholder,
+			t.TBR_CARD_TYPE AS tbrCardType,
+			t.TBR_CARD_ID AS tbrCardId,
+			t.BENEFICIARY AS beneficiary,
+			t.BBR_SEX AS bbrSex,
+			t.BBR_AGE AS bbrAge,
+			t.BBR_CARD_TYPE AS bbrCardType,
+			t.BBR_CARD_ID AS bbrCardId,
+			t.TELPHONE AS telphone,
+			t.MTELPHONE AS mtelphone,
+			t.MAIL AS mail,
+			t.QQ AS qq,
+			t.DISTRICT AS district,
+			t.CITY AS city,
+			t.PROVINCE AS province,
+			t.LINKADDR AS linkaddr,
+			t.OWNER_REMARK AS ownerRemark,
+			t.INSURANCE_COMPANY_ID AS insuranceCompanyId,
+			t.INSURANCE_COMPANY AS insuranceCompany,
+			t.INSURANCE_COMPANY_TEL AS insuranceCompanyTel,
+			t.TBDW AS tbdw,
+			t.TBFS AS tbfs,
+			t.JSYX AS jsyx,
+			t.SYXS AS syxs,
+			t.ZSYX AS zsyx,
+			t.JJQX AS jjqx,
+			t.JQXS AS jqxs,
+			t.ZJQ AS zjq,
+			t.CCS AS ccs,
+			t.ZBF AS zbf,
+			t.SALES_MAN AS salesMan,
+			t.YJZFDX AS yjzfdx,
+			t.SYXYJBL AS syxyjbl,
+			t.SYXYJ AS syxyj,
+			t.ZHJRJBL AS zhjrjbl,
+			t.ZHJRJJE AS zhjrjje,
+			t.JJXYJBL AS jjxyjbl,
+			t.JJXYJ AS jjxyj,
+			t.CCSYJBL AS ccsyjbl,
+			t.CCSYJ AS ccsyj,
+			t.BXGSDQJL AS bxgsdqjl,
+			t.GIFT_SF AS giftSf,
+			t.GIFT_COMMENT AS giftComment,
+			t.SJZFYJ AS sjzfyj,
+			t.YJZFSJ AS yjzfsj,
+			t.YJZFR AS yjzfr,
+			t.RECORDER AS recorder,
+			t.RECORDERID AS recorderid,
+			t.RECORDERYJ AS recorderyj,
+			t.JDCSSXBE AS jdcssxbe,
+			t.JDCSSXBF AS jdcssxbf,
+			t.DSZRXBE AS dszrxbe,
+			t.DSZRXBF AS dszrxbf,
+			t.QCDQX AS qcdqx,
+			t.SJZRXBE AS sjzrxbe,
+			t.SJZRXBF AS sjzrxbf,
+			t.CKZRXBE AS ckzrxbe,
+			t.CKZRXBF AS ckzrxbf,
+			t.BLDDPSX AS blddpsx,
+			t.ZRSSX AS zrssx,
+			t.CSHHX AS cshhx,
+			t.FDCSSSSX AS fdcssssx,
+			t.JDCSSTYX AS jdcsstyx,
+			t.BJMP AS bjmp,
+			t.REMARK AS remark,
+			i.insurer_name as insuranceCompany,
+			i.insurer_phone as insuranceCompanyTel,
+			b.name as operatorName,
+			s.user_name as salesManName,
+			o.name as recorder,
+			c.name as updateUserName
+		FROM
+			order_cx t
+		LEFT JOIN user o ON t.recorderid = o.id
+		LEFT JOIN t_insurer i ON t.insurance_company_id = i.id
+		LEFT JOIN sales_man s ON t.sales_man = s.id
+		LEFT JOIN user b ON t.OPERATOR = b.id
+		LEFT JOIN user c ON t.update_user = c.id
+		<where>
+            <if test=" orderFlag != null and orderFlag != '' ">
+                  <![CDATA[ t.order_flag <> #{orderFlag} ]]>
+            </if>
+        </where>
+	</select>
+	<select id="selectOrderByOrderId" resultType="OrderCxVo">
+		SELECT
+			t.ORDER_ID AS orderId,
+			t.CREATE_TIME AS createTime,
+			t.ORDER_TYPE AS orderType,
+			t.MERCHANT_ID AS merchantId,
+			t.OPERATOR AS operator,
+			t.ORDER_NO AS orderNo,
+			t.TB_START_TIME AS tbStartTime,
+			t.TB_END_TIME AS tbEndTime,
+			t.UPDATE_TIME AS updateTime,
+			t.UPDATE_USER AS updateUser,
+			t.ORDER_FLAG AS orderFlag,
+			t.GIFT_FLAG AS giftFlag,
+			t.COMMISSION_FLAG AS commissionFlag,
+			t.PRINT_FLAG AS printFlag,
+			t.CHECKOUT_FLAG AS checkoutFlag,
+			t.DDR AS ddr,
+			t.DD_DATE AS ddDate,
+			t.BXGSSQJQYJBL AS bxgssqjqyjbl,
+			t.BXGSSQYJBL AS bxgssqyjbl,
+			t.BXGSSQJQYJ AS bxgssqjqyj,
+			t.BXGSSQYJ AS bxgssqyj,
+			t.BXGSKPYJBL AS bxgskpyjbl,
+			t.BXGSKPYJ AS bxgskpyj,
+			t.GSGLFBL AS gsglfbl,
+			t.GSGLFJE AS gsglfje,
+			t.GSJSBL AS gsjsbl,
+			t.GSJSJE AS gsjsje,
+			t.GSTCBL AS gstcbl,
+			t.GSTCJE AS gstcje,
+			t.BGSML AS bgsml,
+			t.CAR_NUM AS carNum,
+			t.CAR_FRAME_NUM AS carFrameNum,
+			t.ENGINE_NUM AS engineNum,
+			t.CHANG_TYPE AS changType,
+			t.REGISTER_TIME AS registerTime,
+			t.EXAMINE_TIME AS examineTime,
+			t.BUSINESS_INS_START_TIME AS businessInsStartTime,
+			t.CAR_TYPE AS carType,
+			t.TRAFFIC_INS_START_TIME AS trafficInsStartTime,
+			t.CAR_REMARK AS carRemark,
+			t.CAR_OWNER AS carOwner,
+			t.OWNER_CARD_TYPE AS ownerCardType,
+			t.OWNER_CARD_ID AS ownerCardId,
+			t.POLICYHOLDER_ID AS policyholderId,
+			t.POLICYHOLDER AS policyholder,
+			t.TBR_CARD_TYPE AS tbrCardType,
+			t.TBR_CARD_ID AS tbrCardId,
+			t.BENEFICIARY AS beneficiary,
+			t.BBR_SEX AS bbrSex,
+			t.BBR_AGE AS bbrAge,
+			t.BBR_CARD_TYPE AS bbrCardType,
+			t.BBR_CARD_ID AS bbrCardId,
+			t.TELPHONE AS telphone,
+			t.MTELPHONE AS mtelphone,
+			t.MAIL AS mail,
+			t.QQ AS qq,
+			t.DISTRICT AS district,
+			t.CITY AS city,
+			t.PROVINCE AS province,
+			t.LINKADDR AS linkaddr,
+			t.OWNER_REMARK AS ownerRemark,
+			t.INSURANCE_COMPANY_ID AS insuranceCompanyId,
+			t.INSURANCE_COMPANY_TEL AS insuranceCompanyTel,
+			t.TBDW AS tbdw,
+			t.TBFS AS tbfs,
+			t.JSYX AS jsyx,
+			t.SYXS AS syxs,
+			t.ZSYX AS zsyx,
+			t.JJQX AS jjqx,
+			t.JQXS AS jqxs,
+			t.ZJQ AS zjq,
+			t.CCS AS ccs,
+			t.ZBF AS zbf,
+			t.SALES_MAN AS salesMan,
+			t.YJZFDX AS yjzfdx,
+			t.SYXYJBL AS syxyjbl,
+			t.SYXYJ AS syxyj,
+			t.ZHJRJBL AS zhjrjbl,
+			t.ZHJRJJE AS zhjrjje,
+			t.JJXYJBL AS jjxyjbl,
+			t.JJXYJ AS jjxyj,
+			t.CCSYJBL AS ccsyjbl,
+			t.CCSYJ AS ccsyj,
+			t.BXGSDQJL AS bxgsdqjl,
+			t.GIFT_SF AS giftSf,
+			t.GIFT_COMMENT AS giftComment,
+			t.SJZFYJ AS sjzfyj,
+			t.YJZFSJ AS yjzfsj,
+			t.YJZFR AS yjzfr,
+			t.RECORDER AS recorder,
+			t.RECORDERID AS recorderid,
+			t.RECORDERYJ AS recorderyj,
+			t.JDCSSXBE AS jdcssxbe,
+			t.JDCSSXBF AS jdcssxbf,
+			t.DSZRXBE AS dszrxbe,
+			t.DSZRXBF AS dszrxbf,
+			t.QCDQX AS qcdqx,
+			t.SJZRXBE AS sjzrxbe,
+			t.SJZRXBF AS sjzrxbf,
+			t.CKZRXBE AS ckzrxbe,
+			t.CKZRXBF AS ckzrxbf,
+			t.BLDDPSX AS blddpsx,
+			t.ZRSSX AS zrssx,
+			t.CSHHX AS cshhx,
+			t.FDCSSSSX AS fdcssssx,
+			t.JDCSSTYX AS jdcsstyx,
+			t.BJMP AS bjmp,
+			t.REMARK AS remark,
+			m.category_name as orderTypeName,
+			i.insurer_name as insuranceCompany,
+			i.insurer_phone as insuranceCompanyTel,
+			b.name as operatorName,
+			s.user_name as salesManName,
+			o.name as recorder,
+			s.mtelphone as salesTelphone,
+			s.wechat,
+			s.linkaddr as salesLinkaddr,
+			s.bank_name as bankName,
+			s.bank_user_name as bankUserName,
+			s.bank_no as bankNo
+		FROM
+			order_cx t
+		LEFT JOIN user o ON t.recorderid = o.id
+		LEFT JOIN t_insurer i ON t.insurance_company_id = i.id
+		LEFT JOIN sales_man s ON t.sales_man = s.id
+		LEFT JOIN user b ON t.OPERATOR = b.id
+		LEFT JOIN t_merchant_product_category m ON t.order_type = m.category_id
+		<where>
+            t.order_id = #{id}
+        </where>
+	</select>
+	<update id="updateById" parameterType="com.gewei.model.OrderCx">
+		update order_cx set 
+			<if test="orderId != null"> ORDER_ID=#{orderId}</if>
+			<if test="createTime != null"> ,CREATE_TIME=#{createTime}</if>
+			<if test="orderType != null"> ,ORDER_TYPE=#{orderType}</if>
+			<if test="merchantId != null"> ,MERCHANT_ID=#{merchantId}</if>
+			<if test="operator != null"> ,OPERATOR=#{operator}</if>
+			<if test="orderNo != null"> ,ORDER_NO=#{orderNo}</if>
+			<if test="tbStartTime != null"> ,TB_START_TIME=#{tbStartTime}</if>
+			<if test="tbEndTime != null"> ,TB_END_TIME=#{tbEndTime}</if>
+			<if test="updateTime != null"> ,UPDATE_TIME=#{updateTime}</if>
+			<if test="updateUser != null"> ,UPDATE_USER=#{updateUser}</if>
+			<if test="orderFlag != null"> ,ORDER_FLAG=#{orderFlag}</if>
+			<if test="giftFlag != null"> ,GIFT_FLAG=#{giftFlag}</if>
+			<if test="commissionFlag != null"> ,COMMISSION_FLAG=#{commissionFlag}</if>
+			<if test="printFlag != null"> ,PRINT_FLAG=#{printFlag}</if>
+			<if test="checkoutFlag != null"> ,CHECKOUT_FLAG=#{checkoutFlag}</if>
+			<if test="ddr != null"> ,DDR=#{ddr}</if>
+			<if test="ddDate != null"> ,DD_DATE=#{ddDate}</if>
+			<if test="bxgssqjqyjbl != null"> ,BXGSSQJQYJBL=#{bxgssqjqyjbl}</if>
+			<if test="bxgssqyjbl != null"> ,BXGSSQYJBL=#{bxgssqyjbl}</if>
+			<if test="bxgssqjqyj != null"> ,BXGSSQJQYJ=#{bxgssqjqyj}</if>
+			<if test="bxgssqyj != null"> ,BXGSSQYJ=#{bxgssqyj}</if>
+			<if test="bxgskpyjbl != null"> ,BXGSKPYJBL=#{bxgskpyjbl}</if>
+			<if test="bxgskpyj != null"> ,BXGSKPYJ=#{bxgskpyj}</if>
+			<if test="gsglfbl != null"> ,GSGLFBL=#{gsglfbl}</if>
+			<if test="gsglfje != null"> ,GSGLFJE=#{gsglfje}</if>
+			<if test="gsjsbl != null"> ,GSJSBL=#{gsjsbl}</if>
+			<if test="gsjsje != null"> ,GSJSJE=#{gsjsje}</if>
+			<if test="gstcbl != null"> ,GSTCBL=#{gstcbl}</if>
+			<if test="gstcje != null"> ,GSTCJE=#{gstcje}</if>
+			<if test="bgsml != null"> ,BGSML=#{bgsml}</if>
+			<if test="carNum != null"> ,CAR_NUM=#{carNum}</if>
+			<if test="carFrameNum != null"> ,CAR_FRAME_NUM=#{carFrameNum}</if>
+			<if test="engineNum != null"> ,ENGINE_NUM=#{engineNum}</if>
+			<if test="changType != null"> ,CHANG_TYPE=#{changType}</if>
+			<if test="registerTime != null"> ,REGISTER_TIME=#{registerTime}</if>
+			<if test="examineTime != null"> ,EXAMINE_TIME=#{examineTime}</if>
+			<if test="businessInsStartTime != null"> ,BUSINESS_INS_START_TIME=#{businessInsStartTime}</if>
+			<if test="carType != null"> ,CAR_TYPE=#{carType}</if>
+			<if test="trafficInsStartTime != null"> ,TRAFFIC_INS_START_TIME=#{trafficInsStartTime}</if>
+			<if test="carRemark != null"> ,CAR_REMARK=#{carRemark}</if>
+			<if test="carOwner != null"> ,CAR_OWNER=#{carOwner}</if>
+			<if test="ownerCardType != null"> ,OWNER_CARD_TYPE=#{ownerCardType}</if>
+			<if test="ownerCardId != null"> ,OWNER_CARD_ID=#{ownerCardId}</if>
+			<if test="policyholderId != null"> ,POLICYHOLDER_ID=#{policyholderId}</if>
+			<if test="policyholder != null"> ,POLICYHOLDER=#{policyholder}</if>
+			<if test="tbrCardType != null"> ,TBR_CARD_TYPE=#{tbrCardType}</if>
+			<if test="tbrCardId != null"> ,TBR_CARD_ID=#{tbrCardId}</if>
+			<if test="beneficiary != null"> ,BENEFICIARY=#{beneficiary}</if>
+			<if test="bbrSex != null"> ,BBR_SEX=#{bbrSex}</if>
+			<if test="bbrAge != null"> ,BBR_AGE=#{bbrAge}</if>
+			<if test="bbrCardType != null"> ,BBR_CARD_TYPE=#{bbrCardType}</if>
+			<if test="bbrCardId != null"> ,BBR_CARD_ID=#{bbrCardId}</if>
+			<if test="telphone != null"> ,TELPHONE=#{telphone}</if>
+			<if test="mtelphone != null"> ,MTELPHONE=#{mtelphone}</if>
+			<if test="mail != null"> ,MAIL=#{mail}</if>
+			<if test="qq != null"> ,QQ=#{qq}</if>
+			<if test="district != null"> ,DISTRICT=#{district}</if>
+			<if test="city != null"> ,CITY=#{city}</if>
+			<if test="province != null"> ,PROVINCE=#{province}</if>
+			<if test="linkaddr != null"> ,LINKADDR=#{linkaddr}</if>
+			<if test="ownerRemark != null"> ,OWNER_REMARK=#{ownerRemark}</if>
+			<if test="insuranceCompanyId != null"> ,INSURANCE_COMPANY_ID=#{insuranceCompanyId}</if>
+			<if test="insuranceCompany != null"> ,INSURANCE_COMPANY=#{insuranceCompany}</if>
+			<if test="insuranceCompanyTel != null"> ,INSURANCE_COMPANY_TEL=#{insuranceCompanyTel}</if>
+			<if test="tbdw != null"> ,TBDW=#{tbdw}</if>
+			<if test="tbfs != null"> ,TBFS=#{tbfs}</if>
+			<if test="jsyx != null"> ,JSYX=#{jsyx}</if>
+			<if test="syxs != null"> ,SYXS=#{syxs}</if>
+			<if test="zsyx != null"> ,ZSYX=#{zsyx}</if>
+			<if test="jjqx != null"> ,JJQX=#{jjqx}</if>
+			<if test="jqxs != null"> ,JQXS=#{jqxs}</if>
+			<if test="zjq != null"> ,ZJQ=#{zjq}</if>
+			<if test="ccs != null"> ,CCS=#{ccs}</if>
+			<if test="zbf != null"> ,ZBF=#{zbf}</if>
+			<if test="salesMan != null"> ,SALES_MAN=#{salesMan}</if>
+			<if test="yjzfdx != null"> ,YJZFDX=#{yjzfdx}</if>
+			<if test="syxyjbl != null"> ,SYXYJBL=#{syxyjbl}</if>
+			<if test="syxyj != null"> ,SYXYJ=#{syxyj}</if>
+			<if test="zhjrjbl != null"> ,ZHJRJBL=#{zhjrjbl}</if>
+			<if test="zhjrjje != null"> ,ZHJRJJE=#{zhjrjje}</if>
+			<if test="jjxyjbl != null"> ,JJXYJBL=#{jjxyjbl}</if>
+			<if test="jjxyj != null"> ,JJXYJ=#{jjxyj}</if>
+			<if test="ccsyjbl != null"> ,CCSYJBL=#{ccsyjbl}</if>
+			<if test="ccsyj != null"> ,CCSYJ=#{ccsyj}</if>
+			<if test="bxgsdqjl != null"> ,BXGSDQJL=#{bxgsdqjl}</if>
+			<if test="giftSf != null"> ,GIFT_SF=#{giftSf}</if>
+			<if test="giftComment != null"> ,GIFT_COMMENT=#{giftComment}</if>
+			<if test="sjzfyj != null"> ,SJZFYJ=#{sjzfyj}</if>
+			<if test="yjzfsj != null"> ,YJZFSJ=#{yjzfsj}</if>
+			<if test="yjzfr != null"> ,YJZFR=#{yjzfr}</if>
+			<if test="recorder != null"> ,RECORDER=#{recorder}</if>
+			<if test="recorderid != null"> ,RECORDERID=#{recorderid}</if>
+			<if test="recorderyj != null"> ,RECORDERYJ=#{recorderyj}</if>
+			<if test="jdcssxbe != null"> ,JDCSSXBE=#{jdcssxbe}</if>
+			<if test="jdcssxbf != null"> ,JDCSSXBF=#{jdcssxbf}</if>
+			<if test="dszrxbe != null"> ,DSZRXBE=#{dszrxbe}</if>
+			<if test="dszrxbf != null"> ,DSZRXBF=#{dszrxbf}</if>
+			<if test="qcdqx != null"> ,QCDQX=#{qcdqx}</if>
+			<if test="sjzrxbe != null"> ,SJZRXBE=#{sjzrxbe}</if>
+			<if test="sjzrxbf != null"> ,SJZRXBF=#{sjzrxbf}</if>
+			<if test="ckzrxbe != null"> ,CKZRXBE=#{ckzrxbe}</if>
+			<if test="ckzrxbf != null"> ,CKZRXBF=#{ckzrxbf}</if>
+			<if test="blddpsx != null"> ,BLDDPSX=#{blddpsx}</if>
+			<if test="zrssx != null"> ,ZRSSX=#{zrssx}</if>
+			<if test="cshhx != null"> ,CSHHX=#{cshhx}</if>
+			<if test="fdcssssx != null"> ,FDCSSSSX=#{fdcssssx}</if>
+			<if test="jdcsstyx != null"> ,JDCSSTYX=#{jdcsstyx}</if>
+			<if test="bjmp != null"> ,BJMP=#{bjmp}</if>
+			<if test="remark != null"> ,REMARK=#{remark}</if> 
+		where order_id=#{orderId}
+	</update>
+</mapper>

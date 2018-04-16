@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商家助手</title>
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/app.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
+		<link rel="stylesheet" href="../../css/icons-extra.css">
+	</head>
+
+	<body>
+		<div class="mui-content order">
+			<ul class="mui-table-view mui-table-view-chevron" id="todo" v-cloak>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-cx.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-beibaoxianren"></span>财产保险
+						<i class="db update">代办:{{todo.db_ccbx}}</i>
+						<i class="cj update">成交:{{todo.cj_ccbx}}</i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-rs.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-renshouxian"></span>人寿保险
+						<i class="db update">代办:{{todo.db_rsbx}}</i>
+						<i class="cj update">成交:{{todo.cj_rsbx}}</i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-cd.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-cheliangxinxi"></span>车务代办
+						<i class="db update">代办:{{todo.db_cwdb}}</i>
+						<i class="cj update">成交:{{todo.cj_cwdb}}</i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-cm.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-meirong"></span>汽修美容
+						<i class="db update">代办:{{todo.db_qcmr}}</i>
+						<i class="cj update">成交:{{todo.cj_qcmr}}</i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-qc.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-ershoucheguanli"></span>二手汽车
+						<i class="db update">代办:{{todo.cj_esc}}</i>
+						<i class="cj update">成交:{{todo.db_esc}}</i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-dk.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-dkw_daikuan"></span>贷款业务
+						<i class="db update">代办:{{todo.db_dkyw}}</i>
+						<i class="cj update">成交:{{todo.cj_dkyw}}</i>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="business-helper-lc.html" class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-38"></span>理财产品
+						<i class="db update">代办:{{todo.db_lcyw}}</i>
+						<i class="cj update">成交:{{todo.cj_lcyw}}</i>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(function() {
+				show();
+				$$.ajax({                
+					type:   "POST",
+					url: base_url + '/shanjiafuwu/merchantAssistant',
+					data: {merchantId: sessionStorage.getItem("merchantId")},
+					dataType: 'json',
+					success:   function(response)  {
+						hide();
+						console.log(response)
+						if(response.success) {
+							var app = new Vue({
+								el: '#todo',
+								data: {
+									todo: response.obj
+								}
+							})
+						} else {
+							hide();
+							_errors();
+						}
+					},
+					error:   function(result)  {
+						_errors();;
+					}            
+				});
+			})
+		</script>
+	</body>
+
+</html>

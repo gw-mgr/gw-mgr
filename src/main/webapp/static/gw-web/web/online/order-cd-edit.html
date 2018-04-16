@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>车务代办-编辑</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item"  id="apply">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item" id="cancel">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;取&nbsp;&nbsp;消&nbsp;&nbsp;</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<input type="hidden" name="status" />
+				<input type="hidden" name="orderId" />
+				<div class="mui-input-group">
+					<div class="mui-table-view-divider none">客户信息</div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="userName" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="32" >
+					</div>
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="text" name="telephone" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="11">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>买/卖地址</label>
+							<input name="provinceAddr" type="text"  class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+							<input name="province" type="hidden">
+							<input name="city" type="hidden">
+							<input name="country" type="hidden">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>详细地址</label>
+						<input type="text" name="detailAddr" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="30">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+						<input type="text" name="carNum" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+					</div>
+					<div class="mui-input-row">
+						<label>车架号</label>
+						<input type="text" name="carFrameNum" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="17">
+					</div>
+					<div class="mui-input-row">
+						<label>发动机号</label>
+						<input type="text" name="engineNum" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="17">
+					</div>
+					<div class="mui-input-row">
+						<label>厂牌类型</label>
+						<input type="text" name="changType" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="32">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>车辆类型</label>
+							<input type="text" name="carType" class=" mui-text-right carType" placeholder="请选择" maxlength="50" readonly="readonly" >
+						</div>
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>初登日期</label>
+						 	<input type="text" name="registerTime" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly" >
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>商业险起保日</label>
+						 	<input type="text" name="businessInsStartTime" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly" >
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>交强险起保日</label>
+						 	<input type="text" name="trafficInsStartTime" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly" >
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(function(){
+				show();
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/dingdanzhuizong/getOrderDetailInfoByOrderId',
+					data:{
+							orderId:getUrlParam('orderId')
+						},
+					dataType: 'json',
+					success: function(response) {
+						hide();
+						if(response.success) {
+							console.log(response)
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							for(var j = 0;j<orderFlagData.length;j++){
+								if(data.status === orderFlagData[j].value){
+									data.statusText = orderFlagData[j].text;
+									$$("input[name=statusText]").addClass(orderFlagData[j].color);
+									break;
+								}
+							}
+							if(!isNull(data.carNum))$$(".cartext").html(data.carNum.substr(0,1));
+							if(!isNull(data.carNum))data.carNum = data.carNum.substr(1,data.carNum.length);
+							if(!isNull(data.createTime))data.createTime = getYear(data.createTime);
+							if(!isNull(data.examineTime))data.examineTime = getYear(data.examineTime);
+							if(!isNull(data.businessInsStartTime))data.businessInsStartTime = getYear(data.businessInsStartTime);
+							if(!isNull(data.registerTime))data.registerTime = getYear(data.registerTime);
+							if(!isNull(data.trafficInsStartTime))data.trafficInsStartTime = getYear(data.trafficInsStartTime);
+							if(!isNull(data.endDate))data.endDate = getYear(data.endDate);
+							if(!isNull(data.orderMoney))data.orderMoney = (data.orderMoney*0.01).toFixed(2);
+							
+							for(var i = 0; i < areaData.length; i++) {
+								if(areaData[i].value === data.province) {
+									for(var j = 0; j < areaData[i].children.length; j++) {
+										if(areaData[i].children[j].value === data.city) {
+											var erea = areaData[i].children[j].children;
+											for(var k = 0; k < erea.length; k++) {
+												if(erea[k].value === data.country) {
+													$$("input[name=provinceAddr]").val(areaData[i].text + " " + areaData[i].children[j].text + " " + erea[k].text);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			
+			_showcar();
+			(function($, doc) {
+				$.init();
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					var carTypePicker = new $.PopPicker({
+						layer: "",
+						title: "车辆类型"
+					});
+					/*车辆类型*/
+					carTypePicker.setData(carTypeData);
+					$$(".carType").click(function(event) { //
+						var _this = $$(this);
+						carTypePicker.show(function(items) {
+							$$(_this).val(JSON.stringify(items[0].text).replace(/"/g, ""));			
+						});
+					});
+					$$(".date").click(function(event){//
+					var _self = this;
+					if(_self.picker) {
+						_self.picker.show(function (rs) {
+							$$(_self).val(rs.text);
+							_self.picker.dispose();
+							_self.picker = null;
+						});
+					} else {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						_self.picker = new $.DtPicker(options);
+						_self.picker.show(function(rs) {
+							$$(_self).val(rs.text);
+							_self.picker.dispose();
+							_self.picker = null;
+						});
+					}
+				});
+				
+				/*************************户籍*********************************/
+				var _getParam = function(obj, param) {
+					return obj[param] || '';
+				};
+				var cityPicker3 = new $.PopPicker({
+					layer: 3,
+					title: "选择地区"
+				});
+				cityPicker3.setData(areaData);
+
+				//投保人现住址
+				$$(".address").click(function(event) { //
+					var _self = this;
+					cityPicker3.show(function(items) {
+						$$(_self).val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+						$$(_self).next().val(_getParam(items[0], 'value'));
+						$$(_self).next().next().val(_getParam(items[1], 'value'));
+						$$(_self).next().next().next().val(_getParam(items[2], 'value'));
+					});
+				});
+			});
+		})(mui, document);
+		
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				if(isNull(datas.userName))return mui.toast("请输入姓名");
+				if(isNull(datas.telephone))return mui.toast("请选择电话");
+				if(checkPhone(datas.telephone))return mui.toast("电话输入有误");
+				if(isNull(datas.province))return mui.toast("请选择联系地址");
+				if(isNull(datas.detailAddr))return mui.toast("请输入详细地址");
+				if(isNull(datas.carNum))return mui.toast("请输入车牌号");
+				datas.carNum = $$(".cartext").html() + datas.carNum;
+				console.log(datas.carNum)
+				if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(datas.carNum)) {
+					return mui.toast("车牌号输入错误，请重新输入");
+				}
+				if(isNull(datas.carFrameNum))return mui.toast("请输入车架号");
+				if(datas.carFrameNum.length!=17)return mui.toast("车架号输入有误");
+				if(isNull(datas.engineNum))return mui.toast("请输入发动机号");
+				if(isNull(datas.changType))return mui.toast("请输入厂牌类型");
+				if(isNull(datas.carType))return mui.toast("请选择车辆类型");
+				if(isNull(datas.registerTime))return mui.toast("请选择初登日期");
+				if(isNull(datas.businessInsStartTime))return mui.toast("请选择商业险起保日");
+				if(isNull(datas.trafficInsStartTime))return mui.toast("请选择交强险起保日");
+				datas.registerTime = datas.registerTime.replace(/-/g, "") + "000000";
+				datas.businessInsStartTime = datas.businessInsStartTime.replace(/-/g, "") + "000000";
+				datas.trafficInsStartTime = datas.trafficInsStartTime.replace(/-/g, "") + "000000";
+				
+				if(!isNull(sessionStorage.getItem("userId"))) {
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				console.log(datas);
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/dingdanzhuizong/editOrderDetailInfoByOrderId',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					hide();
+						if(response.success) {
+							mui.toast("编辑成功!")
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("保存失败，请重试");
+					}
+	            });
+			});
+			$$("#cancel").click(function() {
+				history.back(-1);
+			});
+		</script>
+	</body>
+
+</html>

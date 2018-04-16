@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="orderlist file">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>客户查询</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+		<style>
+			.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech{    right: 91px;}
+			#search{position: absolute;top: 0;right: 0;z-index: 1;padding: 14px 10px;width: 92px;border-radius: 0;border-top-right-radius: 6px;border-bottom-right-radius: 6px;}
+		</style>
+	</head>
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">新增</button>
+			</div>
+		</nav>
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list mui-table-view-cell">
+				<div class="mui-indexed-list-search mui-input-row mui-search">
+					<input type="search" id="keyWords" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索姓/姓名/电话/车牌号任意数字均可搜索">
+					<button class="mui-btn mui-btn-primary" id="search">搜索</button>
+				</div>
+				<div class="mui-table">
+					<div class="mui-table-cell mui-col-xs-3 mui-text-left">
+						<div>姓名</div>
+					</div>
+					
+					<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+						<div>车牌号</div>
+					</div>
+					<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+						<div>总费用</div>
+					</div>
+					<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+						<div class="gray">投保日期</div>
+					</div>
+				</div>
+			</div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		
+		<script>
+			var page = 0,
+				rows =10,
+				max = 0;
+			function queryProduct(page) {
+				var keyType = $$("#keyType").val();//搜索类型
+				var keyWords = $$("#keyWords").val();//搜索内容
+				var param ={
+						userId: sessionStorage.getItem("userId"),
+						page: page,
+						rows: rows,
+						keyWords:keyWords
+				}
+				console.log(param)
+				var table = document.body.querySelector('#pullrefresh .mui-table-view');
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/baoxiandangan/getCxAndSxCustomerList',
+					data:param,
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						if(response.success) {
+							var item = response.obj;
+							max = Math.ceil(response.totalCount / rows); //计算总页数
+							console.log(max+"--------max");
+							if(response.totalCount > 0 && item.length>0) {
+								for(var i = 0; i < item.length; i++) {
+									var statusVal,color;
+									for(var j = 0;j<xcOrderFlagData.length;j++){
+										if(item[i].status === xcOrderFlagData[j].value){
+											statusVal = xcOrderFlagData[j].text;
+											color =  xcOrderFlagData[j].color;
+											break;
+										}
+									}
+									var li = document.createElement('li');
+									li.className = 'mui-table-view-cell';
+									li.setAttribute("data-customerId",item[i].customerId);
+									li.innerHTML = '<div class="mui-table">'
+												+'<div class="mui-table-cell mui-col-xs-3 mui-text-left">'
+												+'<div>'+item[i].customerName+'</div>'
+												+'</div>'
+												+'<div class="mui-table-cell mui-col-xs-3 mui-text-center">'
+												+'<div>'+item[i].carNum+'</div>'
+												+'</div>'
+												+'<div class="mui-table-cell mui-col-xs-3 mui-text-center">'
+												+'<div class="red">'+((item[i].zbf)*0.01).toFixed(2)+'</div>'
+												+'</div>'
+												+'<div class="mui-table-cell mui-col-xs-3 mui-text-right">'
+												+'<div class="gray">'+getData(item[i].lastTBDate)+'</div>'
+												+'</div>'
+												+'</div>';
+									table.appendChild(li);
+									//进度条显示
+									mui(".mui-progressbar").each(function() {
+										mui(this).progressbar({
+											progress: this.getAttribute("data-progress")
+										}).show();
+									});
+								}
+							} else {
+								$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+															+'<div class="data-icon icon-none"></div>'
+															+'<p class="data-title">暂无相关客户</p>'
+															+'</div>');
+							}
+						} else {
+							$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+														+'<div class="data-icon icon-none"></div>'
+														+'<p class="data-title">暂无相关客户</p>'
+														+'</div>');
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			}
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						ontentinit: ' ',
+						contentdown: " ", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "   ", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: " ", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						ontentinit: ' ',
+						contentdown: ' ',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				$$(".mui-table-view").html("");
+				setTimeout(function() {
+					page = 1;
+					queryProduct(1);
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#pullrefresh').pullRefresh().refresh(true);
+				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					var cells = document.body.querySelectorAll('#pullrefresh .mui-table-view li');
+					
+					if(cells.length >= page * rows) {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((page++ > max)); //参数为true代表没有更多数据了。
+						queryProduct(page);
+					} else {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					}
+				}, 1000);
+			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			//详情
+			mui('#pullrefresh .mui-table-view').on('tap', '.mui-table-view li', function () {  
+				var customerId = $$(this).attr("data-customerid");
+				window.location.href= 'file-kh-detail.html?customerId='+customerId;
+	       	});
+	       	$$("#apply").click(function(){
+				_href("file-kh-add.html");
+			});
+		</script>
+	</body>
+
+</html>

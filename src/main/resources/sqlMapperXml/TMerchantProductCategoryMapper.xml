@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.TMerchantProductCategoryMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.TMerchantProductCategory">
+		<id column="ID" property="id" />
+		<result column="CATEGORY_ID" property="categoryId" />
+		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="PARENT_CATEGORY_ID" property="parentCategoryId" />
+		<result column="STATUS" property="status" />
+		<result column="REMARK1" property="remark1" />
+	</resultMap>
+
+</mapper>

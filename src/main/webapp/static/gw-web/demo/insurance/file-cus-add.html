@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>客户详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">保存</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-table-view-divider none">客户信息 <span class="mui-badge mui-badge-danger mui-pull-right edit" id="edit">编辑</span></div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8" disabled="disabled">
+					</div>
+					<div class="mui-input-row hand">
+						<div class="mui-navigate-right">
+							<label>证件类型</label>
+							<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly"  disabled="disabled">
+							<input type="hidden" name="sex" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>证件号</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="30">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+						<input type="text" name="carNo" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+					</div>
+					<div class="mui-input-row">
+						<label>车架号</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="17">
+					</div>
+					<div class="mui-input-row">
+						<label>发动机号</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="17">
+					</div>
+					<div class="mui-input-row">
+						<label>厂牌类型</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-input-row hand">
+						<div class="mui-navigate-right">
+							<label>初登日期</label>
+						 	<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly" disabled="disabled">
+						</div>
+					</div>
+					<div class="mui-input-row hand">
+						<div class="mui-navigate-right">
+							<label>商业险起保日</label>
+						 	<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly" disabled="disabled">
+						</div>
+					</div>
+					<div class="mui-input-row hand">
+						<div class="mui-navigate-right">
+							<label>车辆类型</label>
+							<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly" disabled="disabled">
+							<input type="hidden" name="sex" />
+						</div>
+					</div>
+					
+					<div class="mui-input-row hand">
+						<div class="mui-navigate-right">
+							<label>年审到期日</label>
+						 	<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly" disabled="disabled">
+						</div>
+					</div>
+					<div class="mui-input-row hand">
+						<div class="mui-navigate-right">
+							<label>交强险起保日</label>
+						 	<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly" disabled="disabled">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			_showcar();
+			$$("#edit").click(function(){
+				$$(".mui-input-row").removeClass("hand");
+				$$(".mui-input-row input").removeAttr("disabled");
+			})
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+				$$(".date").click(function(event){//
+					var _self = this;
+					if(_self.picker) {
+						_self.picker.show(function (rs) {
+							$$(_self).val(rs.text);
+								console.log($$(this)+'-----111')
+							_self.picker.dispose();
+							_self.picker = null;
+						});
+					} else {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						_self.picker = new $.DtPicker(options);
+						_self.picker.show(function(rs) {
+							console.log($$(this)+'-----222')
+							$$(_self).val(rs.text);
+							_self.picker.dispose();
+							_self.picker = null;
+						});
+					}
+				});
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					sexPicker.setData(sexdata);
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

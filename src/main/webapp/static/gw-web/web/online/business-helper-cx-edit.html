@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>人寿保险-编辑</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">保存</button>
+			</div>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<input type="hidden" name="orderId" />
+				<input type="hidden" name="orderType" >
+				
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>状态</label>
+							<input type="text" name="statusText" class=" mui-text-right" placeholder="无" maxlength="50" readonly="readonly">
+							<input type="hidden" name="status" />
+						</div>
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>下单日期</label>
+						<input type="text" name="createTime" class=" mui-text-right mui-input-clear" placeholder="无"   disabled="disabled">
+					</div>
+					<div class="mui-input-row">
+						<label>产险类型</label>
+						<input type="text" name="orderTypeName" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8"  disabled="disabled">
+					</div>
+					<div class="mui-input-row">
+						<label>保单号</label>
+						<input type="text" name="orderNo" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(function(){
+				$$.ajax({
+					type:"POST",
+					url: base_url + '/shanjiafuwu/getMerchantOrderDetailInfo',
+					data:{
+							orderId:getUrlParam('orderId'),
+							orderType:getUrlParam('orderType')
+						},
+					dataType: 'json',
+					success: function(response) {
+						if(response.success) {
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							for(var j = 0;j<xcOrderFlagData.length;j++){
+								if(data.status === xcOrderFlagData[j].value){
+									data.statusText = xcOrderFlagData[j].text;
+									$$("input[name=statusText]").addClass(xcOrderFlagData[j].color);
+									break;
+								}
+							}
+							if(!isNull(data.createTime))data.createTime = getData(data.createTime);
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			(function($, doc) {
+				$.ready(function() {
+					var statusTextPicker = new $.PopPicker({
+						layer: "",
+						title: "状态"
+					});
+					statusTextPicker.setData(xcOrderFlagData);
+					$$("input[name=statusText]").click(function(event) { //
+						statusTextPicker.show(function(items) {
+							$$("input[name='statusText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='status']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name=statusText]").addClass(JSON.stringify(items[0].color).replace(/"/g, ""));
+							
+
+						});
+					});
+				});
+			})(mui, document);
+			
+			$$("#apply").click(function(){
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas =getFormValues(formEl);
+				if(!isNull(sessionStorage.getItem("merchantId"))){
+					datas.merchantId = sessionStorage.getItem("merchantId");
+				}
+				if(isNull(datas.orderNo)){
+					return mui.toast("请输入保单号");
+				}
+				console.log(datas);
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/shanjiafuwu/editMerchantOrderInfo',
+					data:datas,
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						if(response.success) {
+							mui.toast("保存成功");
+						} else {
+							mui.toast(response.msg);
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+				
+			})
+		</script>
+	</body>
+
+</html>

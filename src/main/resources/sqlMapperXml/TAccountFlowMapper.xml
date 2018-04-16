@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.TAccountFlowMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.TAccountFlow">
+		<id column="ID" property="id" />
+		<result column="FLOW_ID" property="flowId" />
+		<result column="ORDER_TYPE" property="orderType" />
+		<result column="BEFORE_VALUE" property="beforeValue" />
+		<result column="TRADE_TYPE" property="tradeType" />
+		<result column="TRADE_VALUE" property="tradeValue" />
+		<result column="AFTER_VALUE" property="afterValue" />
+		<result column="BANK_HOST_NAME" property="bankHostName" />
+		<result column="BANK_CARD_ID" property="bankCardId" />
+		<result column="STATUS" property="status" />
+		<result column="PERSON_ID" property="personId" />
+		<result column="UPDATE_TIME" property="updateTime" />
+	</resultMap>
+
+</mapper>

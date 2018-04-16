@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>汽车美容-详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item"  id="edit">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;编&nbsp;&nbsp;辑&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item" id="apply">
+				<div class="mui-btn mui-btn-primary">取消订单</div>
+			</a>
+			<a class="mui-tab-item" id="del">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;删&nbsp;&nbsp;除&nbsp;&nbsp;</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<input type="hidden" name="status" />
+				<input type="hidden" name="orderId" />
+				<div class="mui-table-view">
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>状态</label>
+							<input type="text" name="statusText" class=" mui-text-right mui-input-clear"  maxlength="8">						
+						</div>
+					</div>
+				</div>
+				<div class="line"></div>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>下单日期</label>
+						<input type="text" name="createTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>代办类型</label>
+						<input type="text" name="productName" class=" mui-text-right mui-input-clear" placeholder="买车" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>订单号</label>
+						<input type="text" name="orderId" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="userName" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="tel" name="telephone" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>联系地址</label>
+							<input name="provinceAddr" type="text"  class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+							<input name="province" type="hidden">
+							<input name="city" type="hidden">
+							<input name="country" type="hidden">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>详细地址</label>
+						<input type="text" name="detailAddr" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="line"></div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-table-view-divider none"></div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$("input").attr("disabled","disabled");
+			$$(".mui-navigate-right").parent().addClass("hand")
+			$$(function(){
+				show();
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/dingdanzhuizong/getOrderDetailInfoByOrderId',
+					data:{
+							orderId:getUrlParam('orderId')
+						},
+					dataType: 'json',
+					success: function(response) {
+						hide();
+						if(response.success) {
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							for(var j = 0;j<orderFlagData.length;j++){
+								if(data.status === orderFlagData[j].value){
+									data.statusText = orderFlagData[j].text;
+									$$("input[name=statusText]").addClass(orderFlagData[j].color);
+									break;
+								}
+							}
+							if(data.status ==="10"){//10 已成交
+								$$("#apply").remove();
+								$$("#edit").remove();
+							}else if(data.status ==="11"){//11 已取消
+								$$("#apply").remove();
+								$$("#apply").remove();
+							}else if(data.status ==="01" || data.status ==="02" || data.status ==="09"){
+								
+							}else{
+								$$("nav").remove();
+							}
+							if(!isNull(data.createTime))data.createTime = getYear(data.createTime);
+							if(!isNull(data.examineTime))data.examineTime = getYear(data.examineTime);
+							if(!isNull(data.businessInsStartTime))data.businessInsStartTime = getYear(data.businessInsStartTime);
+							if(!isNull(data.registerTime))data.registerTime = getYear(data.registerTime);
+							if(!isNull(data.trafficInsStartTime))data.trafficInsStartTime = getYear(data.trafficInsStartTime);
+							if(!isNull(data.endDate))data.endDate = getYear(data.endDate);
+							if(!isNull(data.orderMoney))data.orderMoney = (data.orderMoney*0.01).toFixed(2);
+							
+							for(var i = 0; i < areaData.length; i++) {
+								if(areaData[i].value === data.province) {
+									for(var j = 0; j < areaData[i].children.length; j++) {
+										if(areaData[i].children[j].value === data.city) {
+											var erea = areaData[i].children[j].children;
+											for(var k = 0; k < erea.length; k++) {
+												if(erea[k].value === data.country) {
+													$$("input[name=provinceAddr]").val(areaData[i].text + " " + areaData[i].children[j].text + " " + erea[k].text);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							console.log(data)
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			$$("#edit").click(function(){
+				var orderId = $$("input[name=orderId]").val();
+				window.location.href= 'order-cm-edit.html?orderId='+orderId
+			});
+			$$("#apply").click(function(){
+				var btnArray = ['取消', '确定'];
+				mui.confirm('取消订单，确认？', '温馨提示', btnArray, function(e) {
+					if (e.index == 1) {
+						$$.ajax({
+				                type: "POST",
+				                url: base_url + '/dingdanzhuizong/updateOrderStatusByOrderId',
+								data: {
+										orderId:$$("input[name=orderId]").val(),
+										orderFlag:"11",
+										userId:sessionStorage.getItem("userId")
+									},
+								dataType: 'json',
+								success: function(response) {
+									console.log(response)
+									if(response.success) {
+										 mui.toast("取消订单成功");
+										  setTimeout(function(){
+											 location.reload();
+										 },500);
+									} else {
+										mui.toast("取消订单失败");
+									}
+								},
+								error: function(result) {
+									mui.toast("取消订单失败");
+								}
+				            });
+					} else {
+					}
+				})
+			});
+			$$("#del").click(function(){
+				var btnArray = ['取消', '确定'];
+				mui.confirm('订单删除后不可恢复，确认删除？', '温馨提示', btnArray, function(e) {
+					if (e.index == 1) {
+						$$.ajax({
+				                type: "POST",
+				                url: base_url + '/dingdanzhuizong/updateOrderStatusByOrderId',
+								data: {
+										orderId:$$("input[name=orderId]").val(),
+										orderFlag:"13",
+										userId:sessionStorage.getItem("userId")
+									},
+								dataType: 'json',
+								success: function(response) {
+									console.log(response)
+									if(response.success) {
+										 mui.toast("删除成功");
+										  setTimeout(function(){
+											 history.back(-1);
+										 },500);
+									} else {
+										mui.toast("删除失败");
+									}
+								},
+								error: function(result) {
+									mui.toast("删除失败");
+								}
+				            });
+					} else {
+					}
+				})
+			});
+			
+		</script>
+	</body>
+
+</html>

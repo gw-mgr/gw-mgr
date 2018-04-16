@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我要贷款</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">确定</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<input name="page" type="hidden" value="1" />
+				<input name="rows" type="hidden" value="100" />
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>期望贷款金额(元)</label>
+						<input type="text" name="dMoney" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-table-view-divider none">基本信息</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>婚姻状况</label>
+							<input type="text" name="dMarryFlagName" class=" mui-text-right dMarryFlag" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="dMarryFlag" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无社保</label>
+							<input type="text" name="ishaveName" id="ishaveName" class=" mui-text-right is" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="dSocialFlag" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无房产</label>
+							<input type="text" name="housName" id="housName" class=" mui-text-right isT" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="dHouseFlag" />
+						</div>
+					</div>
+
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>每月收入</label>
+							<input type="text" name="dIncomeName" class=" mui-text-right dIncome" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="dIncome" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>工作性质</label>
+							<input type="text" name="dWorkTypeName" class=" mui-text-right dWorkType" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="dWorkType" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无车辆</label>
+							<input type="text" name="dCarFlagName" class=" mui-text-right isT" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="dCarFlag" />
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var wedlockNamePicker = new $.PopPicker({
+						layer: "",
+						title: "婚姻状况"
+					});
+					var ishavePicker = new $.PopPicker({
+						layer: "",
+						title: "有无社保"
+					});
+					var monthIncomeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "每月收入"
+					});
+					
+					var dWorkTypePicker = new $.PopPicker({
+						layer: "",
+						title: "工作性质"
+					});
+					
+					var loandataPicker = new $.PopPicker({
+						layer: "",
+						title: "请选择"
+					});
+					/*婚姻状况*/
+					wedlockNamePicker.setData(wedlockdata);
+					$$(".dMarryFlag").click(function(event) { //
+						var _self = this;
+						wedlockNamePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*有无社保*/
+					ishavePicker.setData(ishavedata);
+					$$(".is").click(function(event) { //
+						var _self = this;
+						ishavePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					
+					/*每月收入*/
+					monthIncomeNamePicker.setData(monthIncomedata);
+					$$(".dIncome").click(function(event) { //
+						var _self = this;
+						monthIncomeNamePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*工作性质*/
+					dWorkTypePicker.setData(workdata);
+					$$(".dWorkType").click(function(event) { //
+						var _self = this;
+						dWorkTypePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*有无房产*/
+					loandataPicker.setData(loandata);
+					$$(".isT").click(function(event) { //
+						var _self = this;
+						loandataPicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(cityData3);
+					$$("#censusName").click(function(event) { //
+						cityPicker3.show(function(items) {
+							$$("#censusName").val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$("input[name='censusProvince']").val(_getParam(items[0], 'value'));
+							$$("input[name='censusCity']").val(_getParam(items[1], 'value'));
+							$$("input[name='censusDistrict']").val(_getParam(items[2], 'value'));
+						});
+					});
+
+				});
+			})(mui, document);
+
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				
+				
+				if(isNull(datas.dMoney))return mui.toast("请输入期望贷款金额");
+				if(isNull(datas.dMarryFlag))return mui.toast("请选择婚姻状况");
+				if(isNull(datas.dSocialFlag))return mui.toast("请选择有无社保");
+				if(isNull(datas.dHouseFlag))return mui.toast("请选择有无房产");
+				if(isNull(datas.dIncome))return mui.toast("请选择每月收入");
+				if(isNull(datas.dWorkType))return mui.toast("请选择工作性质");
+				if(isNull(datas.dCarFlag))return mui.toast("请选择有无车辆");
+				if(!isNull(sessionStorage.getItem("userId"))) {
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/xianshangyewu/getDKProductList',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+						hide();
+						if(response.success) {
+							if(response.obj.length>0){
+								location.href = "online-dk-list.html?dMoney="+datas.dMoney*100
+								+'&dMarryFlag='+datas.dMarryFlag
+								+'&dSocialFlag='+datas.dSocialFlag
+								+'&dHouseFlag='+datas.dHouseFlag
+								+'&dIncome='+datas.dIncome
+								+'&dWorkType='+datas.dWorkType
+								+'&dCarFlag='+datas.dCarFlag
+							}else{
+								mui.alert('暂无贷款产品,功能稍后开放,敬请期待哦', '温馨提示', function() {});
+							}
+				
+						} else {
+							mui.alert('暂无贷款产品,功能稍后开放,敬请期待哦', '温馨提示', function() {});
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.alert('暂无贷款产品,功能稍后开放,敬请期待哦', '温馨提示', function() {});
+					}
+	            });
+		});
+		</script>
+	</body>
+
+</html>

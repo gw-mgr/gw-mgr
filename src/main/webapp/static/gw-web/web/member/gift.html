@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="orderlist file">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>待领礼品</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content ">
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a class=" mui-control-item mui-text-left">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					待领礼品&nbsp;&nbsp;<span class="mui-badge mui-badge-danger" id="count"></span>
+				</a>
+			</div>
+			<div class="mui-table mui-table-view-cell none">
+					<div class="mui-table-cell mui-col-xs-4 mui-text-left">
+						<div>投保时间</div>
+					</div>
+					<div class="mui-table-cell mui-col-xs-4 mui-text-center">
+						<div>保费</div>
+					</div>
+					<div class="mui-table-cell mui-col-xs-4 mui-text-center">
+						<div>礼品</div>
+					</div>
+				</div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			var page = 0,
+				rows =10,
+				max = 0;
+			function queryProduct(page) {
+				var status = $$("#status").val();//状态
+				var createTime = $$("#createTime").val();//下单日期
+				var orderType =  $$("#orderType").val();
+				var param ={
+						userId: sessionStorage.getItem("userId"),
+						page: page,
+						rows: rows
+				}
+				console.log(param)
+				var table = document.body.querySelector('#pullrefresh .mui-table-view');
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/changyongfuwu/getGiftList',
+					data:param,
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						if(response.success) {
+							$$("#count").html(response.totalCount);
+							var item = response.obj;
+							max = Math.ceil(response.totalCount / rows); //计算总页数
+							console.log(max+"--------max");
+							if(response.totalCount > 0 && item.length>0) {
+								for(var i = 0; i < item.length; i++) {
+									var statusVal,color;
+									for(var j = 0;j<xcOrderFlagData.length;j++){
+										if(item[i].status === xcOrderFlagData[j].value){
+											statusVal = xcOrderFlagData[j].text;
+											color =  xcOrderFlagData[j].color;
+											break;
+										}
+									}
+									var li = document.createElement('li');
+									li.setAttribute("data-orderId",item[i].orderId);
+									li.setAttribute("data-orderType",item[i].orderType);
+									li.className = 'mui-table-view-cell';
+									li.innerHTML = '<div class="mui-table">'
+												+'<div class="mui-table-cell mui-col-xs-4 mui-text-left">'
+												+'<div>'+getData(item[i].time)+'</div>'
+												+'</div>'
+												+'<div class="mui-table-cell mui-col-xs-4 mui-text-center">'
+												+'<div>'+item[i].bf+'</div>'
+												+'</div>'
+												+'<div class="mui-table-cell mui-col-xs-4 mui-text-right">'
+												+'<div class="gray">'+item[i].lp+'</div>'
+												+'</div>'
+												+'</div>';
+									table.appendChild(li);
+									//进度条显示
+									mui(".mui-progressbar").each(function() {
+										mui(this).progressbar({
+											progress: this.getAttribute("data-progress")
+										}).show();
+									});
+								}
+							} else {
+								$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+															+'<div class="data-icon icon-none"></div>'
+															+'<p class="data-title">暂无相关礼品</p>'
+															+'</div>');
+							}
+						} else {
+							$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+														+'<div class="data-icon icon-none"></div>'
+														+'<p class="data-title">暂无相关礼品</p>'
+														+'</div>');
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			}
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						ontentinit: ' ',
+						contentdown: " ", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "   ", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: " ", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						ontentinit: ' ',
+						contentdown: ' ',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				$$(".mui-table-view").html("");
+				setTimeout(function() {
+					page = 1;
+					queryProduct(1);
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#pullrefresh').pullRefresh().refresh(true);
+				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					var cells = document.body.querySelectorAll('#pullrefresh .mui-table-view li');
+					
+					if(cells.length >= page * rows) {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((page++ > max)); //参数为true代表没有更多数据了。
+						queryProduct(page);
+					} else {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					}
+				}, 1000);
+			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+		</script>
+	</body>
+
+</html>

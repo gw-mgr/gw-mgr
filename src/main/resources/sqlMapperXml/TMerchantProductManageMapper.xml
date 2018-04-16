@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.TMerchantProductManageMapper">
+
+	<select id="selectProductManagePage" resultType="Map">
+		SELECT 
+			p.PRODUCT_ID as productId, p.PRODUCT_NAME as productName,
+			p.MERCHANT_ID as merchantId, m.MERCHANT_NAME as merchantName,
+			p.PRODUCT_TYPE as productType,c.CATEGORY_NAME as productTypeName,
+			p.UPDATE_TIME as updateTime, p.STATUS as status, m.status as mStatus
+		FROM t_product_manage p
+		left join 
+			t_merchant_manage m on m.MERCHANT_ID = p.MERCHANT_ID
+		left join 
+			t_merchant_product_category c on c.CATEGORY_ID = p.PRODUCT_TYPE
+		<where>
+			<if test=" status != null and status != '' ">
+                <![CDATA[ and p.STATUS = #{status} ]]>
+            </if>
+			<if test=" productType != null and productType != '' ">
+                <![CDATA[ and p.PRODUCT_TYPE = #{productType} ]]>
+			</if>
+			<if test=" merchantName != null and merchantName != '' ">
+                 <![CDATA[ and m.MERCHANT_NAME like CONCAT('%',#{merchantName},'%')]]>
+			</if>
+			<if test=" productName != null and productName != '' ">
+                <![CDATA[ and p.PRODUCT_NAME like CONCAT('%',#{productName},'%') ]]>
+			</if>
+			<if test=" productId != null and productId != '' ">
+                <![CDATA[ and p.PRODUCT_ID = #{productId} ]]>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 服务商结算列表查询 -->
+	<select id="settleDataGrid" resultType="Map">
+		SELECT
+			F.FLOW_ID flowId, M.MERCHANT_ID as merchantId, M.MERCHANT_NAME as merchantName, M.MERCHANT_TYPE as merchantType, M.GRANT_AREA as grantArea,
+			A.BALANCE as balance, F.TRADE_VALUE tradeVlue, A.BANK_HOST_NAME bankHostName, A.BANK_CARD_ID bankCardId, F.UPDATE_TIME updateTime, F.STATUS as status
+		FROM
+			t_account_flow F
+		LEFT JOIN t_account A ON F.PERSON_ID = A.PERSON_ID
+		LEFT JOIN t_merchant_manage M ON F.PERSON_ID = M.MERCHANT_ID
+		<where>
+			F.PERSON_ID IN (SELECT MERCHANT_ID FROM t_merchant_manage)
+			<if test=" status != null and status != '' ">
+               <![CDATA[ AND F.STATUS = #{status} ]]>
+			</if>
+			<if test=" merchantName != null and merchantName != '' ">
+                <![CDATA[ AND M.MERCHANT_NAME like CONCAT('%',#{merchantName},'%') ]]>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 会员提现列表查询 -->
+	<select id="cashDataGrid" resultType="Map">
+		SELECT
+			F.FLOW_ID flowId, M.USER_ID as userId, M.USER_NAME as userName, M.TELEPHONE as telephone, M.WECHAT_NUM as wechatNum,
+			A.BALANCE as balance, F.TRADE_VALUE tradeVlue, A.BANK_HOST_NAME bankHostName, A.BANK_CARD_ID bankCardId, F.UPDATE_TIME updateTime, F.STATUS as status
+		FROM
+			t_account_flow F
+		LEFT JOIN t_account A ON F.PERSON_ID = A.PERSON_ID
+		LEFT JOIN t_member_basicinfo M ON F.PERSON_ID = M.USER_ID
+		<where>
+			F.PERSON_ID IN (SELECT USER_ID FROM t_member_basicinfo)
+			<if test=" status != null and status != '' ">
+               <![CDATA[ F.STATUS = #{status} ]]>
+			</if>
+			<if test=" userName != null and userName != '' ">
+                <![CDATA[ and M.USER_NAME like CONCAT('%',#{userName},'%') ]]>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 通过佣金提现，修改流水 -->
+	<update id="updateAccountFlow" >
+		UPDATE t_account_flow SET STATUS = '02',UPDATE_TIME = #{updateTime} WHERE FLOW_ID = #{flowId};
+	</update>
+	
+	<!-- 通过佣金提现，修改账务 -->
+	<update id="updateAccount" >
+		UPDATE 
+			t_account 
+		SET 
+			UPDATE_TIME = #{updateTime},SETTLE_APPLYING = SETTLE_APPLYING - (SELECT TRADE_VALUE FROM t_account_flow WHERE FLOW_ID = #{flowId})
+		WHERE
+			PERSON_ID = (SELECT PERSON_ID FROM t_account_flow WHERE FLOW_ID = #{flowId})
+	</update>
+	
+</mapper>

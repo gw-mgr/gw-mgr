@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>公众责任险</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<p class="mui-content-padded mui-h5 mui-text-center">温馨提示：您的交易需要线下人员处理，请注意接听电话</p>
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<input type="hidden" name="orderType" >
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>投保单位</label>
+						<input type="text" name="tbDanWei" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+				</div>
+				<div class="mui-table-view-divider none">请告知基本保险需求(备注):</div>
+				<textarea class="question" name="bxRemark" placeholder="如：营业面积？意外伤害保额？意外医疗保额？"></textarea>
+				<div class="line"></div>
+				<div class="mui-content-padded">
+					<p class="mui-h5 gray">保费费率和佣金需要每单核保。</p>
+					<p class="mui-h5 gray">询价所需要提供的基本资料：</p>
+					<p class="mui-h5 gray">1、公司名称，营业面积；</p>
+					<p class="mui-h5 gray">2、投保人所需要的保额，意外身故保额，意外医疗保额，意外津贴保额等。投保人所要求的保额过高，可能会在2、3家保险公司进行分保。</p>
+					<p class="mui-h5 gray">3、投保案例：</p>
+					<p class="mui-h5 gray">重庆***教育培训有限公司，经营面积500平方米。每人赔偿限额10万，每次事故赔偿限额50万，累积赔偿限额50万元。每次事故免赔额500元或10%，取高者，人伤无免赔。</p>
+					<p class="mui-h5 gray">重庆太平财产保险有限公司</p>
+					<p class="mui-h5 gray">保费1500元。</p>
+					<p class="mui-h5 gray">佣金****。</p>
+				</div>
+			</form>
+			<script src="../../js/mui.min.js"></script>
+			<script src="../../js/jquery-1.8.3.min.js"></script>
+			<script src="../../js/commom.base.js"></script>
+			<script>
+				$$("input[name='orderType']").val(getUrlParam("orderType"));
+				$$("#apply").click(function() {
+					var formEl = document.getElementsByTagName('form')[0];
+					var datas = getFormValues(formEl);
+					if(isNull(datas.tbDanWei)) return mui.toast("请输入投保单位");
+					if(isNull(datas.bxRemark)) return mui.toast("请输入备注");
+					if(!isNull(sessionStorage.getItem("userId"))) {
+						datas.userId = sessionStorage.getItem("userId");
+					}
+					console.log(datas);
+					show();
+					$$.ajax({                
+						type:   "POST",
+		                url: base_url + '/baoxianyewu/createBXOrder',
+		                data: datas,
+						dataType: 'json',
+						                success:   function(response)  {
+							console.log(response);
+							hide();
+							if(response.success) {
+								mui.toast("提交成功!")
+							} else {
+								mui.toast(response.msg);
+							}
+						},
+						error:   function(result)  {
+							hide();
+							mui.toast("提交失败，请重试");
+						}            
+					});
+				});
+			</script>
+	</body>
+
+</html>

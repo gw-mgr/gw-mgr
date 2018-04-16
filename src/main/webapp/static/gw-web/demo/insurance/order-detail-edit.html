@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<form>
+				<div class="line"></div>
+				<div id="slider" class="mui-slider mui-fullscreen">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" href="#item2mobile">
+								投保人信息
+							</a>
+							<a class="mui-control-item" href="#item3mobile">
+								被保险人信息
+							</a>
+							<a class="mui-control-item" href="#item4mobile">
+								身故受益人信息
+							</a>
+							<a class="mui-control-item" href="#item5mobile">
+								投保事项
+							</a>
+							<a class="mui-control-item" href="#item6mobile">
+								告知事项及说明栏
+							</a>
+							<a class="mui-control-item" href="#item7mobile">
+								保险情况
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-group">
+						<div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>性别</label>
+												<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="sex" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>婚姻状况</label>
+												<input type="text" name="wedlockName" id="wedlockName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="wedlock" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>出生日期</label>
+												<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly">
+											</div>
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>证件类型</label>
+												<input type="text" name="creTypeName" id="creTypeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="creType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>证件号码</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>国籍</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>户籍</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row" id="creValidDiv">
+											<div class="mui-navigate-right creValid">
+												<label style="width: 100px;">证件有效期至</label>
+												<input type="text" name="creValid" id="creValid" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly">
+												<span class="check">长期</span>
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>居民类型</label>
+												<input type="text" name="populationTypeName" id="populationTypeName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="populationType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>通讯地址</label>
+												<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+												<input name="censusProvince" type="hidden">
+												<input name="censusCity" type="hidden">
+												<input name="censusDistrict" type="hidden">
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>详细地址</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>现住址</label>
+												<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+												<input name="censusProvince" type="hidden">
+												<input name="censusCity" type="hidden">
+												<input name="censusDistrict" type="hidden">
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>详细地址</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+									</div>
+									<ul class="mui-table-view line-t">
+										<li class="mui-table-view-cell">
+											<span>同通讯地址</span>
+											<div class="mui-switch mui-switch-blue mui-switch-mini mui-active">
+												<div class="mui-switch-handle"></div>
+											</div>
+										</li>
+									</ul>
+									<div class="mui-input-group">
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>手机</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>固定电话</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>E-mail</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>工作单位</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>工作内容</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>所属行业</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>职业/工种</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item3mobile" class="mui-slider-item mui-control-content mui-active">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>性别</label>
+												<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="sex" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>婚姻状况</label>
+												<input type="text" name="wedlockName" id="wedlockName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="wedlock" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>出生日期</label>
+												<input type="text" name="birthday" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly">
+											</div>
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>证件类型</label>
+												<input type="text" name="creTypeName" id="creTypeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="creType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>证件号码</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>国籍</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>户籍</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row" id="creValidDiv">
+											<div class="mui-navigate-right creValid">
+												<label style="width: 100px;">证件有效期至</label>
+												<input type="text" name="creValid" id="creValid" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly">
+												<span class="check">长期</span>
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>居民类型</label>
+												<input type="text" name="populationTypeName" id="populationTypeName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="populationType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>通讯地址</label>
+												<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+												<input name="censusProvince" type="hidden">
+												<input name="censusCity" type="hidden">
+												<input name="censusDistrict" type="hidden">
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>详细地址</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>现住址</label>
+												<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+												<input name="censusProvince" type="hidden">
+												<input name="censusCity" type="hidden">
+												<input name="censusDistrict" type="hidden">
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>详细地址</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+									</div>
+									<ul class="mui-table-view line-t">
+										<li class="mui-table-view-cell">
+											<span>同通讯地址</span>
+											<div class="mui-switch mui-switch-blue mui-switch-mini mui-active">
+												<div class="mui-switch-handle"></div>
+											</div>
+										</li>
+									</ul>
+									<div class="mui-input-group">
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>手机</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>固定电话</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>E-mail</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>工作单位</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>工作内容</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>所属行业</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>职业/工种</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item4mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="benefit">
+										<div class="mui-input-group">
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>受益顺序</label>
+													<input type="text" name="benefit" id="benefit" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												</div>
+											</div>
+											<div class="mui-input-row">
+												<label>受益比例</label>
+												<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">%
+											</div>
+											<div class="mui-input-row">
+												<label>受益人姓名</label>
+												<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+											</div>
+
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>性别</label>
+													<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+													<input type="hidden" name="sex" />
+												</div>
+											</div>
+
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>性别</label>
+													<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+													<input type="hidden" name="sex" />
+												</div>
+											</div>
+
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>与被保人关系</label>
+													<input type="text" name="wedlockName" id="wedlockName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+													<input type="hidden" name="wedlock">
+												</div>
+											</div>
+
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>证件类型</label>
+													<input type="text" name="creTypeName" id="creTypeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+													<input type="hidden" name="creType">
+												</div>
+											</div>
+											<div class="mui-input-row" id="creValidDiv">
+												<div class="mui-navigate-right creValid">
+													<label style="width: 100px;">证件有效期至</label>
+													<input type="text" name="creValid" id="creValid" data-options='{"type":"date","beginYear":1900,"endYear":2018}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly"> <span class="check">长期</span>
+												</div>
+											</div>
+										</div>
+										<ul class="mui-table-view">
+											<li class="mui-table-view-cell" id="relation">
+												住址
+												<span class="mui-pull-right">
+												<span class="radio on">同投保人</span>
+												<span class="radio">同被保人</span>
+												<span class="radio">其他</span>
+												</span>
+											</li>
+										</ul>
+										<div class="mui-input-group">
+											<div class="mui-input-row">
+												<div class="mui-navigate-right">
+													<label>通讯地址</label>
+													<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+													<input name="censusProvince" type="hidden">
+													<input name="censusCity" type="hidden">
+													<input name="censusDistrict" type="hidden">
+												</div>
+											</div>
+											<div class="mui-input-row">
+												<label>详细地址</label>
+												<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+											</div>
+										</div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+									<div class="mui-content-padded">
+										<button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-icon mui-icon-plus">添加</button>
+									</div>
+									<div class="mui-table-view-divider none"></div>
+								</div>
+							</div>
+						</div>
+						<div id="item5mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-table-view-divider none">交通事项</div>
+
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>交费频率</label>
+												<input type="text" name="paymentsName" id="paymentsName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="payments" />
+											</div>
+										</div>
+
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>保险费自动垫交选择</label>
+												<input type="text" name="isName" id="isName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="is" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>首期保费支付方式</label>
+												<input type="text" name="payName" id="payName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="pay" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>续期保费支付方式</label>
+												<input type="text" name="payName" id="payName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="pay" />
+											</div>
+										</div>
+										<div class="mui-table-view-divider none">银行自动转账授权事项</div>
+										<div class="mui-input-row">
+											<label>开户行名称</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>授权转账账号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none">保险事项</div>
+										<div class="mui-input-row">
+											<label>主险</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="恒大恒久健康终身重大疾病保险" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>险种代码</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险期间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>交费期间</label>
+												<input type="text" name="yearName" id="yearName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="year" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>保险金额（元）</label>
+											<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险费（元）</label>
+											<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>追加保费（元）</label>
+											<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险费小计（元）</label>
+											<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>附险1</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="恒大恒久健康终身重大疾病保险" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>险种代码</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险期间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>交费期间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险金额（元）</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险费（元）</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>追加保费（元）</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>保险费小计（元）</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+
+										<div class="mui-input-row">
+											<label class="red">保费合计</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear red" placeholder="请输入" value="￥140200" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none ">分红保险填写</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>红利领取方式</label>
+												<input type="text" name="gogetName" id="gogetName" class=" mui-text-right mui-input-clear" placeholder="请选择" maxlength="8" readonly="readonly">
+												<input type="hidden" name="goget" />
+											</div>
+										</div>
+										<div class="mui-table-view-divider none ">分红保险填写</div>
+										<div class="mui-input-row">
+											<label>领取年龄</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>领取方式</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>领取类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>自动支付保险费选择</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none ">投资连结保险填写</div>
+										<div class="mui-input-row">
+											<label>投资账户名称</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>分配比例</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>追加保险费分配比例</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>投资账户名称</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>分配比例</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>追加保险费分配比例</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item6mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-table-view-divider none">A 健康告知</div>
+										<div class="mui-input-row">
+											<label>投保人，身高</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人，体重</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人，身高</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人，体重</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none">保险公司询问事项</div>
+										<div class="mui-content-padded mui-text-justify">
+											1、您过去一年内是否有以下不适症状或体征：反复头痛、头晕、胸痛、胸闷、心悸、气喘、咳嗽、咳血、腹痛、腹泻、血尿、便血、紫癜、皮肤黄染、明显消瘦（体重在3个月内下降超过5公斤）？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											2、您过去一年内是否因受伤或患病去医院门诊接受诊查、治疗，或被医师建议治疗、住院或手术？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											3、您在过去2年内是否做过以下检查：血压、血液和尿液化验检查、x光、心电图、B超、CT、核磁共振、内窥镜、病理活组织检查或其他化验检查？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											4、您过去是否曾因受伤或患病而住院治疗？若是，请在说明栏中详述医院诊断、诊治经过及预后。
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none">5、您过去是否患有、曾被怀疑患者有或因以下疾病症候而接受治疗：</div>
+										<div class="mui-content-padded mui-text-justify">
+											a、脑、神经系统及精神方面疾病：脑膜炎、脑炎、脑瘤、脑中风（脑出血、脑梗塞、短暂性脑缺血）等脑血管疾病；癫痫、脊髓病变、重症肌无力、多发性硬化、帕金森氏病；抑郁症、精神分裂症、神经衰弱、神经官能症以及其他神经或精神方面疾病？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											b、五官科疾病：如原因不明的声音嘶哑、听力下降、复视、耳鸣、中耳炎、美尼尔病、白内障、青光眼、高度近视（800度以上）、视神经或视网膜病变、慢性鼻炎、鼻息肉或其他五官科疾病等？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											c、循环系统疾病：如高血压、冠心病、心肌梗塞、风湿性心脏病、先天性心脏病、风湿热、主动脉瘤、肺心病、心律失常、传导阻滞、心包炎、心肌病、下肢静脉曲张及其他心血管系统疾病？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											d、呼吸系统疾病：如慢性支气管炎、肺气肿、支气管扩张、肺结核、气胸、哮喘或其他呼吸系统疾病？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											e、消化系统疾病：如肝炎病毒携带、肝炎、脂肪肝、肝硬化、肝肿大、肝胆结石、胆囊息肉、胰腺疾病、胃炎、消化道溃疡或出血、穿孔、结肠炎、肠息肉、肠梗阻、疝气或其他消化系统疾病？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											f、泌尿及生殖系统疾病：如肾炎、肾小球疾病、肾病综合症、省功能衰竭、多囊肾、泌尿系结石或感染、前列腺疾病或其他泌尿及生殖系统疾病？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											g、内分泌及结缔组织疾病：如糖尿病、痛风、高尿酸血症、甲状腺或甲状腺旁腺疾病、肾上腺疾病、脑垂体疾病；类风湿性关节炎、风湿病、红斑狼疮、胶原病、白塞氏病、免疫性疾病、肌肉骨骼关节疾病等？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											g、内分泌及结缔组织疾病：如糖尿病、痛风、高尿酸血症、甲状腺或甲状腺旁腺疾病、肾上腺疾病、脑垂体疾病；类风湿性关节炎、风湿病、红斑狼疮、胶原病、白塞氏病、免疫性疾病、肌肉骨骼关节疾病等？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											h、血液疾病：如原因不明的皮肤、粘膜、及齿龈出血、白血病、再生障碍性贫血、血友病、紫癜症、贫血、脾脏疾病等？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											i、癌症、良恶性肿瘤、腺瘤、息肉、囊肿、痔疮、任何包块或肿物等？其他需持续关注或治疗的疾病或异常症状体征？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											j、顽固性皮肤病、性病，传染病？或任何职业病？您或您的配偶是否接受过艾滋病的检查和治疗？或在过去6个月以内曾经持续一周以上的下列症状：体重下降、食欲不振、盗汗、腹泻、淋巴结肿大及皮肤溃疡？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											k、接受过输血或建议不宜献血？您是否使用过任何违禁药品或成瘾性药物，是否服用、吸食或注射过毒品？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											6、身体残障情况：有无智能障碍；有无失明、聋哑、跛行、小二麻痹后遗症；有无脊柱、胸廓、四肢、五官畸形或功能障碍；有无语言、咀嚼、视力、听力、嗅觉、四肢及中枢神经系统机能障碍？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											7、有否吸烟嗜好：若有请说明每天吸烟几只，约多少年。若已停止吸烟，请说明停止的原因和时间。
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											8、有否饮酒嗜好：若有，请说明饮酒种类，每天约几两，约多少年。若已停止饮酒，请说明停止的原因及时间。
+										</div>
+										<div class="mui-input-row">
+											<label>饮酒种类</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>每天饮酒</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>饮酒时间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											9、家族史栏：您的父母、子女、兄弟姐妹中，是否有人出现上述5-6项情况？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none">10、女性告知栏：</div>
+										<div class="mui-content-padded mui-text-justify">
+											a、有否阴道不规则流血、白带异常、下腹痛或患子宫、卵巢等妇科疾病；近半年有否月经不调？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											b、有否乳房方面疾病与不适症状体征，或因此而接受医师检查、用药或住院手术等治疗？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											c、目前是否怀孕？怀孕几周；是否因妊娠分娩而住院或手术；有否异位妊娠或不孕不育？
+										</div>
+										<div class="mui-input-row">
+											<label>怀孕时间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											11、2周岁以下（含2周岁）被保险人告知栏：出生时的身高（厘米）？体重（公斤）？
+										</div>
+										<div class="mui-input-row">
+											<label>身高</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>体重</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											a、是否为早产儿？出生时是否曾有产伤、窒息等异常情况？
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											b、是否有发育迟缓、智力障碍、惊厥、抽搐、脑瘫、缺氧缺血性脑病、先天性遗传性疾病？
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none">B 财务及其他告知</div>
+										<div class="mui-input-row">
+											<label>投保人，年收入</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>来源</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人年收入</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>来源</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											13、您是否有借贷？若是，请在说明栏中详述借贷事由、金额、债权人及偿还期限等信息
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											14、您目前是否拥有公费医疗、社会医疗保险？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											15、您是否曾购买或正在购买除本投保申请以外的其他保险产品（含其他保险公司）？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											16、您的投保生气是否曾被拒保、延期、加费、或作任何承保条件的修改（喊本公司及其他保险公司）？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											17、您是否曾向任何保险公司提出过索赔申请？若是，请详述：公司名称，索赔日期，索赔金额，索赔事由。
+										</div>
+										<div class="mui-input-row">
+											<label>公司名称</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>索赔日期</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>索赔金额</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>索赔事由</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											18、您是否有机动车驾照？若是，请详述：驾照类型，签发日期，若现有驾车，请注明：驾龄，车辆类型，用途。
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											18、您是否有机动车驾照？若是，请详述：驾照类型，签发日期，若现有驾车，请注明：驾龄，车辆类型，用途。
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											18、您是否有机动车驾照？若是，请详述：驾照类型，签发日期，若现有驾车，请注明：驾龄，车辆类型，用途。
+										</div>
+										<div class="mui-input-row">
+											<label>驾照类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>签发日期</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>驾照类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>驾龄</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>车辆类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>用途</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											19、您是否参加潜水、攀岩、蹦极、滑水、滑雪、探险、武术等高风险运动？
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-content-padded mui-text-justify">
+											20、您是否曾在国外持续居住三个月以上或正拟前往中国大陆以外的国家/地区？若是，请详述：
+										</div>
+										<div class="mui-input-row">
+											<label>国家/地区名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>滞留时间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>投保人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>被保险人</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none">C 说明栏</div>
+										<div class="mui-content-padded mui-text-justify">
+											若前述告知第1-11项、第13-20项中填写为“是/有”，请根据提示和要求说明详细说明；填写不下时，可另附纸张补充并签名确认。
+										</div>
+
+										<div class="mui-input-row">
+											<label>序号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>说明对象</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>说明内容</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="否" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-table-view-divider none"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item7mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-input-group">
+								<div class="mui-input-row">
+									<label>保险公司</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+								</div>
+								<div class="mui-input-row">
+									<label>保险公司报案电话</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+								</div>
+								<div class="mui-table-view-divider none"></div>
+								<div class="mui-input-row">
+									<label>总保费</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+								</div>
+								<div class="mui-table-view-divider none"></div>
+								<div class="mui-input-row">
+									<label>礼品内容</label>
+									<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;编&nbsp;&nbsp;辑&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;删&nbsp;&nbsp;除&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">申请报价</div>
+			</a>
+		</nav>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(".check").click(function() {
+				console.log("------------check");
+				console.log($$(this))
+				$$(".check").toggleClass('checkin');
+				if($$(this).hasClass('checkin')) {
+					$$("#creValid").hide();
+					$$("#creValid").val("2099-12-31");
+					$$(this).css("border-left", "none");
+					$$("#creValidDiv").addClass("hand");
+				} else {
+					$$("#creValid").show();
+					$$("#creValid").val("");
+					$$(this).css("border-left", "1px solid #bbb");
+					$$("#creValidDiv").removeClass("hand");
+				}
+			});
+			$$('#relation .radio').click(function() {
+				var liindex = $$('#relation .radio').index(this);
+				$$(this).addClass('on').siblings().removeClass('on');
+			});
+			(function($, doc) {
+				$.init();
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							up: {
+								callback: function() {
+									var self = this;
+									self.endPullUpToRefresh(true);
+								},
+								contentinit: '&nbsp;', //可以上拉提示信息
+								contentdown: '&nbsp;', //上拉结束提示信息
+								contentrefresh: '&nbsp;', //上拉进行中提示信息
+								contentnomore: '&nbsp;' //上拉无更多信息时提示信息
+							}
+						});
+					});
+				});
+				$.ready(function() {
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					var wedlockNamePicker = new $.PopPicker({
+						layer: "",
+						title: "婚姻状况"
+					});
+					var creTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "证件类型"
+					});
+					var populationTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "居民类型"
+					});
+
+					var benefitPicker = new $.PopPicker({
+						layer: "",
+						title: "受益顺序"
+					});
+
+					var paymentsNamePicker = new $.PopPicker({
+						layer: "",
+						title: "交费频率"
+					});
+
+					var isPicker = new $.PopPicker({
+						layer: "",
+						title: "保险费自动垫交选择"
+					});
+
+
+					var payNamePicker = new $.PopPicker({
+						layer: "",
+						title: "支付方式"
+					});
+
+					var yearNamePicker = new $.PopPicker({
+						layer: "",
+						title: "交费期间"
+					});
+
+					var gogetNamePicker = new $.PopPicker({
+						layer: "",
+						title: "红利领取方式"
+					});
+
+
+
+
+
+					/*性别*/
+					sexPicker.setData(sexdata);
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+					/*婚姻状况*/
+					wedlockNamePicker.setData(wedlockdata);
+					$$("#wedlockName").click(function(event) { //
+						wedlockNamePicker.show(function(items) {
+							$$("input[name='wedlock']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='wedlockName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+					/*证件类型*/
+					creTypeNamePicker.setData(creTypedata);
+					$$("#creTypeName").click(function(event) { //
+						creTypeNamePicker.show(function(items) {
+							$$("input[name='creType']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='creTypeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+					/*居民类型*/
+					populationTypeNamePicker.setData(populationtypedata);
+					$$("#populationTypeName").click(function(event) { //
+						populationTypeNamePicker.show(function(items) {
+							$$("input[name='populationType']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='populationTypeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*受益顺序*/
+					benefitPicker.setData(benefitdata);
+					$$("#benefit").click(function(event) { //
+						benefitPicker.show(function(items) {
+							$$("input[name='benefit']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*交费频率*/
+					paymentsNamePicker.setData(paymentsdata);
+					$$("#paymentsName").click(function(event) { //
+						paymentsNamePicker.show(function(items) {
+							$$("input[name='payments']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='paymentsName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*保险费自动垫交选择*/
+					isPicker.setData(isdata);
+					$$("#isName").click(function(event) { //
+						isPicker.show(function(items) {
+							$$("input[name='is']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='isName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+					/*支付方式*/
+					payNamePicker.setData(paydata);
+					$$("#payName").click(function(event) { //
+						payNamePicker.show(function(items) {
+							$$("input[name='pay']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='payName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*交费时间*/
+					yearNamePicker.setData(yeardata);
+					$$("#yearName").click(function(event) { //
+						yearNamePicker.show(function(items) {
+							$$("input[name='year']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='yearName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+
+					/*红利领取方式*/
+					gogetNamePicker.setData(gogetdata);
+					$$("#gogetName").click(function(event) { //
+						gogetNamePicker.show(function(items) {
+							$$("input[name='goget']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='gogetName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+					
+					
+
+
+
+
+
+
+
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(cityData3);
+					$$(".address").click(function(event) { //
+						cityPicker3.show(function(items) {
+							$$("#censusName").val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$("input[name='censusProvince']").val(_getParam(items[0], 'value'));
+							$$("input[name='censusCity']").val(_getParam(items[1], 'value'));
+							$$("input[name='censusDistrict']").val(_getParam(items[2], 'value'));
+						});
+					});
+					$$(".date").click(function(event) { //
+						console.log("----")
+						var _self = this;
+						if(_self.picker) {
+							_self.picker.show(function(rs) {
+								$$(_self).val(rs.text);
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						} else {
+							var optionsJson = this.getAttribute('data-options') || '{}';
+							var options = JSON.parse(optionsJson);
+							var id = this.getAttribute('id');
+							_self.picker = new $.DtPicker(options);
+							_self.picker.show(function(rs) {
+								$$(_self).val(rs.text);
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						}
+					});
+
+				});
+			})(mui, document);
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.OrderInfoMapper">
+	
+	
+	<!-- 中枢系统，订单列表，订单类型 -->
+	<select id="getOrderTypeList" resultType="java.util.HashMap">
+		SELECT
+			CATEGORY_ID,CATEGORY_NAME
+		FROM
+			t_merchant_product_category
+		WHERE
+			STATUS = '01' AND PARENT_CATEGORY_ID in ('ROOTCP','0') AND CATEGORY_ID != 'ROOTCP'
+	</select>
+	
+	<!-- 订单总数 -->
+	<select id="getOrderTotalNum" resultType="long">
+		SELECT T.count_cx + T.count_cp + T.count_sx FROM 
+		(SELECT
+			(SELECT COUNT(*) FROM order_cx) count_cx,
+			(SELECT COUNT(*) FROM order_info) count_cp,
+			(SELECT COUNT(*) FROM order_sx) count_sx
+		 ) AS T
+	</select>
+	
+	<!-- 成交总量，金额 -->
+	<select id="getOrderTotalMoney" resultType="long">
+		SELECT T.count_cx + T.count_cp + T.count_sx FROM 
+		(SELECT
+			(SELECT COUNT(*) FROM order_cx) count_cx,
+			(SELECT COUNT(*) FROM order_info) count_cp,
+			(SELECT COUNT(*) FROM order_sx) count_sx
+		) AS T
+	</select>
+	
+	<!-- 昨日订单数 -->
+	<select id="getYesterdayOrderTotalNum" resultType="long" >
+		SELECT T.count_cx + T.count_cp + T.count_sx FROM 
+		(SELECT
+			(SELECT COUNT(*) FROM order_cx WHERE <![CDATA[ CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]>) count_cx,
+			(SELECT COUNT(*) FROM order_info WHERE <![CDATA[ CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]>) count_cp,
+			(SELECT COUNT(*) FROM order_sx WHERE <![CDATA[ CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]>) count_sx
+		) AS T
+	</select>
+	
+	<!-- 昨日成交数 -->
+	<select id="getYesterdayOrderTotalMoney" resultType="long">
+		SELECT T.count_cx + T.count_cp + T.count_sx FROM 
+		(SELECT
+			(SELECT COUNT(*) FROM order_cx WHERE ORDER_FLAG = '02' <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]>) count_cx,
+			(SELECT COUNT(*) FROM order_info WHERE ORDER_FLAG = '02' <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]>) count_cp,
+			(SELECT COUNT(*) FROM order_sx WHERE ORDER_FLAG in ('03','07','10','12' ) <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]>) count_sx
+		) AS T
+	</select>
+	
+	<!-- 各类型订单昨日成交数 -->
+	<select id="getYesterdayOrderNumOfAllOrderType" resultType="Map" >
+		SELECT
+		(SELECT COUNT(*) FROM order_cx WHERE ORDER_FLAG = '02' <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) CCBXOrderTotalNum,
+		(SELECT COUNT(*) FROM order_sx WHERE ORDER_FLAG = '02' <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) RSBXOrderTotalNum,
+		(SELECT COUNT(*) FROM order_info WHERE ORDER_FLAG = '03' AND ORDER_TYPE = 'ROOTDK'  <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) DKYWOrderTotalNum,
+		(SELECT COUNT(*) FROM order_info WHERE ORDER_FLAG = '07' AND ORDER_TYPE = 'ROOTLC'  <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) LCCPOrderTotalNum,
+		(SELECT COUNT(*) FROM order_info WHERE ORDER_FLAG = '10' AND ORDER_TYPE = 'ROOTQC'  <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) ESQCOrderTotalNum, 
+		(SELECT COUNT(*) FROM order_info WHERE ORDER_FLAG = '12' AND ORDER_TYPE = 'ROOTCD'  <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) CWDBOrderTotalNum, 
+		(SELECT COUNT(*) FROM order_info WHERE ORDER_FLAG = '12' AND ORDER_TYPE = 'ROOTCM'  <![CDATA[ AND CREATE_TIME <= #{endTime} AND CREATE_TIME >= #{startTime} ]]> ) QCMROrderTotalNum
+	</select>
+	
+	<select id="getOrderInsDataGridGroupByProvince" resultType="Map">
+		SELECT
+		MERCHANT_ID as orderId, MERCHANT_NAME as merchantName, MERCHANT_TYPE as merchantType,
+		GRANT_AREA as grantArea, STATUS as status, CREATE_TIME as createTime,
+		MERCHANT_DESCRIPT as merchantDescript,PROVINCE as province, CITY as city,COUNTRY as country,
+		MERCHANT_ADDR as merchantAddr, TELPHONE as telphone
+		FROM
+		t_merchant_manage
+	</select>
+	
+	<select id="orderListGroupByProvince" resultType="Map">
+		SELECT
+		MERCHANT_ID as orderId, MERCHANT_NAME as merchantName, MERCHANT_TYPE as merchantType,
+		GRANT_AREA as grantArea, STATUS as status, CREATE_TIME as createTime,
+		MERCHANT_DESCRIPT as merchantDescript, PROVINCE as province, CITY as city,COUNTRY as country,
+		MERCHANT_ADDR as merchantAddr,TELPHONE as telphone
+		FROM
+		t_merchant_manage
+	</select>
+	
+</mapper>

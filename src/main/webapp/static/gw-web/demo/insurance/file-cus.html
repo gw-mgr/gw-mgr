@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="orderlist file">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>客户查询</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">新增</button>
+			</div>
+		</nav>
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list mui-table-view-cell">
+				<div class="mui-indexed-list-search mui-input-row mui-search">
+					<input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索姓/姓名/电话/车牌号任意数字均可搜索">
+				</div>
+				<div class="mui-table">
+					<div class="mui-table-cell mui-col-xs-3 mui-text-left">
+						<div>姓名</div>
+					</div>
+					
+					<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+						<div>车牌号</div>
+					</div>
+					<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+						<div>总费用</div>
+					</div>
+					<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+						<div class="gray">投保日期</div>
+					</div>
+				</div>
+			</div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3 mui-text-left">
+									<div>张三</div>
+								</div>
+								
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div>渝A12343</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div class="red">￥2000</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+									<div class="gray">2017-10-23 11:21:12 </div>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3 mui-text-left">
+									<div>张三</div>
+								</div>
+								
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div>渝A12343</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div class="red">￥2000</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+									<div class="gray">2017-10-23 11:21:12 </div>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3 mui-text-left">
+									<div>张三</div>
+								</div>
+								
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div>渝A12343</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div class="red">￥2000</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+									<div class="gray">2017-10-23 11:21:12 </div>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-3 mui-text-left">
+									<div>张三</div>
+								</div>
+								
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div>渝A12343</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-center">
+									<div class="red">￥2000</div>
+								</div>
+								<div class="mui-table-cell mui-col-xs-3 mui-text-right">
+									<div class="gray">2017-10-23 11:21:12 </div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for(var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<div class="mui-table">'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-left">'
+								+'<div>张三</div>'
+								+'</div>'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-center">'
+								+'<div>渝A12343</div>'
+								+'</div>'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-center">'
+								+'<div class="red">￥2000'+(i + 1)+'</div>'
+								+'</div>'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-right">'
+								+'<div class="gray">2017-10-23 11:21:12 </div>'
+								+'</div>'
+								+'</div>';
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for(var i = cells.length, len = i + 5; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<div class="mui-table">'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-left">'
+								+'<div>张三</div>'
+								+'</div>'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-center">'
+								+'<div>渝A12343</div>'
+								+'</div>'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-center">'
+								+'<div class="red">￥2000'+(i + 1)+'</div>'
+								+'</div>'
+								+'<div class="mui-table-cell mui-col-xs-3 mui-text-right">'
+								+'<div class="gray">2017-10-23 11:21:12 </div>'
+								+'</div>'
+								+'</div>';
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
+			$$(".mui-indexed-list-search-input").keyup(function(){
+				console.log($$(this).val()+"----keyup");
+			});
+			$$(".mui-indexed-list-search-input").change(function(){
+				console.log($$(this).val()+"----change");
+			});
+			$$("#apply").click(function() {
+			})
+		</script>
+	</body>
+
+</html>

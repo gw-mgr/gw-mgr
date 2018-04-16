@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.CommonMapper">
+
+	<!-- 条件查询客户 -->
+	<select id="queryCustomer" resultType="com.gewei.model.TCustomerBasicinfo">
+		SELECT 
+			USER_ID userId,USER_NAME userName,TELEPHONE telephone
+		FROM 
+			t_customer_basicinfo 
+		<where>
+			<if test=" USER_NAME != null and USER_NAME != '' ">
+				<![CDATA[ AND USER_NAME like CONCAT('',#{USER_NAME},'%') ]]>
+			</if>
+			<if test=" TELEPHONE != null and TELEPHONE != '' ">
+				<![CDATA[ AND TELEPHONE = #{TELEPHONE} ]]>
+			</if>
+			<if test=" CAR_NUM != null and CAR_NUM != '' ">
+				<![CDATA[ AND  CAR_NUM = #{CAR_NUM} ]]>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 插入客户 -->
+	<insert id="insertCustomer" parameterType="com.gewei.model.TCustomerBasicinfo">
+		insert into t_customer_basicinfo (USER_ID ,USER_NAME ,TELEPHONE ,CAR_NUM, CREATE_TIME, UPDATE_TIME) values 
+						(#{userId},#{userName},#{telephone},#{carNum},#{createTime},#{updateTime})
+	</insert>
+	
+</mapper>

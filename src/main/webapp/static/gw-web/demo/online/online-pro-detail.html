@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>产品详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">立即购买</button>
+			</div>
+		</nav>
+		<div class="mui-content ">
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+				<li class="mui-table-view-cell">日益月鑫（这里是产品名称）</li>
+				<li class="mui-table-view-cell gray">
+					由“xxxx”商家提供
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-table">
+						<div class="mui-table-cell mui-col-xs-5">
+							<p class="black">目标年化收益：</p>
+							<p class="black">投资期限（天）：</p>
+							<p class="black">起购金额（元）：</p>
+							<p class="black">风险等级：</p>
+						</div>
+						<div class="mui-table-cell mui-col-xs-7 mui-text-left">
+							<p>7%</p>
+							<p>90</p>
+							<p>2000</p>
+							<p>1级</p>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-divider">产品介绍：</li>
+				<li class="mui-table-view-cell">
+					<p class="black">产品名称： 日益月鑫</p>
+					<p class="black">发行机构： 齐鲁证券（上海）资产管理有限公司</p>
+					<p class="black">产品结构： 固定收益结构</p>
+					<p class="black">参与金额： 首次参与本集合计划的最低金额为人民币50000元，追加参与的最低金额为人民币1000元</p>
+				</li>
+				<li class="mui-table-view-cell">
+					资管计划销售服务由北京肯特瑞财富投资管理有限公司提供 本页面非任何法律文件，投资前请认真阅读产品合同，产品说明书及风险提示书等相关信息，理财有风险，投资需谨慎。 
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					sexPicker.setData(sexdata);
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+				});
+			})(mui, document);
+		</script>
+
+	</body>
+
+</html>

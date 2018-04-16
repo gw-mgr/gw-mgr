@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>车辆保险</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<p class="mui-content-padded mui-h5 mui-text-center">温馨提示：您的交易需要线下人员处理，请注意接听电话</p>
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<input type="hidden" name="orderType" >
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>车主姓名</label>
+						<input type="text" name="carOwnerName" class=" mui-text-right mui-input-clear" placeholder="请输入姓名" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+						<input type="text" name="carNo" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+						<input name="carNum" type="hidden" />
+					</div>
+				</div>
+				<div class="mui-table-view-divider none">请告知基本保险需求(备注):</div>
+				<textarea class="question" name="bxRemark" placeholder="如：车损险，三者100万，乘座各1万，不计，交强+车船税来报价。如果有特别要求，最好一次性说完整。"></textarea>
+				<div class="line"></div>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right blue" onclick="_href('insurance-car-brokerage.html')">
+							点击查看佣金政策
+						</a>
+					</li>
+				</ul>
+		</div>
+		</form>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			_showcar();
+			$$("input[name='orderType']").val(getUrlParam("orderType"));
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				if(isNull(datas.carOwnerName))return mui.toast("请输入车主姓名");
+				if(isNull(datas.carNo))return mui.toast("请输入车牌号");
+				var carNum = $$(".cartext").html() + datas.carNo;
+				console.log(carNum)
+				if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(carNum)) {
+					return mui.toast("车牌号输入错误，请重新输入");
+				}
+				if(isNull(datas.bxRemark))return mui.toast("请输入备注");
+				if(!isNull(sessionStorage.getItem("userId"))) {
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				if(!isNull(carNum)) {
+					datas.carNum = carNum;
+				}
+				console.log(datas);
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/baoxianyewu/createBXOrder',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					hide();
+						if(response.success) {
+							mui.toast("提交成功!")
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("提交失败，请重试");
+					}
+	            });
+			});
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

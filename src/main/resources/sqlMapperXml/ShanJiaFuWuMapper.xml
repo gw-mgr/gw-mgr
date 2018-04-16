@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.ShanJiaFuWuMapper">
+	
+	<!-- 商家助手 -->
+	<select id="getMerchantOrderSummaryById" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT
+		(SELECT COUNT(*) FROM order_cx WHERE ORDER_FLAG = '02' AND MERCHANT_ID = #{merchantId} ) cj_ccbx,
+		(SELECT COUNT(*) FROM order_cx WHERE ORDER_FLAG = '01' AND MERCHANT_ID = #{merchantId} ) db_ccbx,
+		(SELECT COUNT(*) FROM order_sx WHERE ORDER_FLAG = '02' AND MERCHANT_ID = #{merchantId} ) cj_rsbx,
+		(SELECT COUNT(*) FROM order_sx WHERE ORDER_FLAG = '01' AND MERCHANT_ID = #{merchantId} ) db_rsbx,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '03' AND ORDER_TYPE = 'ROOTDK' ) cj_dkyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG in ('01','02') AND ORDER_TYPE = 'ROOTDK' ) db_dkyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '07' AND ORDER_TYPE = 'ROOTLC' ) cj_lcyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '06' AND ORDER_TYPE = 'ROOTLC' ) db_lcyw,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '10' AND ORDER_TYPE LIKE 'ROOTQC%' ) cj_esc,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '02' AND ORDER_TYPE LIKE 'ROOTQC%' ) db_esc,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '12' AND ORDER_TYPE = 'ROOTCD' ) cj_cwdb,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG in ('01','02') AND ORDER_TYPE = 'ROOTCD' ) db_cwdb,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG = '12' AND ORDER_TYPE = 'ROOTCM' ) cj_qcmr,
+		(SELECT COUNT(*) FROM order_info O LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID WHERE P.MERCHANT_ID = #{merchantId} AND O.ORDER_FLAG in ('01','02') AND ORDER_TYPE = 'ROOTCM' ) db_qcmr
+	</select>
+	
+	<!-- 财产保险，订单列表 -->
+	<select id="getMerchantOrderListOfROOTCC" resultType="Map">
+		SELECT 
+			ORDER_ID orderId,POLICYHOLDER policyHolder,CREATE_TIME createTime,ORDER_FLAG status,ZBF zbf,ORDER_TYPE orderType
+		FROM 
+			order_cx 
+		WHERE 
+			MERCHANT_ID = #{merchantId} 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" businessType != null and businessType != '' ">
+				<![CDATA[ AND ORDER_TYPE = #{businessType} ]]> 
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]> 
+			</if>
+		ORDER BY UPDATE_TIME ASC limit #{start},#{rows}
+	</select>
+	
+	<!-- 人寿保险，订单列表 -->
+	<select id="getMerchantOrderListOfROOTRS" resultType="Map">
+		SELECT 
+			s.ORDER_ID orderId,r.USER_NAME policyHolder,s.CREATE_TIME createTime,s.ORDER_FLAG status,s.BFHJ zbf,s.ORDER_TYPE orderType
+		FROM 
+			order_sx s
+		Left join policyholder r on s.POLICYHOLDER_ID = r.PID
+		WHERE 
+			MERCHANT_ID = #{merchantId} AND ORDER_TYPE like CONCAT('',#{orderType},'%')
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]>
+			</if>
+		ORDER BY UPDATE_TIME ASC limit #{start},#{rows}
+	</select>
+	
+	<!-- 其他产品，订单列表 -->
+	<select id="getMerchantOrderListOfOthers" resultType="Map">
+		SELECT 
+			O.ORDER_ID orderId,P.PRODUCT_NAME productName,O.ORDER_FLAG status,O.CREATE_TIME createTime,O.ORDER_MONEY orderMoney,O.ORDER_TYPE orderType
+		FROM 
+			order_info O
+		LEFT JOIN t_product_manage P ON O.PRODUCT_ID = P.PRODUCT_ID
+		WHERE 
+			O.MERCHANT_ID = #{merchantId} AND O.ORDER_TYPE like CONCAT('',#{orderType},'%') 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND O.CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND O.ORDER_FLAG = #{status} ]]>
+			</if>
+		ORDER BY O.UPDATE_TIME ASC limit #{start},#{rows}
+	</select>
+	
+	<!-- 订单详细信息，类型：财产保险 -->
+	<select id="getCCOrderDetailInfoByOrderId" resultType="Map">
+		SELECT 
+			O.ORDER_FLAG status, O.ORDER_ID orderId, O.ORDER_TYPE orderType, T.CATEGORY_NAME orderTypeName, O.CREATE_TIME createTime, O.ORDER_NO orderNo,
+			O.CAR_NUM carNum, O.CAR_FRAME_NUM carFrameNum, O.ENGINE_NUM engineNum, O.CHANG_TYPE changType, O.CAR_TYPE carType,
+			O.REGISTER_TIME registerTime, O.TRAFFIC_INS_START_TIME trafficInsStartTime, O.BUSINESS_INS_START_TIME businessInsStartTime, 
+			O.CAR_OWNER carOwner, O.OWNER_CARD_TYPE ownerCardType, O.OWNER_CARD_ID ownerCardId, O.POLICYHOLDER policyHolder, 
+			O.TBR_CARD_TYPE tbrCardType, O.TBR_CARD_ID tbrCardId, O.BENEFICIARY beneficiary, O.BBR_CARD_TYPE bbrCardType, O.BBR_CARD_ID bbrCardId,
+			O.INSURANCE_COMPANY insuranceCompany, O.INSURANCE_COMPANY_TEL insuranceCompanyTel, O.ZSYX zsyx, O.ZJQ zjq, O.CCS ccs, O.ZBF zbf, O.GIFT_COMMENT giftComment
+		FROM 
+			order_cx O
+		LEFT JOIN t_merchant_product_category T ON O.ORDER_TYPE = T.CATEGORY_ID
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 订单详细信息，类型：人寿保险 -->
+	<select id="getRSOrderDetailInfoByOrderId" resultType="Map">
+		SELECT
+			O.ORDER_FLAG status, O.ORDER_ID orderId, O.ORDER_TYPE orderType, O.CREATE_TIME createTime, O.ORDER_NO orderNo,
+			
+			tbr.USER_NAME tbr_userName,tbr.SEX tbr_sex,tbr.MARRY_FLAG tbr_marryFlag,tbr.BIRTH_DATE tbr_birthDate,tbr.CERT_TYPE tbr_certType,tbr.CERT_NO tbr_certNo,tbr.PID tbr_id,
+			tbr.NATIONALITY tbr_nationality,tbr.HOUSEHOLD tbr_houseHold,tbr.VALIDITY_DATE tbr_validityDate,tbr.RESIDENT_TYPE tbr_residentType,tbr.POSTAL_ADDRESS tbr_postalAddress,
+			tbr.RESIDENTIAL_ADDRESS tbr_residentialAddress,tbr.TELPHONE tbr_telphone,tbr.MTELPHONE tbr_mtelphone,tbr.MAIL tbr_mail,
+			tbr.WORK_UNIT tbr_workUnit,tbr.JOB_CONTENT tbr_jobContent,tbr.INDUSTRY tbr_industry,tbr.OCCUPATION tbr_occupation,
+			tbr.PPROVINCE tbr_pprovince,tbr.PCITY tbr_pcity,tbr.PDISTRICT tbr_pdistrict,
+			tbr.RPROVINCE tbr_rprovince,tbr.RCITY tbr_rcity,tbr.RDISTRICT tbr_rdistrict,
+			
+			
+			
+			bbr.USER_NAME bbr_userName,bbr.SEX bbr_sex,bbr.MARRY_FLAG bbr_marryFlag,bbr.BIRTH_DATE bbr_birthDate,bbr.CERT_TYPE bbr_certType,bbr.CERT_NO bbr_certNo,bbr.PID bbr_id,
+			bbr.NATIONALITY bbr_nationality,bbr.HOUSEHOLD bbr_houseHold,bbr.VALIDITY_DATE bbr_validityDate,bbr.RESIDENT_TYPE bbr_residentType,bbr.POSTAL_ADDRESS bbr_postalAddress,
+			bbr.RESIDENTIAL_ADDRESS bbr_residentialAddress,bbr.TELPHONE bbr_telphone,bbr.MTELPHONE bbr_mtelphone,bbr.MAIL bbr_mail,
+			bbr.WORK_UNIT bbr_workUnit,bbr.JOB_CONTENT bbr_jobContent,bbr.INDUSTRY bbr_industry,bbr.OCCUPATION bbr_occupation,
+			bbr.PPROVINCE bbr_pprovince,bbr.PCITY bbr_pcity,bbr.PDISTRICT bbr_pdistrict,
+			bbr.RPROVINCE bbr_rprovince,bbr.RCITY bbr_rcity,bbr.RDISTRICT bbr_rdistrict,
+			
+			bxgs.INSURER_NAME bxgs_insurerName,bxgs.INSURER_PHONE bxgs_insurerPhone,
+			
+			O.TXWSX1 txwsx1,O.BXWSX1 bxwsx1,O.TXWSX2 txwsx2,O.BXWSX2 bxwsx2,O.TXWSX3 txwsx3,O.BXWSX3 bxwsx3,O.TXWSX4 txwsx4,O.BXWSX4 bxwsx4,O.TXWSX6 txwsx6,O.BXWSX6 bxwsx6,
+			O.TXWSX7 txwsx7,O.BXWSX7 bxwsx7,O.TXWSX8 txwsx8,O.TXWSX9 txwsx9,
+
+			O.TXWSX11 txwsx11,O.TXWSX12 txwsx12,O.TXWSX13 txwsx13,O.TXWSX14 txwsx14,O.TXWSX15 txwsx15,O.TXWSX16 txwsx16,O.TXWSX17 txwsx17,O.TXWSX18 txwsx18,O.TXWSX19 txwsx19,O.TXWSX20 txwsx20,
+			O.BXWSX8 bxwsx8, O.BXWSX9 bxwsx9, 
+			O.BXWSX11 bxwsx11, O.BXWSX12 bxwsx12, O.BXWSX13 bxwsx13, O.BXWSX14 bxwsx14, O.BXWSX15 bxwsx15, O.BXWSX16 bxwsx16,
+			O.BXWSX17 bxwsx17, O.BXWSX18 bxwsx18, O.BXWSX19 bxwsx19, O.BXWSX20 bxwsx20, O.TXWSX5A txwsx5a, O.TXWSX5B txwsx5b, O.TXWSX5C txwsx5c, O.TXWSX5D txwsx5d, 
+			O.TXWSX5E txwsx5e, O.TXWSX5F txwsx5f, O.TXWSX5G txwsx5g, O.TXWSX5H txwsx5h, O.TXWSX5I txwsx5i, O.TXWSX5J txwsx5j, O.TXWSX5K txwsx5k, O.BXWSX5A bxwsx5a, 
+			O.BXWSX5B bxwsx5b, O.BXWSX5C bxwsx5c, O.BXWSX5D bxwsx5d, O.BXWSX5E bxwsx5e, O.BXWSX5F bxwsx5f, O.BXWSX5G bxwsx5g, O.BXWSX5H bxwsx5h, O.BXWSX5I bxwsx5i, 
+			O.BXWSX5J bxwsx5j, O.BXWSX5K bxwsx5k, 
+			O.TXWSX10A txwsx10a,O.TXWSX10B txwsx10b,O.TXWSX10C txwsx10c,O.BXWSX10A bxwsx10a,O.BXWSX10B bxwsx10b,
+			O.BXWSX10C bxwsx10c,O.TXWSX11A txwsx11a,O.TXWSX11B txwsx11b,O.BXWSX11A bxwsx11a,O.BXWSX11B bxwsx11b,
+			
+			O.JFPL jfpl, O.SFZDZF sfzdzf, O.SQJFFS sqjffs,O.XQJFFS xqjffs,O.KHHMC khhmc,O.YHZH yhzh,O.BFHJ bfhj,O.HLLQFS hllqfs,O.HLLQNL hllqnl,O.LQFS lqfs,O.HLLQLX hllqlx,
+			O.SFZDZF sfzdzf,O.TBRSG tbrsg,O.TBRTZ tbrtz,O.BBRSG bbrsg,O.BBRTZ bbrtz,O.BBRNSR bbrnsr,
+			O.CLLX cllx,O.CLYT clyt,O.CSSG cssg,O.CSTZ cstz,O.HYSJ hysj,O.JZGJ jzgj,O.JZJL jzjl,O.JZLX jzlx,O.JZQFRQ jzqfrq,O.JZYY jzyy,O.JZZLSJ jzzlsj,O.LPNR lpnr,
+			O.MTYJ mtyj,O.ORDER_NO orderNo,O.SPGSMC spgsmc,O.SPJE spje,O.SPRQ sprq,O.SPSY spsy,O.TBRSRLY tbrsrly,O.YJSJ yjsj,O.YJZL yjzl,O.TBRNSR tbrnsr,O.BBRSRLY bbrsrly,
+			
+			O.BENEFICIARY_ID BENEFICIARY_ID ,O.TZLJBXTX TZLJBXTX
+			FROM 
+			order_sx O
+		LEFT JOIN t_merchant_product_category T ON O.ORDER_TYPE = T.CATEGORY_ID
+		LEFT JOIN policyholder tbr ON O.POLICYHOLDER_ID = tbr.PID
+		LEFT JOIN policyholder bbr ON O.INSURED_ID = bbr.PID
+		LEFT JOIN t_insurer bxgs ON O.INSURANCE_COMPANY_ID = bxgs.INSURER_ID
+		WHERE 
+			O.ORDER_ID = #{orderId}
+	</select>
+	
+	<!-- 商家累计收入+累计未结算金额 -->
+	<select id="getMerchantSettleSummary" resultType="Map">
+		SELECT
+			(SELECT sum(TRADE_VALUE) FROM t_account_flow WHERE PERSON_ID = #{merchantId} AND TRADE_TYPE = '+' AND UPDATE_TIME like CONCAT('',#{createTime},'%')) totalIncome,
+			(SELECT sum(TRADE_VALUE) FROM t_account_flow WHERE PERSON_ID = #{merchantId} AND TRADE_TYPE = '-' AND STATUS = '02' AND UPDATE_TIME like CONCAT('',#{createTime},'%')) settled
+	</select>
+	
+	<!-- 商家各订单类型收入+各订单类型未结算金额 -->
+	<select id="getMerchantSettleOrderByOrderType" resultType="Map">
+		SELECT
+			(SELECT TOTAL_INCOME FROM t_account WHERE PERSON_ID = #{merchantId} ) totalIncome,
+			(SELECT BALANCE FROM t_account WHERE PERSON_ID = #{merchantId} ) balance
+	</select>
+	
+	<!-- 财产保险订单数量 -->
+	<select id="getMerchantOrderCountOfROOTCC" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_cx 
+		WHERE 
+			MERCHANT_ID = #{merchantId} AND ORDER_TYPE like CONCAT('',#{orderType},'%')
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]> 
+			</if>
+	</select>
+	
+	<!-- 人寿保险订单数量 -->
+	<select id="getMerchantOrderCountOfROOTRS" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_sx
+		WHERE 
+			MERCHANT_ID = #{merchantId} AND ORDER_TYPE like CONCAT('',#{orderType},'%') 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]> 
+			</if>
+	</select>
+	
+	<!-- 其他订单数量 -->
+	<select id="getMerchantOrderCountOfOthers" resultType="long">
+		SELECT 
+			count(*)
+		FROM 
+			order_info 
+		WHERE 
+			MERCHANT_ID = #{merchantId} AND ORDER_TYPE like CONCAT('',#{orderType},'%') 
+			<if test=" createTime != null and createTime != '' ">
+				<![CDATA[ AND CREATE_TIME like CONCAT('',#{createTime},'%') ]]>
+			</if>
+			<if test=" status != null and status != '' ">
+				<![CDATA[ AND ORDER_FLAG = #{status} ]]>
+			</if>
+	</select>
+	
+</mapper>

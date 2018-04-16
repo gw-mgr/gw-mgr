@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>补充信息</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet" />
+		
+		
+	</head>
+	<body>
+		<div class="mui-content">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>所在地</label>
+							<input name="censusName" type="text" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+							<input name="province" type="hidden">
+							<input name="city" type="hidden">
+							<input name="country" type="hidden">
+						</div>
+					</div>	
+				</div>
+				<div class="line15"></div>
+				<div class="mui-content-padded">
+					<button type="button" id="apply" class="mui-btn mui-btn-primary mui-btn-block">确定</button>
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript" src="../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="../../js/commom.base.js" ></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(areaData);
+
+					//投保人现住址
+					$$(".address").click(function(event) { //
+						var _self = this;
+						cityPicker3.show(function(items) {
+							$$(_self).val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$(_self).next().val(_getParam(items[0], 'value'));
+							$$(_self).next().next().val(_getParam(items[1], 'value'));
+							$$(_self).next().next().next().val(_getParam(items[2], 'value'));
+						});
+					});
+
+				});
+			})(mui, document);
+			$$("#apply").click(function(){
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				if(isNull(datas.province))return mui.toast("请选择所在地");
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/security/addMemberInfo',
+	                data: {
+						'telphone': getUrlParam("telphone"),
+						'smsCode': getUrlParam("smsCode"),
+						'province': datas.province,
+						'city': datas.city,
+						'country': datas.country
+					},
+					dataType: 'json',
+	                success: function(response) {
+						console.log(response)
+						hide();
+						if(response.success) {
+							if(isNull(response.obj)){
+								
+							}else{
+								sessionStorage.setItem('merchantId',response.obj.merchantId);
+								sessionStorage.setItem('userId',response.obj.userId);
+								location.href = "../member/index.html";
+							}
+						} else {
+							mui.toast(response.msg);	
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("登录失败，请重新登录");
+					}
+	            });
+				
+				
+			});
+			
+			
+			
+			
+		</script>
+		
+		
+		
+		
+	</body>
+
+</html>

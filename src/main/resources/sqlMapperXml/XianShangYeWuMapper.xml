@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.XianShangYeWuMapper">
+
+	<!-- 车务代办，服务商选择 -->
+	<select id="getROOTCDList" resultType="Map">
+		SELECT
+			M.MERCHANT_ID merchantId,M.MERCHANT_NAME merchantName,P.PRODUCT_NAME productName,M.MERCHANT_PHOTO_URL merchantHeadPhoto,P.CURR_PRICE currPrice,
+			M.TELPHONE telephone,M.MERCHANT_ADDR merchantAddr,M.MERCHANT_DESCRIPT merchantDescript
+		FROM
+			t_product_manage P
+		LEFT JOIN t_merchant_manage M ON P.MERCHANT_ID = M.MERCHANT_ID
+		LEFT JOIN t_merchant_product_category C ON P.PRODUCT_TYPE = C.CATEGORY_ID
+		<where>
+			C.PARENT_CATEGORY_ID = 'ROOTCD' AND M.STATUS = '02' AND P.STATUS = '01'
+			<if test=" productType != null and productType != '' ">
+                <![CDATA[ AND P.PRODUCT_TYPE = #{productType} ]]>
+            </if>
+			<if test=" grantArea != null and grantArea != '' ">
+				<![CDATA[ AND M.GRANT_AREA like CONCAT('%',#{grantArea},'%') ]]>
+            </if>
+        </where>
+        LIMIT #{start},#{rows}
+	</select>
+	
+	<!-- 车务代办，数量 -->
+	<select id="getROOTCDCount" resultType="long">
+		SELECT
+			count(*)
+		FROM
+			t_product_manage P
+		LEFT JOIN t_merchant_manage M ON P.MERCHANT_ID = M.MERCHANT_ID
+		LEFT JOIN t_merchant_product_category C ON P.PRODUCT_TYPE = C.CATEGORY_ID
+		<where>
+			C.PARENT_CATEGORY_ID = 'ROOTCD' AND M.STATUS = '02' AND P.STATUS = '01'
+			<if test=" productType != null and productType != '' ">
+                <![CDATA[ AND P.PRODUCT_TYPE = #{productType} ]]>
+            </if>
+			<if test=" grantArea != null and grantArea != '' ">
+				<![CDATA[ AND M.GRANT_AREA like CONCAT('%',#{grantArea},'%') ]]>
+            </if>
+        </where>
+	</select>
+	
+	<!-- 车务代办服务商，产品列表 -->
+	<select id="getProductListByMerchantId" resultType="Map" >
+		SELECT
+			P.PRODUCT_ID productId,P.PRODUCT_NAME productName,P.CURR_PRICE currPrice,P.ORIG_PRICE origPrice,P.PRODUCT_DESCRIPT productDescript
+		FROM
+			t_product_manage P
+		LEFT JOIN t_merchant_product_category C ON P.PRODUCT_TYPE = C.CATEGORY_ID
+		<where>
+			P.MERCHANT_ID = #{merchantId} AND P.STATUS = '01'
+			<if test=" ROOTCD != null and ROOTCD != '' ">
+                <![CDATA[ AND C.PARENT_CATEGORY_ID = #{ROOTCD} ]]>
+            </if>
+			<if test=" ROOTCM != null and ROOTCM != '' ">
+				<![CDATA[ AND C.CATEGORY_ID = #{ROOTCM} ]]>
+            </if>
+        </where>
+	</select>
+	
+	<!-- 产品详情 -->
+	<select id="getProductInfoById" resultType="Map" >
+		SELECT
+			M.MERCHANT_ID merchantId,M.MERCHANT_NAME merchantName, M.TELPHONE telephone, M.MERCHANT_ADDR merchantAddr,P.PRODUCT_ID productId,P.PRODUCT_TYPE productType,
+			P.PRODUCT_NAME productName, P.CURR_PRICE currPrice, P.PRODUCT_DESCRIPT productDescript,P.ORIG_PRICE origPrice,
+			round(6378.138*2*asin(sqrt(pow(sin((#{latitude}*pi()/180-M.LATITUDE*pi()/180)/2),2)+cos(#{latitude}*pi()/180)*cos(M.LATITUDE*pi()/180)*pow(sin((#{longitude}*pi()/180-M.LONGITUDE*pi()/180)/2),2)))*1000) as distance
+		FROM
+			t_product_manage P
+		LEFT JOIN t_merchant_manage M ON P.MERCHANT_ID = M.MERCHANT_ID
+		LEFT JOIN t_merchant_product_category C ON P.PRODUCT_TYPE = C.CATEGORY_ID
+		WHERE P.PRODUCT_ID = #{productId}
+	</select>
+	
+	<!-- 贷款列表条件查询 -->
+	<select id="getDKProductList" resultType="Map" >
+		SELECT
+			M.MERCHANT_ID merchantId,M.MERCHANT_NAME merchantName, M.TELPHONE telephone,P.PRODUCT_ID productId,
+			P.PRODUCT_NAME productName, P.PRODUCT_DESCRIPT productDescript, P.COMMISSION commission, P.COMMISSION_RATE commission
+		FROM
+			t_product_manage P
+		LEFT JOIN t_merchant_manage M ON P.MERCHANT_ID = M.MERCHANT_ID
+		LEFT JOIN t_merchant_product_category C ON P.PRODUCT_TYPE = C.CATEGORY_ID
+		<where>
+			P.PRODUCT_TYPE = 'ROOTDK' AND P.STATUS = '01' AND M.STATUS = '02' 
+			<if test=" dIncome != null and dIncome != '' ">
+				<![CDATA[ AND P.D_INCOME <= #{dIncome} ]]> 
+			</if>
+			<if test=" dMoney != null and dMoney != '' ">
+				<![CDATA[ AND P.D_MONEY <= #{dMoney} ]]> 
+			</if>
+			<if test=" dMarryFlag != null and dMarryFlag != '' ">
+                <![CDATA[ AND P.D_MARRY_FLAG <= #{dMarryFlag} ]]>
+            </if>
+			<if test=" dSocialFlag != null and dSocialFlag != '' ">
+				<![CDATA[ AND P.D_SOCIAL_FLAG <= #{dSocialFlag} ]]>
+            </if>
+			<if test=" dHouseFlag != null and dHouseFlag != '' ">
+				<![CDATA[ AND P.D_HOUSE_FLAG <= #{dHouseFlag} ]]>
+            </if>
+			<if test=" dCarFlag != null and dCarFlag != '' ">
+				<![CDATA[ AND P.D_CAR_FLAG <= #{dCarFlag} ]]>
+            </if>
+            limit #{start},#{rows}
+        </where>
+	</select>
+	
+	<!-- 贷款列表条件查询 -->
+	<select id="getDKProductCount" resultType="long" >
+		SELECT
+			count(*)
+		FROM
+			t_product_manage P
+		LEFT JOIN t_merchant_manage M ON P.MERCHANT_ID = M.MERCHANT_ID
+		LEFT JOIN t_merchant_product_category C ON P.PRODUCT_TYPE = C.CATEGORY_ID
+		<where>
+			P.PRODUCT_TYPE = 'ROOTDK' AND P.STATUS = '01' AND M.STATUS = '02' 
+			<if test=" dIncome != null and dIncome != '' ">
+				<![CDATA[ AND P.D_INCOME <= #{dIncome} ]]> 
+			</if>
+			<if test=" dMoney != null and dMoney != '' ">
+				<![CDATA[ AND P.D_MONEY <= #{dMoney} ]]> 
+			</if>
+			<if test=" dMarryFlag != null and dMarryFlag != '' ">
+                <![CDATA[ AND P.D_MARRY_FLAG <= #{dMarryFlag} ]]>
+            </if>
+			<if test=" dSocialFlag != null and dSocialFlag != '' ">
+				<![CDATA[ AND P.D_SOCIAL_FLAG <= #{dSocialFlag} ]]>
+            </if>
+			<if test=" dHouseFlag != null and dHouseFlag != '' ">
+				<![CDATA[ AND P.D_HOUSE_FLAG <= #{dHouseFlag} ]]>
+            </if>
+			<if test=" dCarFlag != null and dCarFlag != '' ">
+				<![CDATA[ AND P.D_CAR_FLAG <= #{dCarFlag} ]]>
+            </if>
+        </where>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

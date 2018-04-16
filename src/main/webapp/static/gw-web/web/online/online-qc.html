@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>二手汽车</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>业务类型</label>
+							<input type="text" name="servicesTypeName" id="servicesTypeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="orderType" />
+						</div>
+					</div>
+					<div class="mui-table-view-divider none">基本信息</div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="userNameR" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="tel" name="userTelephone" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="11">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>买/卖地址</label>
+							<input name="tradeAddr" type="text"  class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+							<input name="province" type="hidden">
+							<input name="city" type="hidden">
+							<input name="country" type="hidden">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>详细地址</label>
+						<input type="text" name="tradeAddrR" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-table-view-divider none">车辆信息</div>
+					<div class="mui-input-row">
+						<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+						<input type="text" name="carNumR" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+					</div>
+					<div class="line">
+						<span class="check" id="check">需要发送短信给接受服务方,如果需要,请提供手机号码。</span>
+						<p class="gray mui-h6 mui-text-justify">发送的短信样本：<br /> 尊敬的客户您好，**您预约的***服务，由服务人员****，电话****为您提供本次服务，请注意接听电话，谢谢！
+							</span>
+						</p>
+					</div>
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>电话</label>
+							<input type="tel" name="conTel" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="11">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			_showcar();
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var servicesTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "业务类型"
+					});
+					servicesTypeNamePicker.setData(servicesTypedata);
+					$$("#servicesTypeName").click(function(event) { //
+						servicesTypeNamePicker.show(function(items) {
+							$$("input[name='servicesTypeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='orderType']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(areaData);
+
+					//投保人现住址
+					$$(".address").click(function(event) { //
+						var _self = this;
+						cityPicker3.show(function(items) {
+							$$(_self).val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$(_self).next().val(_getParam(items[0], 'value'));
+							$$(_self).next().next().val(_getParam(items[1], 'value'));
+							$$(_self).next().next().next().val(_getParam(items[2], 'value'));
+						});
+					});
+
+				});
+			})(mui, document);
+
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				if(isNull(datas.orderType))return mui.toast("请选择业务类型");
+				if(isNull(datas.userNameR))return mui.toast("请输入姓名");
+				if(isNull(datas.userTelephone))return mui.toast("请输入电话");
+				if(checkPhone(datas.userTelephone))return mui.toast("电话输入有误");
+				if(isNull(datas.tradeAddrR))return mui.toast("请输入详细地址");
+				if(isNull(datas.carNumR))return mui.toast("请输入车牌号");
+				datas.carNumR = $$(".cartext").html() + datas.carNumR;
+				if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(datas.carNumR))return mui.toast("车牌号输入错误，请重新输入");
+				if(isNull(datas.conTel))return mui.toast("请输入联系电话");
+				if(checkPhone(datas.conTel))return mui.toast("联系电话输入有误");
+				if(!isNull(sessionStorage.getItem("userId"))) {
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				console.log(datas);
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/xianshangyewu/createESCOrder',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					hide();
+						if(response.success) {
+							mui.toast("保存成功!");
+							setTimeout(function(){
+								location.reload();
+							},500);
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("保存失败，请重试");
+					}
+	            });
+		});
+		</script>
+	</body>
+</html>

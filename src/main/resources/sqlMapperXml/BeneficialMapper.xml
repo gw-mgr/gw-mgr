@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.BeneficialMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.Beneficial">
+		<id column="PERSON_ID" property="personId" />
+		<result column="ORDER_ID" property="orderId" />
+		<result column="BENEFICIAL_RATE" property="beneficialRate" />
+		<result column="BENEFICIAL_NAME" property="beneficialName" />
+		<result column="SEX" property="sex" />
+		<result column="BIRTH_DATE" property="birthDate" />
+		<result column="RELATIONSHIP" property="relationship" />
+		<result column="CERT_TYPE" property="certType" />
+		<result column="CERT_NO" property="certNo" />
+		<result column="VALIDITY_DATE" property="validityDate" />
+		<result column="RESIDENTIAL_ADDRESS" property="residentialAddress" />
+		<result column="BENEFICIARY_ORDER" property="beneficiaryOrder" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="REMARK1" property="remark1" />
+		<result column="REMARK2" property="remark2" />
+		<result column="REMARK3" property="remark3" />
+	</resultMap>
+	<select id="selectBeneficial" parameterType="com.gewei.model.Beneficial" resultType="Beneficial">
+		SELECT
+			t.person_id as personId,
+			t.order_id as orderId,
+			t.beneficial_rate as beneficialRate,
+			t.beneficial_name as beneficialName,
+			t.sex,
+			t.birth_date as birthDate,
+			t.relationship,
+			t.cert_type as certType,
+			t.cert_no as certNo,
+			t.validity_date as validityDate,
+			t.residential_address as residentialAddress,
+			t.beneficiary_order as beneficiaryOrder,
+			t.create_time as createTime,
+			t.description,
+			t.remark1,
+			t.remark2,
+			t.remark3
+		FROM
+		beneficial t
+		<where>
+			<if test=" personId != null and personId != '' ">
+              and  t.person_id = #{personId}
+            </if>
+            <if test=" beneficialName != null and beneficialName != '' ">
+              and  t.beneficial_name = #{userName}
+            </if>
+            <if test=" certType != null and certType != '' ">
+              and  t.cert_type = #{certType}
+            </if>
+            <if test=" certNo != null and certNo != '' ">
+              and  t.cert_no = #{certNo}
+            </if>
+        </where>
+	</select>
+	<update id="updateById" parameterType="com.gewei.model.Beneficial">
+	 update beneficial set 
+	 	<if test="personId != null"> person_id=#{personId}</if>
+		<if test="orderId != null">, order_id=#{orderId}</if>
+		<if test="beneficialRate != null">, beneficial_rate=#{beneficialRate}</if>
+		<if test="beneficialName != null">, beneficial_name=#{beneficialName}</if>
+		<if test="sex != null"> ,sex=#{sex}</if>
+		<if test="birthDate != null">, birth_date=#{birthDate}</if>
+		<if test="relationship != null">, relationship=#{relationship}</if>
+		<if test="certType != null"> ,cert_type=#{certType}</if>
+		<if test="certNo != null">, cert_no=#{certNo}</if>
+		<if test="validityDate != null">, validity_date=#{validityDate}</if>
+		<if test="residentialAddress != null">, residential_address=#{residentialAddress}</if>
+		<if test="beneficiaryOrder != null">, beneficiary_order=#{beneficiaryOrder}</if>
+		<if test="createTime != null"> ,create_time=#{createTime}</if>
+		<if test="description != null"> ,description=#{description}</if>
+		<if test="remark1 != null"> ,remark1=#{remark1}</if>
+		<if test="remark2 != null">, remark2=#{remark2}</if>
+		<if test="remark3 != null">, remark3=#{remark3}</if>
+		where person_id=#{personId}
+	</update>
+</mapper>

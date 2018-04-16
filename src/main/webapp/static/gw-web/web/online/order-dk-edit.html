@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>贷款业务-编辑</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item"  id="apply">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item" id="cancel">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;取&nbsp;&nbsp;消&nbsp;&nbsp;</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<input type="hidden" name="status" />
+				<input type="hidden" name="orderId" />
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>期望贷款金额</label>
+						<input type="tel" name="orderMoney" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="32" >
+					</div>
+					<div class="mui-table-view-divider none">客户信息</div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="userName" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="32" >
+					</div>
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="text" name="telephone" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="30">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>证件类型</label>
+							<input type="text" name="cardType"  class=" mui-text-right cardType" placeholder="无" maxlength="50" readonly="readonly">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>证件号</label>
+						<input type="tel" name="cardId" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="32">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>婚姻状况</label>
+							<input type="text" name="marryFlagName" class=" mui-text-right dMarryFlag" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="marryFlag" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无社保</label>
+							<input type="text" name="socialFlagName" class=" mui-text-right is" placeholder="无" maxlength="50" readonly="readonly">
+							<input type="hidden" name="socialFlag" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无房产</label>
+							<input type="text" name="houseFlagName"  class=" mui-text-right isT" placeholder="无" maxlength="50" readonly="readonly">
+							<input type="hidden" name="houseFlag" />
+						</div>
+					</div>
+					<div id="houseFlag">
+						<div class="mui-input-row">
+							<div class="mui-navigate-right">
+								<label>房产区域</label>
+								<input name="provincename" type="text" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+								<input name="HOUSE_AREA_PROVINCE" type="hidden">
+								<input name="HOUSE_AREA_CITY" type="hidden">
+								<input name="HOUSE_AREA_COUNTRY" type="hidden">
+							</div>
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>每月收入</label>
+							<input type="text" name="inComeName" class=" mui-text-right dIncome" placeholder="无" maxlength="50" readonly="readonly">
+							<input type="hidden" name="inCome" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>工作性质</label>
+							<input type="text" name="workTypeName" class=" mui-text-right dWorkType" placeholder="无" maxlength="50" readonly="readonly">
+							<input type="hidden" name="workType" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无车辆</label>
+							<input type="text" name="carFlagName" class=" mui-text-right carFlag" placeholder="无" maxlength="50" readonly="readonly">
+							<input type="hidden" name="carFlag" />
+						</div>
+					</div>
+					<div id="carFlag" style="display: none;">
+						<div class="mui-table-view-divider none"></div>
+						<div class="mui-input-row">
+							<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+							<input type="text" name="carNum" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+						</div>
+						<div class="mui-input-row">
+							<label>车架号</label>
+							<input type="text" name="carFrameNum" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="17">
+						</div>
+						<div class="mui-input-row">
+							<label>发动机号</label>
+							<input type="text" name="engineNum" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="17">
+						</div>
+						<div class="mui-input-row">
+							<label>厂牌类型</label>
+							<input type="text" name="changType" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="32">
+						</div>
+						<div class="mui-input-row">
+							<div class="mui-navigate-right">
+								<label>车辆类型</label>
+								<input type="text" name="carType" class=" mui-text-right carType" placeholder="请选择" maxlength="50" readonly="readonly" >
+							</div>
+						</div>
+						<div class="mui-table-view-divider none"></div>
+						<div class="mui-input-row">
+							<div class="mui-navigate-right">
+								<label>初登日期</label>
+							 	<input type="text" name="registerTime" data-options='{"type":"date","beginYear":1900,"endYear":2099}' class=" mui-text-right date" placeholder="请选择" maxlength="50" readonly="readonly" >
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<div class="mui-navigate-right">
+								<label>商业险起保日</label>
+							 	<input type="text" name="businessInsStartTime" data-options='{"type":"date","beginYear":1900,"endYear":2099}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly" >
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<div class="mui-navigate-right">
+								<label>交强险起保日</label>
+							 	<input type="text" name="trafficInsStartTime" data-options='{"type":"date","beginYear":1900,"endYear":2099}' class=" mui-text-right  date" placeholder="请选择" maxlength="50" readonly="readonly" >
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(function(){
+				show();
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/dingdanzhuizong/getOrderDetailInfoByOrderId',
+					data:{
+							orderId:getUrlParam('orderId')
+						},
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						hide();
+						if(response.success) {
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							for(var j = 0;j<xcOrderFlagData.length;j++){
+								if(data.status === xcOrderFlagData[j].value){
+									data.statusText = xcOrderFlagData[j].text;
+									$$("input[name=statusText]").addClass(xcOrderFlagData[j].color);
+									break;
+								}
+							}
+							if(data.status ==="02"){//02 未放款
+								$$("#del").remove();
+							}else if(data.status ==="04"){//04 已回收
+								$$("#edit").remove();
+							}else if(data.status ==="03"){//03   已放款
+							}else{
+								$$("nav").remove();
+							}
+							if(!isNull(data.carNum))$$(".cartext").html(data.carNum.substr(0,1));
+							if(!isNull(data.carNum))data.carNum = data.carNum.substr(1,data.carNum.length);
+							if(!isNull(data.createTime))data.createTime = getYear(data.createTime);
+							if(!isNull(data.examineTime))data.examineTime = getYear(data.examineTime);
+							if(!isNull(data.businessInsStartTime))data.businessInsStartTime = getYear(data.businessInsStartTime);
+							if(!isNull(data.registerTime))data.registerTime = getYear(data.registerTime);
+							if(!isNull(data.trafficInsStartTime))data.trafficInsStartTime = getYear(data.trafficInsStartTime);
+							if(!isNull(data.endDate))data.endDate = getYear(data.endDate);
+							
+							if(!isNull(data.orderMoney))data.orderMoney = (data.orderMoney*0.01).toFixed(2);
+							
+							for(var i = 0; i < areaData.length; i++) {
+								if(areaData[i].value === data.HOUSE_AREA_PROVINCE) {
+									for(var j = 0; j < areaData[i].children.length; j++) {
+										if(areaData[i].children[j].value === data.HOUSE_AREA_CITY) {
+											var erea = areaData[i].children[j].children;
+											for(var k = 0; k < erea.length; k++) {
+												if(erea[k].value === data.HOUSE_AREA_COUNTRY) {
+													$$("input[name=provincename]").val(areaData[i].text + " " + areaData[i].children[j].text + " " + erea[k].text);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							for(var j = 0; j < wedlockdata.length; j++) { //婚姻状况 
+								if(data.marryFlag === wedlockdata[j].value) {
+									data.marryFlagName = wedlockdata[j].text;
+									break;
+								}
+							}
+							for(var j = 0; j < ishavedata.length; j++) { //有无社保 
+								if(data.socialFlag === ishavedata[j].value) {
+									data.socialFlagName = ishavedata[j].text;
+									break;
+								}
+							}
+							for(var j = 0; j < loandata.length; j++) { //有无房产 
+								if(data.houseFlag === loandata[j].value) {
+									data.houseFlagName = loandata[j].text;
+									break;
+								}
+							}
+							if(data.houseFlag === "0"){//有无房产
+						        $$("#houseFlag").hide();
+							}else{
+								$$("#houseFlag").show();
+							}
+							for(var j = 0; j < monthIncomedata.length; j++) { //每月收入 
+								if(data.inCome === monthIncomedata[j].value) {
+									data.inComeName = monthIncomedata[j].text;
+									console.log("-----------")
+									break;
+								}
+							}
+							for(var j = 0; j < workdata.length; j++) { //工作性质 
+								if(data.workType === workdata[j].value) {
+									data.workTypeName = workdata[j].text;
+									break;
+								}
+							}
+
+							for(var j = 0; j < loandata.length; j++) { //有无车辆 
+								if(data.carFlag === loandata[j].value) {
+									data.carFlagName = loandata[j].text;
+									break;
+								}
+							}
+							if(data.carFlag === "0"){//无车
+						        $$("#carFlag").hide();
+							}else{
+								$$("#carFlag").show();
+							}
+							
+							console.log(data)
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			_showcar();
+			
+			
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var creTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "证件类型"
+					});
+					/*证件类型*/
+					creTypeNamePicker.setData(creTypedata);
+					$$(".cardType").click(function(event) { //投保人证件类型
+						var _this = $$(this);
+						creTypeNamePicker.show(function(items) {
+							$$(_this).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+					var wedlockNamePicker = new $.PopPicker({
+						layer: "",
+						title: "婚姻状况"
+					});
+					var ishavePicker = new $.PopPicker({
+						layer: "",
+						title: "有无社保"
+					});
+					var monthIncomeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "每月收入"
+					});
+					
+					var dWorkTypePicker = new $.PopPicker({
+						layer: "",
+						title: "工作性质"
+					});
+					
+					var loandataPicker = new $.PopPicker({
+						layer: "",
+						title: "请选择"
+					});
+					var carTypePicker = new $.PopPicker({
+						layer: "",
+						title: "车辆类型"
+					});
+					/*婚姻状况*/
+					wedlockNamePicker.setData(wedlockdata);
+					$$(".dMarryFlag").click(function(event) { //
+						var _self = this;
+						wedlockNamePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*有无社保*/
+					ishavePicker.setData(ishavedata);
+					$$(".is").click(function(event) { //
+						var _self = this;
+						ishavePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					
+					/*每月收入*/
+					monthIncomeNamePicker.setData(monthIncomedata);
+					$$(".dIncome").click(function(event) { //
+						var _self = this;
+						monthIncomeNamePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*工作性质*/
+					dWorkTypePicker.setData(workdata);
+					$$(".dWorkType").click(function(event) { //
+						var _self = this;
+						dWorkTypePicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(JSON.stringify(items[0].value).replace(/"/g, ""));
+						});
+					});
+					/*有无房产*/
+					loandataPicker.setData(loandata);
+					$$(".isT").click(function(event) { //
+						var _self = this;
+						loandataPicker.show(function(items) {
+							var _val = JSON.stringify(items[0].value).replace(/"/g, "");
+							if(_val === "0"){//无车
+							 	$$("#houseFlag input").each(function () {
+							        $$(this).val("");  
+						        });  
+						        $$("#houseFlag").hide();
+							}else{
+								$$("#houseFlag").show();
+							}
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(_val);
+						});
+					});
+					$$(".carFlag").click(function(event) { //
+						var _self = this;
+						loandataPicker.show(function(items) {
+							var _val = JSON.stringify(items[0].value).replace(/"/g, "");
+							if(_val === "0"){//无车
+							 	$$("#carFlag input").each(function () {
+							        $$(this).val("");  
+						        });  
+						        $$("#carFlag").hide();
+							}else{
+								$$("#carFlag").show();
+							}
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$(_self).next().val(_val);
+						});
+					});
+					
+					$$(".date").click(function(event){//
+					var _self = this;
+						if(_self.picker) {
+							_self.picker.show(function (rs) {
+								$$(_self).val(rs.text);
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						} else {
+							var optionsJson = this.getAttribute('data-options') || '{}';
+							var options = JSON.parse(optionsJson);
+							var id = this.getAttribute('id');
+							_self.picker = new $.DtPicker(options);
+							_self.picker.show(function(rs) {
+								$$(_self).val(rs.text);
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						}
+					});
+					
+					
+					/*车辆类型*/
+					carTypePicker.setData(carTypeData);
+					$$(".carType").click(function(event) { //
+						var _this = $$(this);
+						carTypePicker.show(function(items) {
+							$$(_this).val(JSON.stringify(items[0].text).replace(/"/g, ""));			
+						});
+					});
+					
+					
+					
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(areaData);
+					$$(".address").click(function(event) { //
+						var _self = this;
+						cityPicker3.show(function(items) {
+							$$(_self).val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$(_self).next().val(_getParam(items[0], 'value'));
+							$$(_self).next().next().val(_getParam(items[1], 'value'));
+							$$(_self).next().next().next().val(_getParam(items[2], 'value'));
+						});
+					});
+
+				});
+			})(mui, document);
+		
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				
+				if(isNull(datas.orderMoney))return mui.toast("请输入期望贷款金额");
+				if(isNull(datas.userName))return mui.toast("请输入姓名");
+				if(isNull(datas.telephone))return mui.toast("请选择电话");
+				if(checkPhone(datas.telephone))return mui.toast("电话输入有误");
+				if(isNull(datas.cardType))return mui.toast("请选择证件类型");
+				if(isNull(datas.cardId))return mui.toast("请输入证件号码");
+				if(isNull(datas.marryFlag))return mui.toast("请选择婚姻状况");
+				if(isNull(datas.socialFlag))return mui.toast("请选择有无社保");
+				if(isNull(datas.houseFlag))return mui.toast("请选择有无房产");
+				if(isNull(datas.inCome))return mui.toast("请选择每月收入");
+				if(isNull(datas.workType))return mui.toast("请选择工作性质");
+				if(isNull(datas.carFlag))return mui.toast("请选择有无车辆");
+				if(datas.carFlag!=="0"){
+					if(isNull(datas.carNum))return mui.toast("请输入车牌号");
+					datas.carNum = $$(".cartext").html() + datas.carNum;
+					console.log(datas.carNum)
+					if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(datas.carNum)) {
+						return mui.toast("车牌号输入错误，请重新输入");
+					}
+					if(isNull(datas.carFrameNum))return mui.toast("请输入车架号");
+					if(datas.carFrameNum.length!=17)return mui.toast("车架号输入有误");
+					if(isNull(datas.engineNum))return mui.toast("请输入发动机号");
+					if(isNull(datas.changType))return mui.toast("请输入厂牌类型");
+					if(isNull(datas.carType))return mui.toast("请选择车辆类型");
+					if(isNull(datas.registerTime))return mui.toast("请选择初登日期");
+					if(isNull(datas.businessInsStartTime))return mui.toast("请选择商业险起保日");
+					if(isNull(datas.trafficInsStartTime))return mui.toast("请选择交强险起保日");
+				}
+				datas.orderMoney = datas.orderMoney*100;
+				datas.registerTime = datas.registerTime.replace(/-/g, "") + "000000";
+				datas.businessInsStartTime = datas.businessInsStartTime.replace(/-/g, "") + "000000";
+				datas.trafficInsStartTime = datas.trafficInsStartTime.replace(/-/g, "") + "000000";
+				if(!isNull(sessionStorage.getItem("userId"))) {
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				console.log(datas);
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/dingdanzhuizong/editOrderDetailInfoByOrderId',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					hide();
+						if(response.success) {
+							mui.toast("编辑成功!")
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("编辑失败，请重试");
+					}
+	            });
+			});
+			$$("#cancel").click(function() {
+				history.back(-1);
+			});
+		</script>
+	</body>
+
+</html>

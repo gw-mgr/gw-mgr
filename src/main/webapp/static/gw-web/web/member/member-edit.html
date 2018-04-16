@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>个人中心-编辑</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">保存</button>
+			</div>
+		</nav>
+		<div class="mui-content car">
+			<form>
+				<input type="hidden" name=userId"" />
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="userName" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="28">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>证件类型</label>
+							<input type="text" name="cardType" class=" mui-text-right certType" placeholder="请选择" maxlength="50" readonly="readonly">
+						</div>
+					</div>
+
+					<div class="mui-input-row">
+						<label>证件号码</label>
+						<input type="text" name="cardId" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="11">
+					</div>
+
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>所在地</label>
+							<input name="provincename" type="text" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+							<input name="province" type="hidden">
+							<input name="city" type="hidden">
+							<input name="country" type="hidden">
+						</div>
+					</div>
+
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var creTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "证件类型"
+					});
+					/*证件类型*/
+					creTypeNamePicker.setData(creTypedata);
+					$$(".certType").click(function(event) { //投保人证件类型
+						var _this = $$(this);
+						creTypeNamePicker.show(function(items) {
+							$$(_this).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(areaData);
+
+					//投保人现住址
+					$$(".address").click(function(event) { //
+						var _self = this;
+						cityPicker3.show(function(items) {
+							$$(_self).val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$(_self).next().val(_getParam(items[0], 'value'));
+							$$(_self).next().next().val(_getParam(items[1], 'value'));
+							$$(_self).next().next().next().val(_getParam(items[2], 'value'));
+						});
+					});
+
+				});
+			})(mui, document);
+			
+			
+			$$(function(){
+				show();
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/changyongfuwu/getUserInfoById',
+					data:{
+							userId:sessionStorage.getItem('userId')
+						},
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						hide();
+						if(response.success) {
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							
+							for(var i = 0; i < areaData.length; i++) {
+								if(areaData[i].value === data.province) {
+									for(var j = 0; j < areaData[i].children.length; j++) {
+										if(areaData[i].children[j].value === data.city) {
+											var erea = areaData[i].children[j].children;
+											for(var k = 0; k < erea.length; k++) {
+												if(erea[k].value === data.country) {
+													$$("input[name=provincename]").val(areaData[i].text + " " + areaData[i].children[j].text + " " + erea[k].text);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				
+				if(isNull(datas.userName))return mui.toast("请输入姓名");
+				if(isNull(datas.cardType))return mui.toast("请选择证件类型");
+				if(isNull(datas.cardId))return mui.toast("请输入证件号码");
+				if(isNull(datas.province))return mui.toast("请选择所在地");
+				if(!isNull(sessionStorage.getItem("userId"))){
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/changyongfuwu/editUserInfoById',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					console.log(response)
+					hide();
+						if(response.success) {
+							mui.toast("修改成功!")
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("修改失败，请重试");
+					}
+	            });
+			});
+			
+		</script>
+	</body>
+
+</html>

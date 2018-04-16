@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.TMemberBasicinfoMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gewei.model.TMemberBasicinfo">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_NAME" property="userName" />
+		<result column="TELEPHONE" property="telephone" />
+		<result column="MOBILE_PHONE" property="mobilePhone" />
+		<result column="MERCHANT_ID" property="merchantId" />
+		<result column="SEX" property="sex" />
+		<result column="CARD_TYPE" property="cardType" />
+		<result column="CARD_ID" property="cardId" />
+		<result column="MAIL" property="mail" />
+		<result column="QQ" property="qq" />
+		<result column="WECHAT_NUM" property="wechatNum" />
+		<result column="WECHAT_NAME" property="wechatName" />
+		<result column="PROVINCE" property="province" />
+		<result column="CITY" property="city" />
+		<result column="COUNTRY" property="country" />
+		<result column="USER_ADDR" property="userAddr" />
+		<result column="INS_COMPANY" property="insCompany" />
+		<result column="BANK_NAME" property="bankName" />
+		<result column="BANK_HOST" property="bankHost" />
+		<result column="BANK_CARD" property="bankCard" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="STATUS" property="status" />
+		<result column="RECOMMENDER" property="recommender" />
+		<result column="DIR_RECOMMENDER" property="dirRecommender" />
+		<result column="REMARK" property="remark" />
+		<result column="REMARK2" property="remark2" />
+	</resultMap>
+
+</mapper>

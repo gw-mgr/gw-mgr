@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;编&nbsp;&nbsp;辑&nbsp;&nbsp;</div>
+			</a>
+			<a class="mui-tab-item">
+				<div class="mui-btn mui-btn-primary">&nbsp;&nbsp;删&nbsp;&nbsp;除&nbsp;&nbsp;</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						状态<span class="mui-pull-right blue">未放款</span>
+					</li>
+				</ul>
+				<div class="line"></div>
+				<div id="slider" class="mui-slider mui-fullscreen">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" href="#item2mobile">
+								订单详情
+							</a>
+							<a class="mui-control-item" href="#item3mobile">
+								产品信息
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-group">
+						<div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>下单日期</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>订单号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="line"></div>
+										<div class="mui-input-row">
+											<label>用户姓名</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>联系电话</label>
+											<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>证件类型</label>
+												<input type="text" name="creTypeName" id="creTypeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="creType" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<label>证件号码</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+										</div>
+										<div class="line"></div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>婚姻状况</label>
+												<input type="text" name="wedlockName" id="wedlockName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="wedlock" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无社保</label>
+												<input type="text" name="ishaveName" id="ishaveName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="ishave" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无房产</label>
+												<input type="text" name="housName" id="housName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="hous" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>房产区域</label>
+												<input name="censusName" type="text" id="censusName" class=" mui-text-right address" placeholder="请选择(省、市、区)" maxlength="50" readonly="readonly">
+												<input name="censusProvince" type="hidden">
+												<input name="censusCity" type="hidden">
+												<input name="censusDistrict" type="hidden">
+											</div>
+										</div>
+
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>每月收入</label>
+												<input type="text" name="monthIncomeName" id="monthIncomeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="monthIncome" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>工作性质</label>
+												<input type="text" name="workName" id="workName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="work" />
+											</div>
+										</div>
+										<div class="mui-input-row">
+											<div class="mui-navigate-right">
+												<label>有无车辆</label>
+												<input type="text" name="carName" id="carName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+												<input type="hidden" name="car" />
+											</div>
+										</div>
+
+										<div class="mui-input-row">
+											<label>车牌号<a href="#cartextcon" class="cartext">渝</a></label>
+											<input type="text" name="carNo" maxlength="6" class="mui-text-right mui-input-clear" placeholder="请输入车牌号码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+										</div>
+										<div class="mui-input-row">
+											<label>车架号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>发动机号</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>厂牌类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>车辆类型</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-table-view-divider none"></div>
+										<div class="mui-input-row">
+											<label>初登日期</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>商业险起保日</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>交强险起保日</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="item3mobile" class="mui-slider-item mui-control-content">
+							<div class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-input-group">
+										<div class="mui-input-row">
+											<label>贷款产品</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="2017-10-23 11:21:12" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>贷款金额</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="mui-input-row">
+											<label>到期时间</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+										<div class="line"></div>
+										<div class="mui-input-row">
+											<label>备注</label>
+											<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			_showcar();
+			(function($, doc) {
+				$.init();
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							up: {
+								callback: function() {
+									var self = this;
+									self.endPullUpToRefresh(true);
+								},
+								contentinit: '&nbsp;', //可以上拉提示信息
+								contentdown: '&nbsp;', //上拉结束提示信息
+								contentrefresh: '&nbsp;', //上拉进行中提示信息
+								contentnomore: '&nbsp;' //上拉无更多信息时提示信息
+							}
+						});
+					});
+				});
+			})(mui, document);
+		</script>
+		<script>
+			mui.init();
+			(function($) {
+				$.ready(function() {
+					var creTypeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "证件类型"
+					});
+					var wedlockNamePicker = new $.PopPicker({
+						layer: "",
+						title: "婚姻状况"
+					});
+					var ishavePicker = new $.PopPicker({
+						layer: "",
+						title: "有无社保"
+					});
+					var monthIncomeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "每月收入"
+					});
+
+					var workNamePicker = new $.PopPicker({
+						layer: "",
+						title: "工作性质"
+					});
+
+					var loandataPicker = new $.PopPicker({
+						layer: "",
+						title: "请选择"
+					});
+
+					/*证件类型*/
+					creTypeNamePicker.setData(creTypedata);
+					$$("#creTypeName").click(function(event) { //
+						creTypeNamePicker.show(function(items) {
+							$$("input[name='creType']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='creTypeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*婚姻状况*/
+					wedlockNamePicker.setData(wedlockdata);
+					$$("#wedlockName").click(function(event) { //
+						wedlockNamePicker.show(function(items) {
+							$$("input[name='wedlock']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='wedlockName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*有无社保*/
+					ishavePicker.setData(ishavedata);
+					$$("#ishaveName").click(function(event) { //
+						ishavePicker.show(function(items) {
+							$$("input[name='ishaveName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='ishave']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*每月收入*/
+					monthIncomeNamePicker.setData(monthIncomedata);
+					$$("#monthIncomeName").click(function(event) { //
+						monthIncomeNamePicker.show(function(items) {
+
+							$$("input[name='monthIncomeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='monthIncome']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*有无房产*/
+					loandataPicker.setData(loandata);
+					$$("#housName").click(function(event) { //
+						loandataPicker.show(function(items) {
+							$$("input[name='housName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='hous']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					workNamePicker.setData(workdata);
+					$$("#workName").click(function(event) { //
+						workNamePicker.show(function(items) {
+							$$("input[name='workName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='work']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*有无车辆*/
+					$$("#carName").click(function(event) { //
+						loandataPicker.show(function(items) {
+							$$("input[name='carName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='car']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(cityData3);
+					$$("#censusName").click(function(event) { //
+						cityPicker3.show(function(items) {
+							$$("#censusName").val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$("input[name='censusProvince']").val(_getParam(items[0], 'value'));
+							$$("input[name='censusCity']").val(_getParam(items[1], 'value'));
+							$$("input[name='censusDistrict']").val(_getParam(items[2], 'value'));
+						});
+					});
+				});
+			})(mui);
+
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+
+				var carNo = "";
+				if($$("#cartext").html() == "新车无牌") {
+					carNo = "";
+				} else {
+					carNo = $$("#cartext").html() + datas.carNo;
+					if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(carNo)) {
+						return mui.toast("车牌号输入错误，请重新输入");
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gewei.mapper.OperatorMapper">
+
+	<select id="operatorDataGrid" resultType="Map">
+		SELECT
+			u.id as id, u.name as userName, u.phone as telephone,
+			op.ROOTDK_COMMISSION_TYPE as rootdkCommissionType, op.ROOTDK_COMMISSION_Value as rootdkCommissionValue, 
+			op.ROOTCC_COMMISSION_TYPE as rootccCommissionType, op.ROOTCC_COMMISSION_Value as rootccCommissionValue, 
+			op.ROOTRS_COMMISSION_Type as rootrsCommissionType, op.ROOTRS_COMMISSION_Value as rootrsCommissionValue, 
+			op.BANK_NAME as bankName, op.BANK_HOST as bankHost, op.BANK_CARD as bankCard, op.MAIL as mail, u.create_time as createTime, 
+			op.UPDATE_TIME as updateTime, u.status as status, op.DESCRIPTION as description, ur.role_id as roleId, role.name as roleName
+		FROM 
+			user u
+		LEFT JOIN operator op ON u.id = op.OPER_ID
+		LEFT JOIN user_role ur ON u.id = ur.user_id
+		LEFT JOIN role role ON ur.role_id = role.id
+		WHERE
+			u.user_type = '01'
+		<where>
+			<if test=" userName != null and userName != '' ">
+                <![CDATA[ and u.name like CONCAT('%',#{userName},'%') ]]>
+			</if>
+			<if test=" telephone != null and telephone != '' ">
+                <![CDATA[ and u.phone like CONCAT('%', #{telephone},'%') ]]>
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertOperator" parameterType="com.gewei.model.Operator">
+		INSERT INTO operator ( OPER_ID, rootdk_commission_type, rootdk_commission_value, rootcc_commission_type, rootcc_commission_value, 
+					rootrs_commission_type, rootrs_commission_value, bank_name, bank_host, bank_card, mail, update_time, description ) 
+			  VALUES ( #{operId},#{rootdkCommissionType},#{rootdkCommissionValue},#{rootccCommissionType}, #{rootccCommissionValue}, 
+			  		#{rootrsCommissionType},#{rootrsCommissionValue},#{bankName},#{bankHost},#{bankCard},
+					#{mail},#{updateTime},#{description} )
+	</insert>
+	
+	<select id="getOperatorById" resultType="com.gewei.model.OperatorRes" parameterType="java.lang.String">
+		SELECT
+			u.id as id, u.name as userName, u.phone as telephone,
+			op.ROOTDK_COMMISSION_TYPE as rootdkCommissionFlag, op.ROOTDK_COMMISSION_Value as rootdkCommissionValue, 
+			op.ROOTCC_COMMISSION_TYPE as rootccCommissionFlag, op.ROOTCC_COMMISSION_Value as rootccCommissionValue, 
+			op.ROOTRS_COMMISSION_Type as rootrsCommissionFlag, op.ROOTRS_COMMISSION_Value as rootrsCommissionValue, 
+			op.BANK_NAME as bankName, op.BANK_HOST as bankHost, op.BANK_CARD as bankCard, op.MAIL as mail, u.create_time as createTime, 
+			op.UPDATE_TIME as updateTime, u.status as status, op.DESCRIPTION as description, ur.role_id as roleId, role.name as roleName
+		FROM 
+			user u
+		LEFT JOIN operator op ON u.id = op.OPER_ID
+		LEFT JOIN user_role ur ON u.id = ur.user_id
+		LEFT JOIN role role ON ur.role_id = role.id
+		where u.id = #{operatorId}
+	</select>
+	
+	<update id="updateOperator" parameterType="com.gewei.model.Operator">
+		UPDATE operator SET rootdk_commission_type = #{rootdkCommissionType}, 
+			rootdk_commission_value = #{rootdkCommissionValue}, rootcc_commission_type = #{rootccCommissionType},
+			rootcc_commission_value = #{rootccCommissionValue}, rootrs_commission_type = #{rootrsCommissionType}, 
+			rootrs_commission_value = #{rootrsCommissionValue}, bank_name = #{bankName}, bank_host = #{bankHost}, 
+			bank_card = #{bankCard}, mail = #{mail}, update_time = #{updateTime}, description = #{description} WHERE OPER_ID = #{operId}
+	</update>
+	
+	<select id="memberListDataGrid" resultType="Map">
+		SELECT 
+			m.USER_ID as userId,m.USER_NAME as userName,m.TELEPHONE as telephone,
+			m.WECHAT_NUM as wechatNum,m.PROVINCE as province,m.USER_ADDR as userAddr,
+			mg.MERCHANT_NAME as merchantName, m1.USER_NAME AS recommender,m2.USER_NAME AS dirRecommender,
+			m.CREATE_TIME as createTime,m.UPDATE_TIME as updateTime,m.STATUS as status
+		FROM t_member_basicinfo m
+		LEFT JOIN t_merchant_manage mg ON mg.MERCHANT_ID = m.MERCHANT_ID
+		LEFT JOIN t_member_basicinfo m1 ON m.RECOMMENDER = m1.USER_ID
+		LEFT JOIN t_member_basicinfo m2 ON m.DIR_RECOMMENDER = m2.USER_ID
+		<where>
+			<if test=" USER_NAME != null and USER_NAME != '' ">
+                <![CDATA[ and m.USER_NAME like CONCAT('%',#{USER_NAME},'%') ]]>
+			</if>
+			<if test=" TELEPHONE != null and TELEPHONE != '' ">
+                <![CDATA[ and m.TELEPHONE = #{TELEPHONE} ]]>
+			</if>
+			<if test=" WECHAT_NAME != null and WECHAT_NAME != '' ">
+                <![CDATA[ and m.WECHAT_NAME like CONCAT('%',#{WECHAT_NAME},'%') ]]>
+			</if>
+			<if test=" WECHAT_NUM != null and WECHAT_NUM != '' ">
+                <![CDATA[ and m.WECHAT_NUM = #{WECHAT_NUM} ]]>
+			</if>
+		</where>
+	</select>
+	<select id="getMemberInfoById" resultType="com.gewei.model.TMemberBasicinfo">
+		SELECT 
+			m.USER_ID as userId,m.USER_NAME as userName,m.TELEPHONE as telephone,m.MOBILE_PHONE as mobilePhone,m.REMARK as remark,
+			m.WECHAT_NUM as wechatNum,m.PROVINCE as province,m.USER_ADDR as userAddr,m.MAIL as mail,m.QQ as qq,m.INS_COMPANY as insCompany,
+			mg.MERCHANT_NAME as merchantName, m1.USER_NAME AS recommender,m2.USER_NAME AS dirRecommender,m.BANK_NAME as bankName,m.BANK_HOST as bankHost,
+			m.BANK_CARD as bankCard,m.CREATE_TIME as createTime,m.UPDATE_TIME as updateTime,m.STATUS as status,m.CARD_TYPE as cardType,m.CARD_ID as cardId
+		FROM t_member_basicinfo m
+		LEFT JOIN t_merchant_manage mg ON mg.MERCHANT_ID = m.MERCHANT_ID
+		LEFT JOIN t_member_basicinfo m1 ON m.RECOMMENDER = m1.USER_ID
+		LEFT JOIN t_member_basicinfo m2 ON m.DIR_RECOMMENDER = m2.USER_ID
+		WHERE m.USER_ID = #{memberId}
+	</select>
+	
+	<select id="customerDataGrid" resultType="Map">
+		SELECT 
+		m.USER_ID as userId,m.USER_NAME as userName,m.CAR_NUM as carNum,m.CAR_FRAME_NUM as carFrameNum,
+		m.CHANG_TYPE as changType,m.REGISTER_TIME as registerTime,m.STATUS as status,m.TELEPHONE as telephone
+		FROM t_customer_basicinfo m
+		<where>
+			<if test=" USER_NAME != null and USER_NAME != '' ">
+                <![CDATA[ and m.USER_NAME like CONCAT('%',#{USER_NAME},'%') ]]>
+			</if>
+			<if test=" TELEPHONE != null and TELEPHONE != '' ">
+                <![CDATA[ and m.TELEPHONE = #{TELEPHONE} ]]>
+			</if>
+		</where>
+	</select>
+	
+	<select id="getCustomerIdInfoById" resultType="com.gewei.model.TCustomerBasicinfo">
+		SELECT
+			m.USER_ID as userId,m.ORGANIZATIONS as organizations,m.USER_NAME as userName,m.CARD_TYPE as cardType,
+			m.CARD_ID as cardId,m.CAR_NUM as carNum,m.CAR_FRAME_NUM as carFrameNum,m.ENGINE_NUM as engineNum,
+			m.CHANG_TYPE as changType,m.REGISTER_TIME as registerTime,m.EXAMINE_TIME as examineTime,
+			m.EXAMINE_TIME as engineNum,m.BUSINESS_INS_START_TIME as businessInsStartTime,
+			m.TRAFFIC_INS_START_TIME as trafficInsStartTime,m.CAR_TYPE as carType
+		FROM 
+			t_customer_basicinfo m
+		WHERE 
+			m.USER_ID = #{customerId}
+	</select>
+	
+	<insert id="insertOrUpdate" parameterType="com.gewei.model.TCustomerBasicinfo">
+		REPLACE INTO t_customer_basicinfo 
+			( USER_ID, USER_NAME, TELEPHONE, SEX, CARD_TYPE, CARD_ID, CAR_NUM, CAR_FRAME_NUM, CAR_TYPE, ENGINE_NUM,
+			  CHANG_TYPE, TRAFFIC_INS_START_TIME, BUSINESS_INS_START_TIME, REGISTER_TIME, EXAMINE_TIME, `STATUS`, CREATE_TIME, UPDATE_TIME ) 
+		VALUES 
+			( #{userId}, #{userName}, #{telephone}, #{sex}, #{cardType}, #{cardId}, #{carNum}, #{carFrameNum}, #{carType}, #{engineNum}, 
+			  #{changType}, #{trafficInsStartTime}, #{businessInsStartTime}, #{registerTime}, #{examineTime}, #{status}, #{createTime}, #{updateTime} )
+	</insert>
+	
+</mapper>

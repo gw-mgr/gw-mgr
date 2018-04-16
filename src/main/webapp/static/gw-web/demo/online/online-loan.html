@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我要贷款</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>期望贷款金额(元)</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-table-view-divider none">基本信息</div>
+					<div class="mui-input-row">
+						<label>用户姓名</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>婚姻状况</label>
+							<input type="text" name="wedlockName" id="wedlockName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="wedlock" />
+						</div>
+					</div>
+
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无社保</label>
+							<input type="text" name="ishaveName" id="ishaveName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="ishave" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无房产</label>
+							<input type="text" name="housName" id="housName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="hous" />
+						</div>
+					</div>
+
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>每月收入</label>
+							<input type="text" name="monthIncomeName" id="monthIncomeName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="monthIncome" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>工作性质</label>
+							<input type="text" name="workName" id="workName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="work" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>有无车辆</label>
+							<input type="text" name="carName" id="carName" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="car" />
+						</div>
+					</div>
+					<div class="line">
+						<span class="check" id="check">需要发送短信给接受服务方,如果需要,请提供手机号码。</span>
+						<p class="gray mui-h6 mui-text-justify">发送的短信样本：<br /> 尊敬的客户您好，**您预约的***服务，由服务人员****，电话****为您提供本次服务，请注意接听电话，谢谢！
+							</span>
+						</p>
+					</div>
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>电话</label>
+							<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+
+					var wedlockNamePicker = new $.PopPicker({
+						layer: "",
+						title: "婚姻状况"
+					});
+					var ishavePicker = new $.PopPicker({
+						layer: "",
+						title: "有无社保"
+					});
+					var monthIncomeNamePicker = new $.PopPicker({
+						layer: "",
+						title: "每月收入"
+					});
+					
+					var workNamePicker = new $.PopPicker({
+						layer: "",
+						title: "工作性质"
+					});
+					
+					var loandataPicker = new $.PopPicker({
+						layer: "",
+						title: "请选择"
+					});
+					
+					
+					
+
+					/*婚姻状况*/
+					wedlockNamePicker.setData(wedlockdata);
+					$$("#wedlockName").click(function(event) { //
+						wedlockNamePicker.show(function(items) {
+							$$("input[name='wedlock']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+							$$("input[name='wedlockName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+						});
+					});
+
+					/*有无社保*/
+					ishavePicker.setData(ishavedata);
+					$$("#ishaveName").click(function(event) { //
+						ishavePicker.show(function(items) {
+							$$("input[name='ishaveName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='ishave']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*每月收入*/
+					monthIncomeNamePicker.setData(monthIncomedata);
+					$$("#monthIncomeName").click(function(event) { //
+						monthIncomeNamePicker.show(function(items) {
+
+							$$("input[name='monthIncomeName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='monthIncome']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*有无房产*/
+					loandataPicker.setData(loandata);
+					$$("#housName").click(function(event) { //
+						loandataPicker.show(function(items) {
+							$$("input[name='housName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='hous']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+					
+					
+					
+					workNamePicker.setData(workdata);
+					$$("#workName").click(function(event) { //
+						workNamePicker.show(function(items) {
+							$$("input[name='workName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='work']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+					
+					
+					
+					
+					/*有无车辆*/
+					$$("#carName").click(function(event) { //
+						loandataPicker.show(function(items) {
+							$$("input[name='carName']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+							$$("input[name='car']").val(JSON.stringify(items[0].value).replace(/"/g, ""));
+
+						});
+					});
+
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(cityData3);
+					$$("#censusName").click(function(event) { //
+						cityPicker3.show(function(items) {
+							$$("#censusName").val(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$("input[name='censusProvince']").val(_getParam(items[0], 'value'));
+							$$("input[name='censusCity']").val(_getParam(items[1], 'value'));
+							$$("input[name='censusDistrict']").val(_getParam(items[2], 'value'));
+						});
+					});
+
+				});
+			})(mui, document);
+
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+
+				var carNo = "";
+				if($$("#cartext").html() == "新车无牌") {
+					carNo = "";
+				} else {
+					carNo = $$("#cartext").html() + datas.carNo;
+					if(!/(^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$)/.test(carNo)) {
+						return mui.toast("车牌号输入错误，请重新输入");
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

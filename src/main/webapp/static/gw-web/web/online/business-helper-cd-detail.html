@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="orderdetail">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>车务代办-详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">编辑</button>
+			</div>
+		</nav>
+		<div class="mui-content">
+			<form>
+				<input type="hidden" name="status" />
+				<input type="hidden" name="orderId" />
+				<div class="mui-table-view">
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>状态</label>
+							<input type="text" name="statusText" class=" mui-text-right mui-input-clear"  maxlength="8">						
+						</div>
+					</div>
+				</div>
+				<div class="line"></div>
+				<div class="mui-input-group">
+					
+					<div class="mui-input-row">
+						<label>下单日期</label>
+						<input type="text" name="createTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>代办类型</label>
+						<input type="text" name="orderTypeName" class=" mui-text-right mui-input-clear" placeholder="买车" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>订单号</label>
+						<input type="text" name="orderId" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>姓名</label>
+						<input type="text" name="userName" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>电话</label>
+						<input type="tel" name="telephone" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>车牌号</label>
+						<input type="text" name="carNum" maxlength="6" class="mui-text-right mui-input-clear" placeholder="无" onkeyup="value=value.replace(/[^\w\.\/]/ig,'');this.value=this.value.toUpperCase()" style="width: 54%;" maxlength="6">
+					</div>
+					<div class="mui-input-row">
+						<label>车架号</label>
+						<input type="text" name="carFrameNum" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>发动机号</label>
+						<input type="text" name="engineNum" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>厂牌类型</label>
+						<input type="text" name="changType" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<label>初登日期</label>
+						<input type="text" name="registerTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					
+					<div class="mui-input-row">
+						<label>年审到期日</label>
+						<input type="text" name="examineTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>商业险起保日</label>
+						<input type="text" name="businessInsStartTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>交强险起保日</label>
+						<input type="text" name="trafficInsStartTime" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<label>车辆类型</label>
+						<input type="text" name="carType" class=" mui-text-right mui-input-clear" placeholder="无" maxlength="8">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-table-view-divider none"></div>
+				</div>
+			</form>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			
+			$$("input").attr("disabled","disabled");
+			$$(".mui-navigate-right").parent().addClass("hand")
+			$$(function(){
+				show();
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/shanjiafuwu/getMerchantOrderDetailInfo',
+					data:{
+							orderId:getUrlParam('orderId'),
+							orderType:getUrlParam('orderType')
+						},
+					dataType: 'json',
+					success: function(response) {
+						hide();
+						if(response.success) {
+							var formEl = document.getElementsByTagName('form')[0];
+							var data = response.obj;
+							for(var j = 0;j<orderFlagData.length;j++){
+								if(data.status === orderFlagData[j].value){
+									data.statusText = orderFlagData[j].text;
+									$$("input[name=statusText]").addClass(orderFlagData[j].color);
+									break;
+								}
+							}
+							if(!isNull(data.createTime))data.createTime = getData(data.createTime);
+							if(!isNull(data.examineTime))data.examineTime = getData(data.examineTime);
+							if(!isNull(data.businessInsStartTime))data.businessInsStartTime = getData(data.businessInsStartTime);
+							if(!isNull(data.registerTime))data.registerTime = getData(data.registerTime);
+							if(!isNull(data.trafficInsStartTime))data.trafficInsStartTime = getData(data.trafficInsStartTime);
+							if(!isNull(data.endDate))data.endDate = getData(data.endDate);
+							if(!isNull(data.orderMoney))data.orderMoney = (data.orderMoney*0.01).toFixed(2);
+							for(var j = 0;j<wedlockdata.length;j++){//婚姻状况 
+								if(data.marryFlag === wedlockdata[j].value){
+									data.marryFlagName = wedlockdata[j].text;
+									break;
+								}
+							}
+							for(var j = 0;j<ishavedata.length;j++){//有无社保 
+								if(data.socialFlag === ishavedata[j].value){
+									data.socialFlagName = ishavedata[j].text;
+									break;
+								}
+							}
+							for(var j = 0;j<loandata.length;j++){//有无房产 
+								if(data.houseFlag === loandata[j].value){
+									data.houseFlagName = loandata[j].text;
+									break;
+								}
+							}
+							for(var j = 0;j<monthIncomedata.length;j++){//每月收入 
+								if(data.inCome === monthIncomedata[j].value){
+									data.inComeName = monthIncomedata[j].text;
+									break;
+								}
+							}
+							for(var j = 0;j<workdata.length;j++){//工作性质 
+								if(data.workType === workdata[j].value){
+									data.workTypeName = workdata[j].text;
+									break;
+								}
+							}
+								
+							for(var j = 0;j<loandata.length;j++){//有无车辆 
+								if(data.carFlag === loandata[j].value){
+									data.carFlagName = loandata[j].text;
+									break;
+								}
+							}
+							console.log(data)
+							setFormValues(formEl, data);
+						} else {
+							
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			});
+			$$("#apply").click(function(){
+				_href("business-helper-cd-edit.html?orderId="+getUrlParam("orderId")+"&orderType="+getUrlParam("orderType"));
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>会员中心</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/app.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
+		<link rel="stylesheet" href="../../css/icons-extra.css">
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">会员中心</h1>
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>返回
+			</button>
+		</header>
+		 <nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="#tabbar">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-prech"></span>
+				<span class="mui-tab-label">我的收入</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-chat">
+				
+				<span class="mui-icon mui-icon-extra mui-icon-extra-peoples"></span>
+				<span class="mui-tab-label">我的车险团队</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-contact">
+				<span class="mui-icon mui-icon-contact mui-icon-icon-contact-filled"></span>
+				<span class="mui-tab-label">个人中心</span>
+			</a>
+		</nav>
+			<div class="mui-content member" id="todo" v-cloak>
+				
+				
+				<input name="balance" :value="todo.balance"  type="hidden"/>
+				<input name="balances" :value="todos.balance"  type="hidden"/>
+				<input name="settledMoney" :value="todo.settledMoney"  type="hidden"/>
+				<div id="tabbar" class="mui-control-content mui-active apply order">
+					<div class="mui-card">
+						<div class="mui-card-header mui-card-media mui-text-center">
+							<div class="write mui-h5">可提现金额(元)</div>
+							<div class="write mui-h3">{{todo.balance}}</div>
+							<button type="button" class="mui-btn mui-btn-outlined write" onclick="_withdraw('01')">提现</button>
+							
+							<div class="mui-text-center mui-col-xs-12">
+								<div class="mui-text-center mui-pull-left mui-col-xs-5">
+									<div class="black mui-h5">累计收入(元)</div>
+				                    <div class="black mui-h4">{{todo.totalIncome}}</div>
+								</div>
+								<div class="mui-text-center mui-pull-left mui-col-xs-2">
+								</div>
+								<div class="mui-text-center mui-pull-left mui-col-xs-5">
+									<div class="black mui-h5">本月预估收入(元)</div>
+				                    <div class="black mui-h4">{{todo.EstimateMoney}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="line"></div>
+					<ul class="mui-table-view mui-grid-view mui-grid-9">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income.html?orderType=ROOTRS')">
+		           		 	<span class="mui-icon iconfont icon-renshouxian"></span>
+		                    <div class="mui-media-body">人寿保险</div>
+		            	</a>
+	                </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		           		<a onclick="_href('income.html?orderType=ROOTCCCL')">
+		                    <span class="mui-icon iconfont icon-chexiandingdan"></span>
+		                    <div class="mui-media-body">车辆保险</div>
+	                    </a>
+					</li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income.html?orderType=ROOTCCTY')">
+		                    <span class="mui-icon iconfont icon-beibaoxianren"></span>
+		                    <div class="mui-media-body">团意雇主险</div>
+	                    </a>
+	                </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income.html?orderType=ROOTCCGC')">
+	                    	<span class="mui-icon iconfont icon-jixiexingye"></span>
+	                    	<div class="mui-media-body">工程机械险</div>
+	                    </a>
+		            </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income.html?orderType=ROOTCCJZ')">
+	                    	<span class="mui-icon iconfont icon-jianzhuwu"></span>
+	                    	<div class="mui-media-body">建筑工程险</div>
+	                    </a>
+	                </li>
+	                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income.html?orderType=ROOTCCGZ')">
+	                    	<span class="mui-icon iconfont icon-baozhangzeren"></span>
+	                    	<div class="mui-media-body">公众责任险</div>
+	                    </a>
+	                </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income.html?orderType=ROOTCC')">
+	                    	<span class="mui-icon iconfont icon-yiwaixian"></span>
+	                    	<div class="mui-media-body">短期意外险</div>
+	                    </a>
+	                </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_href('income-dk.html?orderType=ROOTDK')">
+		                    <span class="mui-icon iconfont icon-dkw_daikuan"></span>
+		                    <div class="mui-media-body">贷款业务 </div>
+	                    </a>
+	                </li>
+		        </ul>
+			</div>
+			<div id="tabbar-with-chat" class="mui-control-content apply order">
+				<div class="mui-card">
+						<div class="mui-card-header mui-card-media mui-text-center">
+							<div class="write mui-h5">可提现金额(元)</div>
+							<div class="write mui-h3">{{todos.balance}}</div>
+							<button type="button" class="mui-btn mui-btn-outlined write" onclick="_withdraw('02')">提现</button>
+							
+							<div class="mui-text-center mui-col-xs-12">
+								<div class="mui-text-center mui-pull-left mui-col-xs-5">
+									<div class="black mui-h5">累计收入(元)</div>
+				                    <div class="black mui-h4">{{todos.totalIncome}}</div>
+								</div>
+								<div class="mui-text-center mui-pull-left mui-col-xs-2">
+								</div>
+								<div class="mui-text-center mui-pull-left mui-col-xs-5">
+									<div class="black mui-h5">未结算金额(元)</div>
+				                    <div class="black mui-h4">{{todos.restCash}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="line15 black mui-h6">如果会员本人当月车险佣金为0，那么可提现金额为0</div>
+					
+					
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a href="team.html">
+		           		 	<span class="mui-icon iconfont icon-tuandui2"></span>
+		                    <div class="mui-media-body mui-h6">直接推荐团队</div>
+		                    <div class="mui-media-body mui-h6">({{todos.RECOMMENDER}})人</div>
+		            	</a>
+	                </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		           		<a href="team-dir.html">
+		                    <span class="mui-icon iconfont icon-tuandui-tianchong"></span>
+		                    <div class="mui-media-body mui-h6">第二代团队</div>
+		                    <div class="mui-media-body mui-h6">({{todos.DIR_RECOMMENDER}})人</div>
+	                    </a>
+					</li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a onclick="_withdraw('02')">
+		                    <span class="mui-icon iconfont icon-yuangongjiangliwodejianglijiangpinwodelipin"></span>
+		                    <div class="mui-media-body">推荐奖结算</div>
+		                    <div class="mui-media-body">&nbsp;</div>
+	                    </a>
+	                </li>
+		             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+		            	<a href="mydecode.html">
+		                    <span class="mui-icon iconfont icon-iconfonttuijianren"></span>
+		                    <div class="mui-media-body">我的推荐链接</div>
+	                    </a>
+	                </li>
+		        </ul>
+			</div>
+			<div id="tabbar-with-contact" class="mui-control-content apply files">
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+			            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+			            	<a href="member.html">
+			           		 	<span class="mui-icon iconfont icon-gerenzhongxin"></span>
+			                    <div class="mui-media-body mui-h6">个人中心</div>
+			            	</a>
+		                </li>
+			        </ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			function _href(url){
+				location.href = url+"&balance="+$$("input[name=balance]").val()+"&settledMoney="+$$("input[name=settledMoney]").val();
+			}
+			function _withdraw(type){
+				if(type === "01"){//个人中心结算
+					var balance = $$("input[name=balance]").val();
+					if(parseInt(balance) ===0) mui.alert('暂无可提现金额', '温馨提示', function() {});
+					else location.href = "withdraw.html?balance="+balance;
+				}else if(type === "02"){
+					var balance = $$("input[name=balances]").val();
+					if(parseInt(balance) ===0) mui.alert('暂无可提现金额', '温馨提示', function() {});
+					else location.href = "withdraw.html?balance="+balance;
+				}
+			}
+			$$(function() {
+				show();
+				$$.ajax({                
+					type:"POST",
+					url: base_url + '/wodechexiantuandui/getMyIncomeSummaryByUserId',
+					data: {userId: sessionStorage.getItem("userId")},
+					dataType: 'json',
+					success:   function(response)  {
+						hide();
+						console.log(response)
+						if(!isNull(response.obj)) {
+							$$.ajax({                
+								type:"POST",
+								url: base_url + '/wodechexiantuandui/getCheXianIncomeSummaryByUserId',
+								data: {userId: sessionStorage.getItem("userId")},
+								dataType: 'json',
+								success:   function(result)  {
+									hide();
+									if(!isNull(result.obj)) {
+										response.obj.balance = (response.obj.balance*0.01).toFixed(2);//个人中心  可提现金额
+										response.obj.settledMoney = ((response.obj.totalIncome - response.obj.balance)*0.01).toFixed(2);//个人中心  已结算金额
+										response.obj.totalIncome = (response.obj.totalIncome*0.01).toFixed(2);//个人中心  结算总额
+										response.obj.EstimateMoney = (response.obj.EstimateMoney*0.01).toFixed(2);//个人中心 本月预估收入
+										result.obj.balance = (result.obj.balance*0.01).toFixed(2);//车险团队   可提现金额
+										result.obj.totalIncome = (result.obj.totalIncome*0.01).toFixed(2);//车险团队  总额
+										result.obj.restCash = (result.obj.restCash*0.01).toFixed(2);//车险团队   未结算金额
+										var app = new Vue({
+											el: '#todo',
+											data: {
+												todos: result.obj,
+												todo: response.obj
+											}
+										});
+									} else {
+										hide();
+									}
+								},
+								error:   function(result)  {
+									hide();
+								}            
+							});
+						} else {
+							hide();
+						}
+					},
+					error:   function(result)  {
+						hide();
+					}            
+				});
+			});
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

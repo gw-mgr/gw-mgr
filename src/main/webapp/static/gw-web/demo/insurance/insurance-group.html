@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>团意雇主险</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<p class="mui-content-padded mui-h5 mui-text-center">温馨提示：您的交易需要线下人员处理，请注意接听电话</p>
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>投保单位</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+				</div>
+				<div class="mui-table-view-divider none">请告知基本保险需求(备注):</div>
+				<textarea class="question" placeholder="如：选择团体意外？雇主？职业工种和人数？意外伤害保额？意外医疗保额？"></textarea>
+				<div class="line"></div>
+				<div class="mui-content-padded">
+
+					<p class="mui-h5 gray">保费费率和佣金需要每单核保，记名投保。</p>
+					<p class="mui-h5 gray">询价所需要提供的基本资料：</p>
+					<p class="mui-h5 gray">1、公司名称，各种职业类型和人数；</p>
+					<p class="mui-h5 gray">2、投保人所需要的保额，意外身故保额，意外医疗保额，意外津贴保额等。投保人所要求的保额过高，可能会在2、3家保险公司进行分保。</p>
+					<p class="mui-h5 gray">3、投保案例：</p>
+					<p class="mui-h5 gray">团体意外险：</p>
+					<p class="mui-h5 gray">重庆***建筑装饰工程有限公司 杂工1人、项目经理3人、财务1人、钢结构工人5人。意外身故保额40万，意外医疗保额3万。</p>
+					<p class="mui-h5 gray">重庆富邦财产保险有限公司</p>
+					<p class="mui-h5 gray">杂工、项目经理、财务：550元/人</p>
+					<p class="mui-h5 gray">钢结构工人：1050元/人</p>
+					<p class="mui-h5 gray">特别约定：100元以上部份报80%。</p>
+					<p class="mui-h5 gray">佣金：***。</p>
+					<p class="mui-h5 gray">雇主责任险：</p>
+					<p class="mui-h5 gray">重庆***建筑装饰工程有限公司 杂工1人、项目经理3人、财务1人、钢结构工人5人。意外身故保额40万，意外医疗保额3万。</p>
+					<p class="mui-h5 gray">重庆富邦财产保险有限公司</p>
+					<p class="mui-h5 gray">杂工、项目经理、财务：590元/人</p>
+					<p class="mui-h5 gray">钢结构工人：1100元/人</p>
+					<p class="mui-h5 gray">特别约定：100元以上部份报80%。</p>
+					<p class="mui-h5 gray">佣金：***。</p>
+				</div>
+			</form>
+			<script src="../../js/mui.min.js"></script>
+			<script src="../../js/jquery-1.8.3.min.js"></script>
+			<script src="../../js/commom.base.js"></script>
+				<script>
+				$$("#apply").click(function() {
+
+					var formEl = document.getElementsByTagName('form')[0];
+					var datas = getFormValues(formEl);
+
+				})
+			</script>
+	</body>
+
+</html>

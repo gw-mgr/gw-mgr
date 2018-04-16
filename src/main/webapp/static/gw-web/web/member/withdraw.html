@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>申请提现</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+		<style>
+			.bankcard{background: #fff !important;}
+			.bankcard .mui-popover .mui-table-view{background: #FFFFFF;}
+			.bankcard .mui-popover .mui-table-view .mui-table-view-cell:last-child, .mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn) {border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+			.bankcard .mui-poppicker-header {background: #F0F0F0;}
+			.bankcard.mui-popover.mui-popover-action .mui-table-view {margin: 0  !important;;}
+			.cardtext{padding-right: 80px !important;}
+			.addcard{position: absolute;top: 9px!important;right: 1pc;width: 55px;padding: 6px 10px!important;text-align: center;}
+    		.mui-popover.mui-popover-action.mui-active{top:80%}
+		</style>
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity car">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>持卡人</label>
+						<input type="text" name="bankHostName" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-input-row cardno">
+						<label>银行卡卡号</label>
+						<input type="tel" name="bankCardId" class=" mui-text-right  cardtext" placeholder="请输入" maxlength="8">
+						<a href="#bankcard" class="mui-btn mui-btn-danger mui-btn-outlined addcard">添加</a>
+					</div>
+					<div class="line"></div>
+					<div class="mui-input-row">
+						<label>结算金额(元)</label>
+						<input type="tel" name="tradeVlue" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+				</div>
+				<div class="line"></div>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right blue" onclick="_href('withdraw-list.html')">
+							提现记录
+						</a>
+					</li>
+				</ul>
+		</div>
+		
+		<div id="bankcard" class="mui-popover mui-popover-action mui-popover-bottom bankcard">
+			<div class="mui-poppicker-header"> 
+				<button class="mui-btn mui-poppicker-btn-cancel" data-value="0"></button>
+				<h1 class="poppicker-title">选择银行账户</h1> 
+				<button class="mui-btn mui-poppicker-btn-ok"  data-value="1">确认</button>
+				<div class="mui-poppicker-clear"></div>
+			</div>
+			<ul class="mui-table-view mui-table-view-radio">
+			</ul>
+		</div>
+		
+		
+		</form>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			mui('body').on('tap', '.mui-popover-action button', function() {
+				var a = this,
+					parent;
+				//根据点击按钮，反推当前是哪个actionsheet
+				for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+					if (parent.classList.contains('mui-popover-action')) {
+						break;
+					}
+				}
+				if($$(a).attr("data-value") ==="1"){
+					mui('.mui-table-view.mui-table-view-radio li').each(function() {
+						if($$(this).hasClass("mui-selected")){
+							var data =$$(this).children('a');
+							$$("input[name='bankCardNo']").val(data.attr("data-repaymentAccount"));
+							$$("input[name='bankCodeName']").val(data.attr("data-repaymentbankname"));
+							$$("input[name='bankCode']").val(data.attr("data-repaymentbank"));
+						}
+					});
+				}else{
+				}
+				//关闭
+				mui('#' + parent.id).popover('toggle');
+			});
+			
+			
+			$$(function(){
+				$$.ajax({
+					type:"POST",
+					url: base_url + '/common/getLastBankInfoByUserId',
+					data:{
+							userId: sessionStorage.getItem("userId")
+						},
+					dataType: 'json',
+					success: function(response) {
+						if(response.success) {
+								var data = response.resp_body;
+								var table = document.body.querySelector('.mui-table-view-radio');
+								if(!isNull(data)){//有银行卡信息
+									for(var i=0;i<data.length;i++){
+										var li = document.createElement('li');
+				      					li.className = 'mui-table-view-cell';
+				      					var length= data[i].bankcardnumber.length;
+				      					li.innerHTML ='<a class="mui-text-left black mui-navigate-right" '
+				      					+'data-repaymentAccount="'+data[i].bankcardnumber
+				      					+'"data-repaymentBank="'+data[i].bankcode
+				      					+'" data-repaymentBankName="'+data[i].repaymentBankName
+				      					+'">'+data[i].repaymentBankName+'<span class="gray">(尾号'+data[i].bankcardnumber.substring(length-4,length)+')</span></a>';
+										table.appendChild(li);
+									}
+								}else {
+									$$(".mui-table-view-radio").html('<p class="line15">暂无银行卡</p>');
+							}
+						} else {
+							$$(".mui-table-view-radio").html('<p class="line15">暂无银行卡</p>');
+						}
+					},error: function(result) {
+						hide();
+						$$(".mui-table-view-radio").html('<p class="line15">暂无银行卡</p>');
+					}
+				});
+			});
+			
+			
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+
+
+	
+	
+	
+
+
+
+
+				if(isNull(datas.bankHostName))return mui.toast("请输入持卡人");
+				if(isNull(datas.bankCardId))return mui.toast("请输入银行卡卡号");
+				if(isNull(datas.tradeVlue))return mui.toast("请输入结算金额");
+				
+				datas.tradeVlue = datas.tradeVlue*100;
+				
+				if(!isNull(sessionStorage.getItem("userId"))){
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/common/applyGetSettle',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					console.log(response)
+					hide();
+						if(response.success) {
+							mui.toast("申请提现成功!");
+							setTimeout(function(){
+								location.reload();
+							},500);
+							
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("修改失败，请重试");
+					}
+	            });
+			})
+		</script>
+	</body>
+
+</html>

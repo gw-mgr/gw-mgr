@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="orderlist">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>车务代办</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content ">
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a  class="mui-navigate-right mui-control-item address">地区</a>
+				<input type="hidden" id="province" />
+				<input type="hidden" id="city" />
+				<input type="hidden" id="country" />
+				<a href="#productType" class="mui-navigate-right mui-control-item productType">
+					类型
+				</a>
+			</div>
+			<div class="line"></div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="date" class="mui-popover mui-popover-action statecontent">
+			<div class="mui-content mui-row mui-fullscreen">
+				<div class="mui-col-xs-3">
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+					</div>
+				</div>
+				<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+					<div id="item1" class="mui-control-content mui-active">
+					</div>
+					<div id="item2" class="mui-control-content">
+					</div>
+					<div id="item3" class="mui-control-content">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="productType" class="mui-popover mui-popover-action statecontent">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell black" data-val="" data-text="类型">全部</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDKSNJDB" data-text="快速年检代办">快速年检代办</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDSXNJDB" data-text="上线年检代办">上线年检代办</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDJFDB" data-text="代缴路桥费">代缴路桥费</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDWZDB" data-text="代办车辆违章">代办车辆违章</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDCPDB" data-text="代选车牌">代选车牌</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDGHDB" data-text="代办汽车过户">代办汽车过户</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDSHDB" data-text="代办新车上户">代办新车上户</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDBXDB" data-text="代办保险过户">代办保险过户</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDBLHPDB" data-text="补领号牌">补领号牌</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDBHJZDB" data-text="补换驾照">补换驾照</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDWDNJDB" data-text="开外地年检委托书">开外地年检委托书</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDDLLKDB" data-text="代领绿标">代领绿标</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDBXSZDB" data-text="补行驶证">补行驶证</li>
+				<li class="mui-table-view-cell black" data-val="ROOTCDHCYYZDB" data-text="货车运营证">货车运营证</li>
+			</ul>
+		</div>
+		<input type="hidden" id="productType" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					/*************************户籍*********************************/
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var cityPicker3 = new $.PopPicker({
+						layer: 3,
+						title: "选择地区"
+					});
+					cityPicker3.setData(areaData);
+					//投保人现住址
+					$$(".address").click(function(event) { //
+						var _self = this;
+						cityPicker3.show(function(items) {
+							//$$(_self).html(_getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text'));
+							$$(_self).html(_getParam(items[2], 'text'));
+							
+							$$(_self).next().val(_getParam(items[0], 'value'));
+							$$(_self).next().next().val(_getParam(items[1], 'value'));
+							$$(_self).next().next().next().val(_getParam(items[2], 'value'));
+							$$("#pullrefresh .mui-table-view").html("");
+							queryProduct(1);
+						});
+					});
+
+				});
+			})(mui, document);
+			
+			mui('body').on('tap', '.mui-popover-action li', function() {
+				var a = this,
+					parent;
+				//根据点击按钮，反推当前是哪个actionsheet
+				for(parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+					if(parent.classList.contains('mui-popover-action')) {
+						break;
+					}
+				}
+				$$(this).addClass('actives').siblings().removeClass('actives');
+				$$("#"+parent.id).val($$(a).attr("data-val"));
+				$$("."+parent.id).html($$(a).attr("data-text"));
+				$$("#pullrefresh .mui-table-view").html("");
+				queryProduct(1);
+				mui('#' + parent.id).popover('toggle');//关闭
+				
+			});
+			var page = 0,
+				rows =10,
+				max = 0;
+			function queryProduct(page) {
+				var province = $$("#province").val();//
+				var city = $$("#city").val();//
+				var country = $$("#country").val();//
+				var productType =  $$("#productType").val();//
+				
+				var grantArea="";
+				if(!isNull(province)){
+					grantArea = province+'-'+city+'-'+country;
+				}
+				
+				
+				var param ={
+						page: page,
+						rows: rows,
+						productType:productType,
+						grantArea:grantArea
+				}
+				console.log(param)
+				var table = document.body.querySelector('#pullrefresh .mui-table-view');
+				$$.ajax({
+					type:   "POST",
+					url: base_url + '/xianshangyewu/getCDMerchantList',
+					data:param,
+					dataType: 'json',
+					success: function(response) {
+						console.log(response)
+						if(response.success) {
+							var item = response.obj;
+							max = Math.ceil(response.totalCount / rows); //计算总页数
+							console.log(max+"--------max");
+							if(response.totalCount) {
+								for(var i = 0; i < item.length; i++) {
+									var statusVal,color;
+									for(var j = 0;j<xcOrderFlagData.length;j++){
+										if(item[i].status === xcOrderFlagData[j].value){
+											statusVal = xcOrderFlagData[j].text;
+											color =  xcOrderFlagData[j].color;
+											break;
+										}
+									}
+									var li = document.createElement('li');
+									li.setAttribute("data-merchantId",item[i].merchantId);
+									
+									li.className = "mui-table-view-cell mui-media";
+									li.innerHTML = '<img class="mui-media-object mui-pull-left" src="'+base_url+item[i].merchantHeadPhoto+'" onerror="src=\'../../images/2x2.png\'">'
+									+'<div class="mui-media-body">'
+									+'<div class="mui-table">'
+									+'<div class="mui-table-cell mui-col-xs-8">'
+									+'<p class="mui-ellipsis black">'+item[i].merchantName+'</p>'
+									+'<div class="mui-ellipsis black">'+item[i].merchantDescript+'</div>'
+									+'</div>'
+									+'<div class="mui-table-cell mui-col-xs-4 mui-text-right">'
+									+'<span class="red mui-h4">￥'+((item[i].currPrice)*0.01).toFixed(2)+'</span>'
+									+'</div>'
+									+'</div>'
+									+'</div>'
+										
+									table.appendChild(li);
+									//进度条显示
+									mui(".mui-progressbar").each(function() {
+										mui(this).progressbar({
+											progress: this.getAttribute("data-progress")
+										}).show();
+									});
+								}
+							} else {
+								$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+															+'<div class="data-icon icon-none"></div>'
+															+'<p class="data-title">暂无相关车务代办</p>'
+															+'</div>');
+							}
+						} else {
+							$$("#pullrefresh .mui-table-view").html('<div class="data gray-bg">'
+														+'<div class="data-icon icon-none"></div>'
+														+'<p class="data-title">暂无相关车务代办</p>'
+														+'</div>');
+						}
+					},error: function(result) {
+						hide();
+						_errors();
+					}
+				});
+			}
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						ontentinit: ' ',
+						contentdown: " ", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "   ", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: " ", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						ontentinit: ' ',
+						contentdown: ' ',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				$$(".mui-table-view").html("");
+				setTimeout(function() {
+					page = 1;
+					queryProduct(1);
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#pullrefresh').pullRefresh().refresh(true);
+				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					var cells = document.body.querySelectorAll('#pullrefresh .mui-table-view li');
+					
+					if(cells.length >= page * rows) {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((page++ > max)); //参数为true代表没有更多数据了。
+						queryProduct(page);
+					} else {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					}
+				}, 1000);
+			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			//详情
+			mui('#pullrefresh .mui-table-view').on('tap', '.mui-table-view li', function () {  
+				var merchantId = $$(this).attr("data-merchantId");
+				window.location.href= 'online-cd-shop.html?merchantId='+merchantId;
+	       	});
+		</script>
+	</body>
+
+</html>

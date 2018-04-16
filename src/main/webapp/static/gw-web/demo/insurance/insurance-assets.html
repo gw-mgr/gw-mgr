@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>财产保险</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<p class="mui-content-padded mui-h5 mui-text-center">温馨提示：您的交易需要线下人员处理，请注意接听电话</p>
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>投保人姓名</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>性别</label>
+							<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="sex" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>年龄</label>
+						<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入年龄" maxlength="3">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<label>被投保人姓名</label>
+						<input type="text" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>性别</label>
+							<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+							<input type="hidden" name="sex" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>年龄</label>
+						<input type="tel" name="workname" class=" mui-text-right mui-input-clear" placeholder="请输入年龄" maxlength="3">
+					</div>
+				</div>
+
+				<div class="mui-table-view-divider none">请告知基本保险需求(备注):</div>
+				<textarea class="question" placeholder="如：如想保1年，保30天等"></textarea>
+				<div class="mui-table-view-divider none"></div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					sexPicker.setData(sexdata);
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

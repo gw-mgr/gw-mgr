@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商家详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="mui-content ">
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../../images/2x2.png">
+						<div class="mui-media-body line20">
+							一汽大众商社飞跃4S店
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					电话：15922890987
+					<a class="mui-pull-right update" href="tel:15922890987"><span class="mui-icon mui-icon-phone"></span></a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="examples/badges.html">
+						<span class="mui-icon mui-icon-location"></span>重庆市九龙坡区谢陈路
+					</a>
+				</li>
+				<li class="mui-table-view-divider">商家介绍</li>
+				<li class="mui-table-view-cell">
+					一汽大众商社飞跃4S店是一家专业化汽车维修服务公司，为四川、重庆区域内的广大汽车用户提供24小时全天候全方位的救援维修服务。 一汽大众商社飞跃4S店是一家专业化汽车维修服务公司，为四川、重庆区域内的广大汽 众商社飞跃4S店是一家专业化汽车维修服务公司，为四川、重庆区域内的广大汽车用户提供24小时全天候全方位的救援维修服务。一汽大众商社飞跃4S店是一家专业化汽车维修服务公司，为四川。
+				</li>
+			</ul>
+			<div class="line"></div>
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<div class="mui-navigate-right">
+						<label>全部服务</label>
+						<input type="text" name="sexText" id="sexText" class=" mui-text-right" placeholder="请选择" maxlength="50" readonly="readonly">
+						<input type="hidden" name="sex" />
+					</div>
+				</div>
+			</div>
+			<div class="line"></div>
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+				<li class="mui-table-view-cell">
+					<div class="mui-table">
+						<div class="mui-table-cell mui-col-xs-8">
+							<p class="mui-ellipsis black">商社飞跃保养原装自动变速箱油</p>
+						</div>
+						<div class="mui-table-cell mui-col-xs-4 mui-text-right">
+							<div><span class="red mui-h3">￥125</span>&nbsp;<u class="gray">¥200</u></div>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-table">
+						<div class="mui-table-cell mui-col-xs-8">
+							<p class="mui-ellipsis black">商社飞跃保养原装自动变速箱油</p>
+						</div>
+						<div class="mui-table-cell mui-col-xs-4 mui-text-right">
+							<div><span class="red mui-h3">￥125</span>&nbsp;<u class="gray">¥200</u></div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					sexPicker.setData(sexdata);
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+					$$("#sexText").click(function(event) { //
+						sexPicker.show(function(items) {
+
+							$$("input[name='sexText']").val(JSON.stringify(items[0].text).replace(/"/g, ""));
+
+						});
+					});
+
+				});
+			})(mui, document);
+		</script>
+
+	</body>
+
+</html>

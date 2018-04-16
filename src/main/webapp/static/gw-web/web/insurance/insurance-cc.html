@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>财产保险</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<p class="mui-content-padded mui-h5 mui-text-center">温馨提示：您的交易需要线下人员处理，请注意接听电话</p>
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">提交</button>
+			</div>
+		</nav>
+		<div class="mui-content identity">
+			<form>
+				<input type="hidden" name="orderType" >
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>投保人姓名</label>
+						<input type="text" name="tbrName" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>性别</label>
+							<input type="text" name="tbrSex"  class=" mui-text-right sex" placeholder="请选择" maxlength="50" readonly="readonly">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>年龄</label>
+						<input type="tel" name="tbrAge" class=" mui-text-right mui-input-clear" placeholder="请输入年龄" maxlength="3"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+					</div>
+					<div class="mui-table-view-divider none"></div>
+					<div class="mui-input-row">
+						<label>被投保人姓名</label>
+						<input type="text" name="bbRName" class=" mui-text-right mui-input-clear" placeholder="请输入" maxlength="8">
+					</div>
+					<div class="mui-input-row">
+						<div class="mui-navigate-right">
+							<label>性别</label>
+							<input type="text" name="bbRSex"  class=" mui-text-right sex" placeholder="请选择" maxlength="50" readonly="readonly">
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>年龄</label>
+						<input type="tel" name="bbRAge" class=" mui-text-right mui-input-clear" placeholder="请输入年龄" maxlength="3"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+					</div>
+				</div>
+
+				<div class="mui-table-view-divider none">请告知基本保险需求(备注):</div>
+				<textarea class="question" name="bxRemark" placeholder="如：如想保1年，保30天等"></textarea>
+				<div class="mui-table-view-divider none"></div>
+			</form>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			
+			$$("input[name='orderType']").val(getUrlParam("orderType"));
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var sexPicker = new $.PopPicker({
+						layer: "",
+						title: "性别"
+					});
+					sexPicker.setData(sexdata);
+					$$(".sex").click(function(event) { //投保人性别
+						var _self = this;
+						sexPicker.show(function(items) {
+							$$(_self).val(JSON.stringify(items[0].text).replace(/"/g, ""));
+			
+						});
+					});
+				});
+			})(mui, document);
+			$$("#apply").click(function() {
+				var formEl = document.getElementsByTagName('form')[0];
+				var datas = getFormValues(formEl);
+				console.log(datas);
+				if(!isNull(sessionStorage.getItem("userId"))) {
+					datas.userId = sessionStorage.getItem("userId");
+				}
+				if(isNull(datas.tbrName))return mui.toast("请输入投保人姓名");
+				if(isNull(datas.tbrSex))return mui.toast("请选择投保人性别");
+				if(isNull(datas.tbrAge))return mui.toast("请输入投保人年龄");
+				if(isNull(datas.bbRName))return mui.toast("请输入被保人姓名");
+				if(isNull(datas.bbRSex))return mui.toast("请选择被保人性别");
+				if(isNull(datas.bbRAge))return mui.toast("请输入被保人年龄");
+				if(isNull(datas.bxRemark))return mui.toast("请输入备注");
+				show();
+				$$.ajax({
+	                type: "POST",
+	                url: base_url + '/baoxianyewu/createBXOrder',
+	                data: datas,
+					dataType: 'json',
+	                success: function(response) {	
+					console.log(response);
+					hide();
+						if(response.success) {
+							mui.toast("提交成功!")
+						} else {
+							mui.toast(response.msg);
+						}
+					},
+					error: function(result) {
+						hide();
+						mui.toast("提交失败，请重试");
+					}
+	            });
+			});
+		</script>
+	</body>
+
+</html>

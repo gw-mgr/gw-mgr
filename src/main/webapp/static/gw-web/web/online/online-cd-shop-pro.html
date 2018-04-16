@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>产品详情</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab bottom">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply">立即购买</button>
+			</div>
+		</nav>
+		<div class="mui-content ">
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="todo" v-cloak>
+				<input :value="todo.productId" type="hidden" name="productId" />
+				<li class="mui-table-view-cell">{{todo.productName}}</li>
+				<li class="mui-table-view-cell">
+					<div><span class="red mui-h3">￥{{todo.currPrice}}</span>&nbsp;<u class="gray">¥{{todo.origPrice}}</u></div>
+				</li>
+				<li class="mui-table-view-divider">商家信息</li>
+				<li class="mui-table-view-cell">
+					<p class="black">{{todo.merchantName}}</p>
+					<a :href="thistel" class="mui-h5 gray">
+						<span class="mui-icon mui-icon-phone"></span>{{todo.telephone}}
+					</a>
+					<a href="javascript:void(0)" class="mui-h5 gray">
+						<span class="mui-icon mui-icon-location"></span>{{todo.merchantAddr}}
+						<span class="mui-pull-right update">{{todo.distance}}</span>
+					</a>
+					<br />
+					<div class="mui-text-center">
+						<a :href="thistel" class="mui-btn mui-btn-outlined mui-btn-primary mui-icon mui-icon-phone">
+							联系客服
+						</a>&nbsp;&nbsp;&nbsp;
+						<a href="javascript:history.back(-1)" class="mui-btn mui-btn-outlined mui-btn-primary mui-icon mui-icon-home">
+							进入店铺
+						</a>
+					</div>
+				</li>
+				<li class="mui-table-view-divider">产品介绍</li>
+				<li class="mui-table-view-cell">
+					{{todo.productDescript}}
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			$$(function() {
+				$$.ajax({                
+					type:   "POST",
+					url: base_url + '/xianshangyewu/getProductInfoById',
+					data: {
+						productId:getUrlParam('productId'),
+						longitude:'29.5825570000',
+						latitude:'106.22',
+						},
+					dataType: 'json',
+					success:   function(response)  {
+						console.log(response)
+						hide();
+						if(response.success) {
+							response.obj.currPrice = (response.obj.currPrice*0.01).toFixed(2);
+							response.obj.origPrice = (response.obj.origPrice*0.01).toFixed(2);
+							var app = new Vue({
+								el: '#todo',
+								data: {
+									todo: response.obj,
+									thistel:"tel:"+response.obj.telphone
+								}
+							});
+						} else {
+							_errors();
+						}
+					},
+					error:   function(result)  {
+						_errors();
+					}            
+				});
+			});
+			$$("#apply").click(function(){
+				window.location.href= 'pay.html?productId='+$$("input[name=productId]").val();
+	       	});
+		</script>
+
+	</body>
+
+</html>

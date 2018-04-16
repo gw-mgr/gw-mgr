@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="orderlist">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商家结算</title>
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet">
+		<link href="../../css/app.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="apply" onclick="_href('../member/withdraw.html')">申请结算</button>
+			</div>
+		</nav>
+		<div class="mui-content member">
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a href="#createTime" class="mui-navigate-right mui-control-item">
+					全部
+				</a>
+			</div>
+			<div class="line"></div>
+			<div class="mui-card">
+				<div class="mui-content-padded mui-text-center">
+					<div class="mui-text-center mui-col-xs-12">
+						<div class="mui-text-center mui-pull-left mui-col-xs-5">
+							<div class="black mui-h5">累计收入</div>
+							<div class="black mui-h4">￥555.00</div>
+						</div>
+						<div class="mui-text-center mui-pull-left mui-col-xs-2">
+						</div>
+						<div class="mui-text-center mui-pull-left mui-col-xs-5">
+							<div class="black mui-h5">累计未结算金额</div>
+							<div class="black mui-h4">￥555.00</div>
+						</div>
+					</div>
+					<div class="line20"></div>
+					<div class="line15"></div>
+				</div>
+			</div>
+			<div class="mui-card">
+				<div class="line">车务代办 </div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+								<p class="mui-h5">收入</p>
+								<h4>￥555.00</h4>
+							</div>
+							<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+								<p class="mui-h5">未结算金额</p>
+								<h4>￥555.00</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-card">
+				<div class="line">汽修美容 </div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+								<p class="mui-h5">收入</p>
+								<h4>￥555.00</h4>
+							</div>
+							<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+								<p class="mui-h5">未结算金额</p>
+								<h4>￥555.00</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-card">
+				<div class="line">理财产品 </div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+								<p class="mui-h5">收入</p>
+								<h4>￥555.00</h4>
+							</div>
+							<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+								<p class="mui-h5">未结算金额</p>
+								<h4>￥555.00</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="createTime" class="mui-popover mui-popover-action statecontent">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" data-val="" data-text="下单日期">全部</li>
+			</ul>
+			<div class="mui-content mui-row mui-fullscreen" style="top: 45px;">
+				<div class="mui-col-xs-3">
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+					</div>
+				</div>
+				<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="createTime" />
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.3.min.js"></script>
+		<script src="../../js/commom.base.js"></script>
+		<script>
+			//获取当前时间
+			var date=new Date;
+			var year=date.getFullYear(); 
+			var month=date.getMonth()+1;
+			
+			var controls = document.getElementById("segmentedControls");
+			var contents = document.getElementById("segmentedControlContents");
+			var html = [];
+			var i = 0,
+				j = 1,
+				m = 4, //左侧选项卡数量+1
+				n = 21; //每个选项卡列表数量+1
+			for(; i < m; i++) {
+				html.push('<a class="mui-control-item" href="#content' + i + '">' + (year - i) + '年</a>');
+			}
+			controls.innerHTML = html.join('');
+			html = [];
+			for(i = 0; i < m; i++) {
+				html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
+				var mouth = 12;
+				for(j = 12; j > 0; j--) {
+					if(j<10){
+						mouth = "0"+j;
+					}else{
+						mouth = j;
+					}
+					html.push('<li class="mui-table-view-cell" data-val="' + (year - i) + '' + mouth+ '"  data-text="'+(year - i)+'年'+j+'月">' + j + '月</li>');
+				}
+				html.push('</ul></div>');
+			}
+			contents.innerHTML = html.join('');
+			//默认选中第一个
+			controls.querySelector('.mui-control-item').classList.add('mui-active');
+			contents.querySelector('.mui-control-content').classList.add('mui-active');
+		</script>
+		<script>
+			mui('body').on('tap', '.mui-popover-action li', function() {
+				var a = this,
+					parent;
+				//根据点击按钮，反推当前是哪个actionsheet
+				for(parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+					if(parent.classList.contains('mui-popover-action')) {
+						break;
+					}
+				}
+				$$(this).addClass('actives').siblings().removeClass('actives');
+				$$("#"+parent.id).val($$(a).attr("data-val"));
+				$$("."+parent.id).html($$(a).attr("data-text"));
+				//$$("#pullrefresh .mui-table-view").html("");
+				queryProduct();
+				mui('#' + parent.id).popover('toggle');//关闭
+				
+			});
+			
+			$$(function() {
+				queryProduct();
+			})
+			function queryProduct(){
+				show();
+				$$.ajax({                
+					type:"POST",
+					url: base_url + '/shanjiafuwu/queryMerchantSettleInfo',
+					data: {
+						merchantId: sessionStorage.getItem("merchantId"),
+						createTime:""
+						},
+					dataType: 'json',
+					success:   function(response)  {
+						hide();
+						console.log(response)
+						if(response.success) {
+							var app = new Vue({
+								el: '#todo',
+								data: {
+									todo: response.obj
+								}
+							});
+						} else {
+							hide();
+							_errors();
+						}
+					},
+					error:   function(result)  {
+						_errors();;
+					}            
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>
