@@ -3,7 +3,7 @@
 
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',border:false" style="font-size: 20px; height: 600px; overflow: hidden; background-color: #fff; width: 600px; border: 0px solid red; padding-left:10px;padding-top: 10px">
-		<table style="width: 600px">
+		<table style="width: 700px" >
 			<tr>
 				<th height="30px" align="right" width="100px"><font color="red">ID：</font></th>
 				<td width="200px"><font color="red">${memberInfo.userId}</font></td>
@@ -67,8 +67,8 @@
 				<td width="200px" colspan="3">${memberInfo.remark}</td>
 			</tr>
 			<tr>
-				<th height="30px" align="right" width="80px"><font color="red">直接推荐人：</font></th>
-				<td width="200px"><font color="red">${memberInfo.recommender}</font></td>
+				<th height="30px" align="right" width="100px"><font color="red">直接推荐人：</font></th>
+				<td width="160px"><font color="red">${memberInfo.recommender}</font></td>
 				<th height="30px" align="right" width="150px"><font color="red">间接推荐人：</font></th>
 				<td width="200px"><font color="red">${memberInfo.dirRecommender}</font></td>
 			</tr>

@@ -47,17 +47,18 @@
 										hidden : true
 									},
 									{
-										width : '100',
+										width : '120',
 										title : '角色',
 										field : 'roleName',
 										align : 'center',
 										sortable : true
 									},
 									{
-										width : '350',
+										width : '500',
 										title : '备注',
 										field : 'description',
-										align : 'center',
+										halign : 'center',
+										align : 'left',
 										sortable : true
 									},
 									{
