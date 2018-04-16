@@ -21,10 +21,6 @@
 									400, 500 ],
 							frozenColumns : [ [
 									{
-										field : 'ck',
-										checkbox : true
-									},
-									{
 										width : '120',
 										title : '姓名',
 										field : 'userName',
@@ -58,7 +54,7 @@
 									},
 									{
 										width : '90',
-										title : '提现金额/元',
+										title : '<font color = \'red\'>提现金额/元</font>',
 										field : 'tradeVlue',
 										align : 'center',
 										sortable : true,
@@ -176,7 +172,7 @@
 				}, function(result) {
 					if (result.success) {
 						parent.$.messager.alert('提示', result.msg, 'info');
-						tMerchantManageDataGrid.datagrid('reload');
+						cashManageDataGrid.datagrid('reload');
 					}
 					progressClose();
 					cashManageDataGrid.datagrid("unselectAll");
@@ -184,7 +180,11 @@
 			}
 		});
 	}
-
+	// 清除
+	function tCashManageCleanFun() {
+		$('#tCashManageSearchForm input').val('');
+		cashManageDataGrid.datagrid('load', {});
+	}
 	// 搜索
 	function tCashManageSearchFun() {
 		cashManageDataGrid.datagrid('load', $
@@ -215,6 +215,7 @@
 				</div>
 				<div style="border: 0px solid green; float: left; width: 150px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 12px; padding-top: 8px">
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="tCashManageSearchFun();">查询</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-x-circle',plain:true" onclick="tCashManageCleanFun();">清空</a>
 				</div>
 			</div>
 		</form>

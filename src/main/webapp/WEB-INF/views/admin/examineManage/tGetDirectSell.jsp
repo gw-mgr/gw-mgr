@@ -114,7 +114,7 @@
 										sortable : true
 									},
 									{
-										width : '80',
+										width : '100',
 										title : '状态',
 										field : 'tjjyjCancle',
 										align : 'center',
@@ -122,7 +122,7 @@
 										formatter : function(value, row, index) {
 											switch (value) {
 											case "01":
-												return '取消推荐奖';
+												return '<font color = \'red\'>推荐奖已取消</font>';
 											case "02":
 												return '正常';
 											}
@@ -203,10 +203,12 @@
 			alert('复用服务商系统订单详情');
 		}
 	}
-
-	/**
-	 * 搜索
-	 */
+	// 清除
+	function tDirectSellManageCleanFun() {
+		$('#tDirectSellManageSearchForm input').val('');
+		directSellManageDataGrid.datagrid('load', {});
+	}
+	// 搜索
 	function tDirectSellManageSearchFun() {
 		directSellManageDataGrid.datagrid('load', $
 				.serializeObject($('#tDirectSellManageSearchForm')));
@@ -219,7 +221,8 @@
 		<form id="tDirectSellManageSearchForm">
 			<div style="width: 1200px; height: 40px; border: 0px solid red;">
 				<div style="border: 0px solid green; float: left; width: 180px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 50px; padding-top: 10px">
-					关键字搜索&nbsp;&nbsp; <select id="editStatus" name="keywordType" class="easyui-combobox" data-options="width:80,height:25,editable:false,panelHeight:'auto'">
+					关键字搜索&nbsp;&nbsp;
+					<select id="editStatus" name="keywordType" class="easyui-combobox" data-options="width:80,height:25,editable:false,panelHeight:'auto'">
 						<option value="SALES_MAN">业务员</option>
 						<option value="RECORDER">录单员</option>
 						<option value="ORDER_ID">订单号</option>
@@ -230,6 +233,7 @@
 				</div>
 				<div style="border: 0px solid green; float: left; width: 150px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 12px; padding-top: 8px">
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="tDirectSellManageSearchFun();">查询</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-x-circle',plain:true" onclick="tDirectSellManageCleanFun();">清空</a>
 				</div>
 			</div>
 		</form>

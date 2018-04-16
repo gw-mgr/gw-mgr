@@ -58,7 +58,7 @@
 									},
 									{
 										width : '100',
-										title : '申请结算金额/元',
+										title : '<font color = \'red\'>申请结算金额/元</font>',
 										field : 'tradeVlue',
 										align : 'center',
 										sortable : true,
@@ -167,6 +167,12 @@
 			}
 		});
 	}
+
+	// 清除
+	function tSettleManageCleanFun() {
+		$('#tSettleManageForm input').val('');
+		settleManageDataGrid.datagrid('load', {});
+	}
 	// 搜索
 	function tSettleManageSearchFun() {
 		settleManageDataGrid.datagrid('load', $
@@ -197,6 +203,7 @@
 				</div>
 				<div style="border: 0px solid green; float: left; width: 150px; height: 35px; font-size: 16px; margin-top: 2px; padding-left: 12px; padding-top: 8px">
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="tSettleManageSearchFun();">查询</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-x-circle',plain:true" onclick="tSettleManageCleanFun();">清空</a>
 				</div>
 			</div>
 		</form>
