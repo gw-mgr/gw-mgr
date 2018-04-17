@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -57,7 +58,7 @@ import com.gewei.zhongshu.service.ITMerchantManageService;
  * </pre>
  */
 @Controller
-@RequestMapping("/security")
+@RequestMapping("")
 public class AuthController extends BaseController {
 	protected static final Logger logger = Logger.getLogger(AuthController.class);
 
@@ -67,7 +68,7 @@ public class AuthController extends BaseController {
 		System.out.println("获取来源URL:" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath());
 		System.out.println("获取请求的URL，不包括参数:" + request.getRequestURL());
 		System.out.println("获取参数信息:" + request.getQueryString());
-		StringBuffer returnURL = new StringBuffer(request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/static/gw-web/web/base/login.html");// 设置回调地址
+		StringBuffer returnURL = new StringBuffer(request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/afterAuth");// 设置回调地址
 		System.out.println("returnURL...[" + returnURL + "]");
 		// 需要用户点同意 scope="snsapi_userinfo";
 		// 不需要用户点同意scope="snsapi_base";
@@ -83,9 +84,38 @@ public class AuthController extends BaseController {
 	}
 
 	@Autowired
-	private CommonMapper commonMapper;
-	@Autowired
 	private ITMemberBasicinfoService iTMemberBasicinfoServiceImpl;
+
+	@RequestMapping("/afterAuth")
+	protected String afterAuth(HttpServletRequest request, HttpServletResponse response, String code, Model model) throws ServletException, IOException {
+		// 查询数据库，是否已经绑定openId
+		String openId = WchatUtil.getOpenId(AppUtil.getPropertie("wxConfig.appid"), code, AppUtil.getPropertie("wxConfig.appSecret"));
+		model.addAttribute("openId", openId);
+		System.out.println(openId);
+		// 普通会员
+		EntityWrapper<TMemberBasicinfo> entityWrapper = new EntityWrapper<TMemberBasicinfo>();
+		entityWrapper.eq("OPEN_ID", openId);
+		TMemberBasicinfo memberBasicinfo = iTMemberBasicinfoServiceImpl.selectOne(entityWrapper);
+		model.addAttribute("userId", memberBasicinfo == null ? null : memberBasicinfo.getUserId());
+		// 服务商
+		EntityWrapper<TMerchantManage> entityWrapper2 = new EntityWrapper<TMerchantManage>();
+		entityWrapper2.eq("MERCHANT_ID", memberBasicinfo == null ? "" : memberBasicinfo.getMerchantId());
+		TMerchantManage merchantManage = iTMerchantManageServiceImpl.selectOne(entityWrapper2);
+		model.addAttribute("merchantId", merchantManage == null ? null : merchantManage.getMerchantId());
+		if (memberBasicinfo == null) {
+			System.out.println("login");
+			// 该用户已绑定平台，跳转个人中心
+			return "redirect:static/gw-web/web/base/login.html";
+		} else {
+			System.out.println("index");
+			// 该用户不是平台会员，跳转注册
+			return "redirect:static/gw-web/web/member/index.html";
+		}
+
+	}
+
+	@Autowired
+	private CommonMapper commonMapper;
 	@Autowired
 	private ITMerchantManageService iTMerchantManageServiceImpl;
 
@@ -98,7 +128,7 @@ public class AuthController extends BaseController {
 			SmsCode code2 = commonMapper.getSMSCodeByTelephone(telphone);
 			String flag = code2.getFlag();
 			if ("02".equals(flag)) {
-				return renderError("验证码已经被使用");
+				return renderError("验证码不可用");
 			}
 			long deadTime = Long.parseLong(code2.getDeadTime());
 			long currTime = DateUtil.get_Long$yyyyMMddHHmmss(new Date());
@@ -109,8 +139,6 @@ public class AuthController extends BaseController {
 			if (!smsCode.equals(smsCode2)) {
 				return renderError("验证码错误");
 			}
-			// 验证码过期
-			code2.setFlag("02");
 			commonMapper.expiredSmscode(code2);
 			// 查询用户是否存在
 			EntityWrapper<TMemberBasicinfo> entityWrapper = new EntityWrapper<TMemberBasicinfo>();
@@ -144,7 +172,7 @@ public class AuthController extends BaseController {
 	// 第一次登录补充信息
 	@RequestMapping("/addMemberInfo")
 	@ResponseBody
-	public Object addMemberInfo(TMemberBasicinfo tMemberBasicinfo, String telphone, String smsCode) {
+	public Object addMemberInfo(TMemberBasicinfo tMemberBasicinfo, String telphone, String smsCode, String openId) {
 		Result result = new Result();
 		try {
 			// 短信验证码校验
@@ -164,12 +192,13 @@ public class AuthController extends BaseController {
 				return renderError("验证码已过期");
 			}
 			// 验证码过期
-			code.setFlag("03");
+			code.setFlag("02");
 			commonMapper.expiredSmscode(code);
 			TMemberBasicinfo memberBasicinfo = new TMemberBasicinfo();
 			BeanUtils.copyNotNullProperties(tMemberBasicinfo, memberBasicinfo);
 			memberBasicinfo.setUserId("WX" + currTime + UUIDUtil.getUUID32().substring(0, 16));
 			memberBasicinfo.setCreateTime(currTime + "");
+			memberBasicinfo.setOpenId(openId);
 			memberBasicinfo.setStatus("01");
 			memberBasicinfo.setType("01");
 			memberBasicinfo.setUpdateTime(currTime + "");
