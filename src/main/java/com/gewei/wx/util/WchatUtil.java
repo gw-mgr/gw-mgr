@@ -278,7 +278,7 @@ public class WchatUtil {
 	 */
 	public static String getOpenId(String appId, String code, String app_secrect) {
 		String openId = "";
-		String wxUrl = AppUtil.getPropertie("weixin_url") + "/sns/oauth2/access_token?appid=" + appId + "&secret=" + app_secrect + "&code=" + code + "&grant_type=authorization_code";
+		String wxUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appId + "&secret=" + app_secrect + "&code=" + code + "&grant_type=authorization_code";
 		logger.info("wxOpenIdUrl:" + wxUrl);
 		HttpResult result = HttpUtil.doPost("getopenId", wxUrl, null);
 		String res = result.getText();
