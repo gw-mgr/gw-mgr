@@ -174,12 +174,7 @@ public class ShanJiaFuWuServiceImpl extends ServiceImpl<BaoXianDingDanMapper, Or
 			String[] BENEFICIARY_ID_Array = BENEFICIARY_ID.split(",");
 			if (BENEFICIARY_ID_Array.length >= 1) {
 				// 按照收益顺序排序
-				Set<Beneficial> beneficialArray = new TreeSet<Beneficial>(new Comparator<Beneficial>() {
-					@Override
-					public int compare(Beneficial o1, Beneficial o2) {
-						return o1.getBeneficiaryOrder().compareTo(o2.getBeneficiaryOrder());
-					}
-				});
+				Set<Beneficial> beneficialArray = new TreeSet<Beneficial>((x, y) -> (x.getBeneficiaryOrder()).compareTo(y.getBeneficiaryOrder()));
 				for (int j = 0; j < BENEFICIARY_ID_Array.length; j++) {
 					EntityWrapper<Beneficial> entityWrapper = new EntityWrapper<Beneficial>();
 					String PERSON_ID = BENEFICIARY_ID_Array[j];
