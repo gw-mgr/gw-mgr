@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp"%>
-<script type='text/javascript' src='${path}/static/jquery.citys.js'></script>
 <script type="text/javascript">
 	//下拉框选择控件，下拉框的内容是动态查询数据库信息  
 	var tMerchantManageDataGrid;
@@ -22,10 +21,6 @@
 							pageList : [ 10, 20, 30, 40, 50, 100, 200, 300,
 									400, 500 ],
 							frozenColumns : [ [
-									{
-										field : 'ck',
-										checkbox : true
-									},
 									{
 										width : '10',
 										title : '服务商名称',
@@ -196,7 +191,75 @@
 										});
 							}
 						});
-		$('#city').citys();
+
+		// 下拉框选择控件，下拉框的内容是动态查询数据库信息  
+		$('#province')
+				.combobox(
+						{
+							url : '${path}/mgr/tMerchantManage/chinaAreaList?pId=0',
+							editable : false, //不可编辑状态  
+							cache : false,
+							valueField : 'ID',
+							textField : 'NAME',
+							onHidePanel : function() {
+								var province = $('#province').combobox(
+										'getValue');
+								$('#city').combobox('setValue', '');
+								$("#country").combobox("setValue", '');
+								var country = $('#country').combobox(
+										'getValue');
+								if (province != '') {
+									$
+											.ajax({
+												type : "POST",
+												url : "${path}/mgr/tMerchantManage/chinaAreaList?pId="
+														+ province,
+												cache : false,
+												dataType : "json",
+												success : function(data) {
+													$("#city").combobox(
+															"loadData", data);
+												}
+											});
+								}
+							}
+						});
+		$('#city')
+				.combobox(
+						{
+							editable : false, //不可编辑状态  
+							cache : false,
+							valueField : 'ID',
+							textField : 'NAME',
+							onHidePanel : function() {
+								$("#country").combobox("setValue", '');
+								var city = $('#city').combobox('getValue');
+								if (city != '') {
+									$
+											.ajax({
+												type : "POST",
+												url : "${path}/mgr/tMerchantManage/chinaAreaList?pId="
+														+ city,
+												cache : false,
+												dataType : "json",
+												success : function(data) {
+													$("#country").combobox(
+															"loadData", data);
+												}
+											});
+								}
+							}
+						});
+		$('#country').combobox({
+			editable : false, //不可编辑状态  
+			cache : false,
+			valueField : 'ID',
+			textField : 'NAME',
+			onHidePanel : function() {
+				var str = $('#country').combobox('getText');
+				$("#cregicounty").val(str);
+			}
+		});
 	});
 
 	/**
@@ -412,11 +475,9 @@
 				</div>
 				<div style="border: 0px solid; float: left; width: 600px; height: 35px; font-size: 16px; margin-top: 2px; margin-left: 10px; padding-top: 10px">
 					<div style="font-size: 16px; float: left; margin-top: 2px">服务商地址&nbsp;&nbsp;</div>
-					<div id="city" class="citys" style="margin-top: 5px; margin-left: 10px; float: left">
-						<select id="province" name="province"></select>
-						<select id="city" name="city"></select>
-						<select id="area" name="country"></select>
-					</div>
+					<input id="province" name="province" data-options="required: true" style="width: 140px;">
+					<input id="city" name="city" data-options="required: true" style="width: 95px;">
+					<input id="country" name="country" data-options="required: false" style="width: 120px;">
 				</div>
 			</div>
 			<hr width=1310px align="left"></hr>
@@ -448,9 +509,9 @@
 					<button type="button" onclick="addMerchantFun()" style="width: 60px; height: 26px;">新建</button>
 				</div>
 			</shiro:hasPermission>
-			<div style="border: 0px solid; float: left; width: 120px; margin-top: 2px; margin-left: 20px">
+			<!-- <div style="border: 0px solid; float: left; width: 120px; margin-top: 2px; margin-left: 20px">
 				<button type="button" onclick="exmportExcelFun()" style="width: 120px; height: 26px;">批量导出EXCEL</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div data-options="region:'center',border:false">

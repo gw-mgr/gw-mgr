@@ -25,7 +25,7 @@
 			}
 		});
 		// 下拉框选择控件，下拉框的内容是动态查询数据库信息  
-		$('#province2')
+		$('#province3')
 				.combobox(
 						{
 							url : '${path}/mgr/tMerchantManage/chinaAreaList?pId=0',
@@ -34,11 +34,11 @@
 							valueField : 'ID',
 							textField : 'NAME',
 							onHidePanel : function() {
-								var province = $('#province2').combobox(
+								var province = $('#province3').combobox(
 										'getValue');
-								$('#city2').combobox('setValue', '');
-								$("#country2").combobox("setValue", '');
-								var country = $('#country2').combobox(
+								$('#city3').combobox('setValue', '');
+								$("#country3").combobox("setValue", '');
+								var country = $('#country3').combobox(
 										'getValue');
 								if (province != '') {
 									$
@@ -49,14 +49,14 @@
 												cache : false,
 												dataType : "json",
 												success : function(data) {
-													$("#city2").combobox(
+													$("#city3").combobox(
 															"loadData", data);
 												}
 											});
 								}
 							}
 						});
-		$('#city2')
+		$('#city3')
 				.combobox(
 						{
 							editable : false, //不可编辑状态  
@@ -64,8 +64,8 @@
 							valueField : 'ID',
 							textField : 'NAME',
 							onHidePanel : function() {
-								$("#country2").combobox("setValue", '');
-								var city = $('#city2').combobox('getValue');
+								$("#country3").combobox("setValue", '');
+								var city = $('#city3').combobox('getValue');
 								if (city != '') {
 									$
 											.ajax({
@@ -75,27 +75,27 @@
 												cache : false,
 												dataType : "json",
 												success : function(data) {
-													$("#country2").combobox(
+													$("#country3").combobox(
 															"loadData", data);
 												}
 											});
 								}
 							}
 						});
-		$('#country2').combobox({
+		$('#country3').combobox({
 			editable : false, //不可编辑状态  
 			cache : false,
 			valueField : 'ID',
 			textField : 'NAME',
 			onHidePanel : function() {
-				var str = $('#country2').combobox('getText');
+				var str = $('#country3').combobox('getText');
 				$("#cregicounty").val(str);
 			}
 		});
 
-		$("#province2").val('${tMerchantManage.province}');
-		$("#city2").val('${tMerchantManage.city}');
-		$("#country2").val('${tMerchantManage.country}');
+		$("#province3").val('${tMerchantManage.province}');
+		$("#city3").val('${tMerchantManage.city}');
+		$("#country3").val('${tMerchantManage.country}');
 
 		// 授权区域dataGrid
 		$.fn.zTree
@@ -197,9 +197,9 @@
 				<th align="right" width="100px">服务商地址：</th>
 				<td>
 					<div style="height: 10px"></div>
-					<input id="province2" name="province" data-options="required: true" style="width: 140px;" value="${tMerchantManage.province}">
-					<input id="city2" name="city" data-options="required: true" style="width: 95px;" value="${tMerchantManage.city}">
-					<input id="country2" name="country" data-options="required: false" style="width: 120px;" value="${tMerchantManage.country}">
+					<input id="province3" name="province" data-options="required: true" style="width: 140px;" value="${tMerchantManage.province}">
+					<input id="city3" name="city" data-options="required: true" style="width: 95px;" value="${tMerchantManage.city}">
+					<input id="country3" name="country" data-options="required: false" style="width: 120px;" value="${tMerchantManage.country}">
 					<br>
 					<div style="height: 10px"></div>
 					<input name="merchantAddr" type="text" value="${tMerchantManage.merchantAddr}" class="easyui-validatebox span2" data-options="required: true" style="width: 370px">
