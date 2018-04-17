@@ -1,11 +1,9 @@
 package com.gewei.model;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
 
 @TableName("t_merchant_product_category")
 public class TMerchantProductCategory extends Model<TMerchantProductCategory> {
