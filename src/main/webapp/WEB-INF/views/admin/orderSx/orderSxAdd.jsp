@@ -3,6 +3,7 @@
 <%@ include file="/commons/head.jsp"%>
 <script type='text/javascript' src='${path }/static/jquery.citys.js'></script>  
 <script type="text/javascript">
+	var syrNum = 1;
     $(function() {
         $('#orderSxAddForm').form({
             url : '${path}/mgr/orderSx/add',
@@ -210,6 +211,29 @@
 		table.append(row2);
 		table.append(row3);
 	}
+	function syrClone(){
+		var div = $('#syr');
+		var str="[" + syrNum + "]";
+		var table = $("<table class='grid'></table>");
+		var row1 = $("<tr><td align='right' width='120px'>受益顺序：</td><td align='left'><input style='width: 200px' name='syr"+ str + ".beneficiaryOrder' ></td><td align='right'>受益比例：</td><td align='left'><input style='width: 150px' name='syr" + str + ".beneficialRate' >%</td></tr>");
+		var row2 = $("<tr><td align='right'>受益人姓名：</td><td align='left'><input style='width: 200px' name='syr"+ str + ".beneficialName' ></td><td align='right'>性别：</td><td align='left'><select name='syr"+ str + ".sex' class='easyui-combobox' style='width:150px;'><option value='男'>男</option><option value='女'>女</option></select></td></tr>");
+		var row3 = $("<tr><td align='right'>出生日期：</td><td align='left'><input name='syr"+ str + ".birthDate'  type='text' class='easyui-datebox'  style='width:200px;'></td><td align='right'>与被保人关系：</td><td align='left'><select name='syr"+ str + ".relationship' class='easyui-combobox' style='width:150px;'><option value='配偶'>配偶</option><option value='子女'>子女</option><option value='父母'>父母</option><option value='本人'>本人</option></select></td></tr>");
+		var row4 = $("<tr><td align='right'>证件类型：</td><td align='left'><select name='syr"+ str + ".certType' class='easyui-combobox' style='width:200px;'><option value='身份证'>身份证</option><option value='护照'>护照</option><option value='军人证'>军人证</option><option value='通行证'>通行证</option><option value='户口本'>户口本</option></select></td></tr>");
+		var row5 = $("<tr><td align='right'>证件号码：</td><td align='left' colspan='3'><input style='width: 300px' name='syr"+ str + ".certNo' ></td></tr>");
+		var row6 = $("<tr><td align='right'>证件有效期至：</td><td align='left'><input name='syr"+ str + ".validityDate'  type='text' class='easyui-datebox'  style='width:200px;'></td></tr>");
+		var row7 = $(" <tr><td align='right'>住址：</td><td align='left'><select name='syr"+ str + ".residentialAddress' class='easyui-combobox' style='width:200px;'><option value='同投保人'>同投保人</option><option value='同被保险人'>同被保险人</option><option value='其他'>其他</option></select></td></tr>");
+		table.append(row1);
+		table.append(row2);
+		table.append(row3);
+		table.append(row4);
+		table.append(row5);
+		table.append(row6);
+		table.append(row7);
+		div.append(table);
+		$("input[name='syr"+str+".birthDate']").datebox();
+		$("input[name='syr"+str+".validityDate']").datebox();
+	}
+	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false" >
     <div data-options="region:'center',border:false" title="" style="overflow: auto;padding: 3px;">
@@ -448,61 +472,68 @@
 					</table>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">
-					<table class="grid">
-						<tr>
-							<td align="right" width="120px">受益顺序：</td>
-							<td align="left"><input style="width: 200px" name="syr[0].beneficiaryOrder" ></td>
-							<td align="right">受益比例：</td>
-							<td align="left"><input style="width: 250px" name="syr[0].beneficialRate" >%</td>
-						</tr>
-						<tr>
-							<td align="right">受益人姓名：</td>
-							<td align="left"><input style="width: 200px" name="syr[0].beneficialName" ></td>
-							<td align="right">性别：</td>
-							<td align="left">
-								<select name="syr[0].sex" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'男',text:'男'},{id:'女',text:'女'}],value:'男'">
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right">出生日期：</td>
-		                    <td align="left"><input name="syr[0].birthDate"  type="text" class="easyui-datebox"  style="width:100px;"></td>
-		                    <td align="right">与被保人关系：</td>
-							<td align="left">
-								<select name="syr[0].relationship" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'配偶'">
-								</select>
-							</td>
-						</tr>
-						 <tr>
-		                	<td align="right">证件类型：</td>
-							<td align="left">
-								<select name="syr[0].certType" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'身份证'">
-								</select>
-							</td>
-		                </tr>
-		                <tr>
-							<td align="right">证件号码：</td>
-							<td align="left" colspan="3"><input style="width: 500px" name="syr[0].certNo" ></td>
-						</tr>
-						<tr>
-		                	<td align="right">证件有效期至：</td>
-		                    <td align="left"><input name="syr[0].validityDate"  type="text" class="easyui-datebox"  style="width:100px;"></td>
-		                </tr>
-		                <tr>
-		                	<td align="right">住址：</td>
-							<td align="left">
-								<select name="syr[0].residentialAddress" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'同投保人',text:'同投保人'},{id:'同被保险人',text:'同被保险人'},{id:'其他',text:'其他'}],value:'同投保人'">
-								</select>
-							</td>
-		                </tr>
-					</table>
+					<div  id="syrTable">
+						<table class="grid">
+							<tr>
+								<td align="right" width="120px">受益顺序：</td>
+								<td align="left"><input style="width: 200px" name="syr[0].beneficiaryOrder" ></td>
+								<td align="right">受益比例：</td>
+								<td align="left"><input style="width: 180px" name="syr[0].beneficialRate" >%</td>
+							</tr>
+							<tr>
+								<td align="right">受益人姓名：</td>
+								<td align="left"><input style="width: 200px" name="syr[0].beneficialName" ></td>
+								<td align="right">性别：</td>
+								<td align="left">
+									<select name="syr[0].sex" class="easyui-combobox" style="width:200px;">
+										<option value="男">男</option>
+										<option value="女">女</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td align="right">出生日期：</td>
+			                    <td align="left"><input name="syr[0].birthDate"  type="text" class="easyui-datebox"  style="width:200px;"></td>
+			                    <td align="right">与被保人关系：</td>
+								<td align="left">
+									<select name="syr[0].relationship" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'配偶'">
+									</select>
+								</td>
+							</tr>
+							 <tr>
+			                	<td align="right">证件类型：</td>
+								<td align="left">
+									<select name="syr[0].certType" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'身份证'">
+									</select>
+								</td>
+			                </tr>
+			                <tr>
+								<td align="right">证件号码：</td>
+								<td align="left" colspan="3"><input style="width: 300px" name="syr[0].certNo" ></td>
+							</tr>
+							<tr>
+			                	<td align="right">证件有效期至：</td>
+			                    <td align="left"><input name="syr[0].validityDate"  type="text" class="easyui-datebox"  style="width:200px;"></td>
+			                </tr>
+			                <tr>
+			                	<td align="right">住址：</td>
+								<td align="left">
+									<select name="syr[0].residentialAddress" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'同投保人',text:'同投保人'},{id:'同被保险人',text:'同被保险人'},{id:'其他',text:'其他'}],value:'同投保人'">
+									</select>
+								</td>
+			                </tr>
+			                <tr>
+			                	<td colspan="4">
+			                	</td>
+			                </tr>
+						</table>
+					</div>
 					<div id="syr"></div>
 					<div>
-						<input type="button" value="+增加">
+						<input type="button" value="+增加" onclick="syrClone()">
 					</div>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">

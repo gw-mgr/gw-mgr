@@ -248,23 +248,18 @@ public class OrderSxController extends BaseController {
 		}
 		
 		List<Beneficial> syr = orderSxVo.getSyr();
+		String beneficiaryId = "";
 		if (syr != null && syr.size() >= 1) {
-			
+			for(Beneficial be : syr){
+				be.setPersonId(StringUtils.getUUId());
+				be.setOrderId(orderSxVo.getOrderId());
+				be.setCreateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
+				b = beneficialService.insert(be);
+				beneficiaryId = beneficiaryId + be.getPersonId() + ",";
+			}
 		}
-		
-		Beneficial beneficial = new Beneficial();
-		BeanUtils.copyNotNullProperties(orderSxVo, beneficial);
-		beneficial.setSex(orderSxVo.getSexS());
-		beneficial.setBirthDate(orderSxVo.getBirthDateS());
-		beneficial.setCertType(orderSxVo.getCertTypeS());
-		beneficial.setCertNo(orderSxVo.getCertNoS());
-		beneficial.setValidityDate(orderSxVo.getValidityDateS());
-		beneficial.setResidentialAddress(orderSxVo.getResidentialAddressS());
-		beneficial.setOrderId(orderSx.getOrderId());
-		beneficial.setPersonId(StringUtils.getUUId());
-		beneficial.setCreateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
-		b = beneficialService.insert(beneficial);
-		orderSx.setBeneficiaryId(beneficial.getPersonId());
+		beneficiaryId = beneficiaryId.length() > 0 ? beneficiaryId.substring(0, beneficiaryId.length()-1):beneficiaryId;
+		orderSx.setBeneficiaryId(beneficiaryId);
 		b = orderSxService.insert(orderSx);
 		if (b) {
 			return renderSuccess("添加成功！");

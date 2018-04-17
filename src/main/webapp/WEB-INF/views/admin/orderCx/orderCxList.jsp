@@ -1028,7 +1028,7 @@
 			data-options="plain:true,iconCls:'fi-page-add'">新增</a>
 	</shiro:hasPermission>
 	<shiro:hasPermission name="/orderCx/add">
-		<select class="easyui-combobox" data-options="valueField:'id', textField:'text', panelHeight:'auto', data: [{ 'text': '批量操作', 'id': '' ,selected:true},{ 'text': '成交/未成交', 'id': 'orderFlag' },{ 'text': '打单/未打单', 'id': 'printFlag' },{ 'text': '礼品发放', 'id': 'giftFlag' },{ 'text': '结账设置', 'id': 'checkoutSet' },{ 'text': '保险公司结账', 'id': 'checkoutFlag' }]" id='batch' style='width: 100px'>
+		<select class="easyui-combobox" data-options="valueField:'id', textField:'text', panelHeight:'auto', data: [{ 'text': '批量操作', 'id': '' ,selected:true},{ 'text': '成交/未成交', 'id': 'orderFlag' },{ 'text': '打单/未打单', 'id': 'printFlag' },{ 'text': '礼品发放', 'id': 'giftFlag' },{ 'text': '结账设置', 'id': 'checkoutSet' },{ 'text': '保险公司结账', 'id': 'checkoutFlag' }]" id='batch' style='width: 100px;background-color: #cccccc;'>
 		</select>
 	</shiro:hasPermission>
 	<shiro:hasPermission name="/orderCx/add">
