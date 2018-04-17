@@ -382,6 +382,97 @@
             t.order_id = #{id}
         </where>
 	</select>
+	
+	<!-- 中枢系统接口 -->
+	<select id="selectCXList" resultType="map">
+		SELECT
+			t.ORDER_ID AS orderId,
+			t.CREATE_TIME AS createTime,
+			t.ORDER_TYPE AS orderType,
+			m.category_name as orderTypeName,
+			t.POLICYHOLDER_ID as POLICYHOLDER_ID,
+			p.USER_NAME as customerName,
+			t.RECORDER AS operatorName,
+			s.user_name as salesMan,
+			f.MERCHANT_NAME as merchantName,
+			t.PROVINCE as province,
+			t.CITY as city,
+			t.DISTRICT as country,
+			t.ORDER_FLAG AS orderFlag
+		FROM
+			order_cx t
+		LEFT JOIN user o ON t.recorderid = o.id
+		LEFT JOIN policyholder p ON t.POLICYHOLDER_ID = p.PID
+		LEFT JOIN t_merchant_manage f ON t.MERCHANT_ID = f.MERCHANT_ID
+		LEFT JOIN t_member_basicinfo s ON t.sales_man = s.USER_ID
+		LEFT JOIN user b ON t.OPERATOR = b.id
+		LEFT JOIN t_merchant_product_category m ON t.order_type = m.category_id
+		<where>
+			t.ORDER_ID is not null
+			<if test=" createStartTime != null and createStartTime != '' ">
+               <![CDATA[ and t.CREATE_TIME >= #{createStartTime}  ]]>
+			</if>
+			<if test=" createEndTime != null and createEndTime != '' ">
+                <![CDATA[ and t.CREATE_TIME <= #{createEndTime} ]]>
+			</if>
+			<if test=" province != null and province != '' ">
+                 <![CDATA[ and t.PROVINCE = #{province}  ]]>
+			</if>
+			<if test=" city != null and city != '' ">
+                <![CDATA[ and t.CITY = #{city}  ]]>
+			</if>
+			<if test=" country != null and country != '' ">
+                 <![CDATA[ and t.DISTRICT = #{country}  ]]>
+			</if>
+			<if test=" orderTypeQuery != null and orderTypeQuery != '' ">
+                 <![CDATA[ and t.ORDER_TYPE = #{orderTypeQuery}  ]]>
+			</if>
+			<if test=" keywordInfo != null and keywordInfo != '' ">
+                 <![CDATA[ and ${keywordType} like CONCAT('%',#{keywordInfo},'%')  ]]>
+			</if>
+		</where>
+		
+		limit #{start},#{rows}
+	</select>
+	
+	<!-- 中枢系统接口 -->
+	<select id="getCXOrderCount" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			order_cx t
+		LEFT JOIN user o ON t.recorderid = o.id
+		LEFT JOIN policyholder p ON t.POLICYHOLDER_ID = p.PID
+		LEFT JOIN t_merchant_manage f ON t.MERCHANT_ID = f.MERCHANT_ID
+		LEFT JOIN t_member_basicinfo s ON t.sales_man = s.USER_ID
+		LEFT JOIN user b ON t.OPERATOR = b.id
+		LEFT JOIN t_merchant_product_category m ON t.order_type = m.category_id
+		<where>
+			t.ORDER_ID is not null
+			<if test=" createStartTime != null and createStartTime != '' ">
+               <![CDATA[ and t.CREATE_TIME >= #{createStartTime}  ]]>
+			</if>
+			<if test=" createEndTime != null and createEndTime != '' ">
+                <![CDATA[ and t.CREATE_TIME <= #{createEndTime} ]]>
+			</if>
+			<if test=" province != null and province != '' ">
+                 <![CDATA[ and t.PROVINCE = #{province}  ]]>
+			</if>
+			<if test=" city != null and city != '' ">
+                <![CDATA[ and t.CITY = #{city}  ]]>
+			</if>
+			<if test=" country != null and country != '' ">
+                 <![CDATA[ and t.DISTRICT = #{country}  ]]>
+			</if>
+			<if test=" orderTypeQuery != null and orderTypeQuery != '' ">
+                 <![CDATA[ and t.ORDER_TYPE = #{orderTypeQuery}  ]]>
+			</if>
+			<if test=" keywordInfo != null and keywordInfo != '' ">
+                 <![CDATA[ and ${keywordType} like CONCAT('%',#{keywordInfo},'%')  ]]>
+			</if>
+		</where>
+	</select>
+	
 	<update id="updateById" parameterType="com.gewei.model.OrderCx">
 		update order_cx set 
 			<if test="orderId != null"> ORDER_ID=#{orderId}</if>
