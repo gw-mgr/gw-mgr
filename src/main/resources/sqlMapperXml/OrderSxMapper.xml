@@ -825,9 +825,7 @@
 			t.RECORDER AS operatorName,
 			s.user_name as salesMan,
 			f.MERCHANT_NAME as merchantName,
-			p.PPROVINCE as province,
-			p.PCITY as city,
-			p.PDISTRICT as country,
+			TT.NAME as province,
 			t.ORDER_FLAG AS orderFlag
 		FROM
 			order_sx t
@@ -837,6 +835,7 @@
 		LEFT JOIN t_member_basicinfo s ON t.sales_man = s.USER_ID
 		LEFT JOIN user b ON t.OPERATOR = b.id
 		LEFT JOIN t_merchant_product_category m ON t.order_type = m.category_id
+		LEFT JOIN t_china_area TT ON p.PPROVINCE = TT.ID
 		<where>
 			t.ORDER_ID is not null
 			<if test=" createStartTime != null and createStartTime != '' ">
