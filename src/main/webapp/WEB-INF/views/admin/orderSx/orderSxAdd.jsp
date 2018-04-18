@@ -472,7 +472,7 @@
 					</table>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">
-					<div  id="syrTable">
+					<div id="syrTable">
 						<table class="grid">
 							<tr>
 								<td align="right" width="120px">受益顺序：</td>

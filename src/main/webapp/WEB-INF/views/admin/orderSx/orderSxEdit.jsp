@@ -241,6 +241,69 @@
     	   $("#saleManForOrderSx").css("display", "none"); 
     	   $("#saleManForOrderSx").dialog('close');
       }
+      function bxsxAddNew() {
+  		
+  		var length = $("#bxsx tr").length - 1;
+  		var str = "tbsx_bxsx[" + length + "].";
+  		var table1 = $('#bxsx');
+  		var row = $("<tr></tr>");
+  		var td1 = $("<td  align='center'>附险" + length + "<input type='hidden' name='" + str + "order' value='"+length+"'></td>");
+  		var td2 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "name'></textarea></td>");
+  		var td3 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "code'></textarea></td>");
+  		var td4 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "bxDate'></textarea></td>");
+  		var td5 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "jfDate'></textarea></td>");
+  		var td6 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "bxMoney'></textarea></td>");
+  		var td7 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "bxFee'></textarea></td>");
+  		var td8 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "zjbf'></textarea></td>");
+  		var td9 = $("<td  align='center'><textarea style='width: 60px; border: 0px; outline:none;' name='" + str + "bfxj'></textarea></td>");
+  		row.append(td1);
+  		row.append(td2);
+  		row.append(td3);
+  		row.append(td4);
+  		row.append(td5);
+  		row.append(td6);
+  		row.append(td7);
+  		row.append(td8);
+  		row.append(td9);
+  		table1.append(row);
+  	}
+  	function tzljAddNew() {
+  		var length = $("#tzlj tr").length / 3;
+  		var str = "tzlj[" + length + "].";
+  		var table = $('#tzlj');
+  		var row = $("<tr></tr>");
+  		var row1 = $("<tr><td align='right' width='220px'>投资账户名称：</td><td align='left'><input name='"+ str + "tzzhmc'></td></tr>");
+  		var row2 = $("<tr><td align='right' width='220px'>分配比例：</td><td align='left'><input name='"+ str + "fpbl'></td></tr>");
+  		var row3 = $("<tr><td align='right' width='220px'>追加保险费分配比例：</td><td align='left'><input name='"+ str + "zjbxfpbl'></td></tr>");
+  		table.append(row1);
+  		table.append(row2);
+  		table.append(row3);
+  	}
+  	function syrClone(){
+  		var syrNum = $('#syrNum').val();
+  		var div = $('#syr');
+  		var str="[" + syrNum + "]";
+  		var table = $("<table class='grid'></table>");
+  		var row1 = $("<tr><td align='right' width='120px'>受益顺序：</td><td align='left'><input style='width: 200px' name='syr"+ str + ".beneficiaryOrder' ></td><td align='right'>受益比例：</td><td align='left'><input style='width: 150px' name='syr" + str + ".beneficialRate' >%</td></tr>");
+  		var row2 = $("<tr><td align='right'>受益人姓名：</td><td align='left'><input style='width: 200px' name='syr"+ str + ".beneficialName' ></td><td align='right'>性别：</td><td align='left'><select name='syr"+ str + ".sex' class='easyui-combobox' style='width:150px;'><option value='男'>男</option><option value='女'>女</option></select></td></tr>");
+  		var row3 = $("<tr><td align='right'>出生日期：</td><td align='left'><input name='syr"+ str + ".birthDate'  type='text' class='easyui-datebox'  style='width:200px;'></td><td align='right'>与被保人关系：</td><td align='left'><select name='syr"+ str + ".relationship' class='easyui-combobox' style='width:150px;'><option value='配偶'>配偶</option><option value='子女'>子女</option><option value='父母'>父母</option><option value='本人'>本人</option></select></td></tr>");
+  		var row4 = $("<tr><td align='right'>证件类型：</td><td align='left'><select name='syr"+ str + ".certType' class='easyui-combobox' style='width:200px;'><option value='身份证'>身份证</option><option value='护照'>护照</option><option value='军人证'>军人证</option><option value='通行证'>通行证</option><option value='户口本'>户口本</option></select></td></tr>");
+  		var row5 = $("<tr><td align='right'>证件号码：</td><td align='left' colspan='3'><input style='width: 300px' name='syr"+ str + ".certNo' ></td></tr>");
+  		var row6 = $("<tr><td align='right'>证件有效期至：</td><td align='left'><input name='syr"+ str + ".validityDate'  type='text' class='easyui-datebox'  style='width:200px;'></td></tr>");
+  		var row7 = $(" <tr><td align='right'>住址：</td><td align='left'><select name='syr"+ str + ".residentialAddress' class='easyui-combobox' style='width:200px;'><option value='同投保人'>同投保人</option><option value='同被保险人'>同被保险人</option><option value='其他'>其他</option></select></td></tr>");
+  		table.append(row1);
+  		table.append(row2);
+  		table.append(row3);
+  		table.append(row4);
+  		table.append(row5);
+  		table.append(row6);
+  		table.append(row7);
+  		div.append(table);
+  		$("input[name='syr"+str+".birthDate']").datebox();
+  		$("input[name='syr"+str+".validityDate']").datebox();
+  		syrNum = syrNum + 1;
+  		$('#syrNum').val(syrNum);
+  	}
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false" >
     <div data-options="region:'center',border:false" title="" style="overflow: auto;padding: 3px;">
@@ -249,6 +312,7 @@
         <input type="hidden" id="policyholderId" name="policyholderId" value="${orderSx.policyholderId }">
         <input type="hidden" id="insuredId" name="insuredId" value="${orderSx.insuredId }">
         <input type="hidden" id="beneficiaryId" name="beneficiaryId" value="${orderSx.beneficiaryId }">
+        <input type="hidden" id="syrNum" value="${syrNum }">
             <div>
 				<div class="ordercx_details">
 					<ul>
@@ -482,60 +546,128 @@
 					</table>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">
-					<table class="grid">
-						<tr>
-							<td align="right" width="120px">受益顺序：</td>
-							<td align="left"><input style="width: 200px" name="beneficiaryOrder" value="${orderSx.beneficiaryOrder }"></td>
-							<td align="right">受益比例：</td>
-							<td align="left"><input style="width: 250px" name="beneficialRate" value="${orderSx.beneficialRate }">%</td>
-						</tr>
-						<tr>
-							<td align="right">受益人姓名：</td>
-							<td align="left"><input style="width: 200px" name="beneficialName" value="${orderSx.beneficialName }"></td>
-							<td align="right">性别：</td>
-							<td align="left">
-								<select name="sexS" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'男',text:'男'},{id:'女',text:'女'}],value:'${orderSx.sexS }'">
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right">出生日期：</td>
-		                    <td align="left"><input name="birthDateS"  type="text" class="easyui-datebox" value="${orderSx.birthDateS }"  style="width:100px;"></td>
-		                    <td align="right">与被保人关系：</td>
-							<td align="left">
-								<select name="relationship" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'${orderSx.relationship }'">
-								</select>
-							</td>
-						</tr>
-						 <tr>
-		                	<td align="right">证件类型：</td>
-							<td align="left">
-								<select name="certTypeS" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'${orderSx.certTypeS }'">
-								</select>
-							</td>
-		                </tr>
-		                <tr>
-							<td align="right">证件号码：</td>
-							<td align="left" colspan="3"><input style="width: 500px" name="certNoS" value="${orderSx.certNoS }"></td>
-						</tr>
-						<tr>
-		                	<td align="right">证件有效期至：</td>
-		                    <td align="left"><input name="validityDateS" value="${orderSx.validityDateS }" type="text" class="easyui-datebox"  style="width:100px;"></td>
-		                </tr>
-		                <tr>
-		                	<td align="right">住址：</td>
-							<td align="left">
-								<select name="residentialAddressS" class="easyui-combobox" style="width:150px;" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'同投保人',text:'同投保人'},{id:'同被保险人',text:'同被保险人'},{id:'其他',text:'其他'}],value:'${orderSx.residentialAddressS }'">
-								</select>
-							</td>
-		                </tr>
-					</table>
+					<div id="syrTable">
+						<input type="hidden" name="syr[0].personId" value="${orderSx.syr[0].personId}">
+						<table class="grid">
+							<tr>
+								<td align="right" width="120px">受益顺序：</td>
+								<td align="left"><input style="width: 200px" name="syr[0].beneficiaryOrder" value="${orderSx.syr[0].beneficiaryOrder }"></td>
+								<td align="right">受益比例：</td>
+								<td align="left"><input style="width: 180px" name="syr[0].beneficialRate" value="${orderSx.syr[0].beneficialRate }">%</td>
+							</tr>
+							<tr>
+								<td align="right">受益人姓名：</td>
+								<td align="left"><input style="width: 200px" name="syr[0].beneficialName" value="${orderSx.syr[0].beneficialName }"></td>
+								<td align="right">性别：</td>
+								<td align="left">
+									<select name="syr[0].sex" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'男',text:'男'},{id:'女',text:'女'}],value:'${orderSx.syr[0].sex }'">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td align="right">出生日期：</td>
+			                    <td align="left"><input name="syr[0].birthDate"  type="text" class="easyui-datebox" value="${orderSx.syr[0].birthDate }" style="width:200px;"></td>
+			                    <td align="right">与被保人关系：</td>
+								<td align="left">
+									<select name="syr[0].relationship" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'${orderSx.syr[0].relationship }'">
+									</select>
+								</td>
+							</tr>
+							 <tr>
+			                	<td align="right">证件类型：</td>
+								<td align="left">
+									<select name="syr[0].certType" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'${orderSx.syr[0].certType }'">
+									</select>
+								</td>
+			                </tr>
+			                <tr>
+								<td align="right">证件号码：</td>
+								<td align="left" colspan="3"><input style="width: 300px" name="syr[0].certNo" value="${orderSx.syr[0].certNo }"></td>
+							</tr>
+							<tr>
+			                	<td align="right">证件有效期至：</td>
+			                    <td align="left"><input name="syr[0].validityDate"  type="text" class="easyui-datebox" value="${orderSx.syr[0].validityDate }" style="width:200px;"></td>
+			                </tr>
+			                <tr>
+			                	<td align="right">住址：</td>
+								<td align="left">
+									<select name="syr[0].residentialAddress" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'同投保人',text:'同投保人'},{id:'同被保险人',text:'同被保险人'},{id:'其他',text:'其他'}],value:'${orderSx.syr[0].residentialAddress }'">
+									</select>
+								</td>
+			                </tr>
+			                <tr>
+			                	<td colspan="4">
+			                	</td>
+			                </tr>
+						</table>
+					</div>
+					<div id="syr">
+						<c:forEach begin="1" end="${orderSx.syr.size()}" var="tbsxBxsx" items="${orderSx.syr}" varStatus="status"> 
+						<input type="hidden" name="syr[${status.index}].personId" value="${orderSx.syr[status.index].personId}">
+						<table class="grid">
+							<tr>
+								<td align="right" width="120px">受益顺序：</td>
+								<td align="left"><input style="width: 200px" name="syr[${status.index}].beneficiaryOrder" value="${orderSx.syr[status.index].beneficiaryOrder }"></td>
+								<td align="right">受益比例：</td>
+								<td align="left"><input style="width: 180px" name="syr[${status.index}].beneficialRate" value="${orderSx.syr[status.index].beneficialRate }">%</td>
+							</tr>
+							<tr>
+								<td align="right">受益人姓名：</td>
+								<td align="left"><input style="width: 200px" name="syr[${status.index}].beneficialName" value="${orderSx.syr[status.index].beneficialName }"></td>
+								<td align="right">性别：</td>
+								<td align="left">
+									<select name="syr[${status.index}].sex" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'男',text:'男'},{id:'女',text:'女'}],value:'${orderSx.syr[status.index].sex }'">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td align="right">出生日期：</td>
+			                    <td align="left"><input name="syr[${status.index}].birthDate"  type="text" class="easyui-datebox" value="${orderSx.syr[status.index].birthDate }" style="width:200px;"></td>
+			                    <td align="right">与被保人关系：</td>
+								<td align="left">
+									<select name="syr[${status.index}].relationship" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'${orderSx.syr[status.index].relationship }'">
+									</select>
+								</td>
+							</tr>
+							 <tr>
+			                	<td align="right">证件类型：</td>
+								<td align="left">
+									<select name="syr[${status.index}].certType" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'${orderSx.syr[status.index].certType }'">
+									</select>
+								</td>
+			                </tr>
+			                <tr>
+								<td align="right">证件号码：</td>
+								<td align="left" colspan="3"><input style="width: 300px" name="syr[${status.index}].certNo" value="${orderSx.syr[status.index].certNo }"></td>
+							</tr>
+							<tr>
+			                	<td align="right">证件有效期至：</td>
+			                    <td align="left"><input name="syr[${status.index}].validityDate"  type="text" class="easyui-datebox" value="${orderSx.syr[status.index].validityDate }" style="width:200px;"></td>
+			                </tr>
+			                <tr>
+			                	<td align="right">住址：</td>
+								<td align="left">
+									<select name="syr[${status.index}].residentialAddress" class="easyui-combobox" style="width:200px;" 
+									data-options="editable:false,valueField:'id',textField:'text',data:[{id:'同投保人',text:'同投保人'},{id:'同被保险人',text:'同被保险人'},{id:'其他',text:'其他'}],value:'${orderSx.syr[status.index].residentialAddress }'">
+									</select>
+								</td>
+			                </tr>
+			                <tr>
+			                	<td colspan="4">
+			                	</td>
+			                </tr>
+						</table>
+						</c:forEach>
+					</div>
 					<div>
-						<input type="button" value="+增加">
+						<input type="button" value="+增加" onclick="syrClone()">
 					</div>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">
@@ -620,48 +752,75 @@
 										<td align="center">保险费<br />小计<br />（元）</td>
 									</tr>
 									<tr>
-										<td align="center">主险</td>
-										<td align="center">
+										<td align="center">主险<input type="hidden" name="tbsx_bxsx[0].order" value="${orderSx.tbsx_bxsx[0].order}">
+											<input type="hidden" name="tbsx_bxsx[0].id" value="${orderSx.tbsx_bxsx[0].id}">
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].name" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].name}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].code" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].code}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].bxDate" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].bxDate}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].jfDate" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].jfDate}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].bxMoney" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].bxMoney}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].bxFee" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].bxFee}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[0].zjbf" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].zjbf}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[0].bfxj" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[0].bfxj}</textarea>
 										</td>
 									</tr>
+									<tr id="a">
+										<td align="center">附险1<input type="hidden" name="tbsx_bxsx[1].order" value="1">
+											<input type="hidden" name="tbsx_bxsx[1].id" value="${orderSx.tbsx_bxsx[1].id}">
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].name" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].name}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].code" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].code}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].bxDate" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].bxDate}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].jfDate" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].jfDate}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].bxMoney" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].bxMoney}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].bxFee" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].bxFee}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].zjbf" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].zjbf}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[1].bfxj" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[1].bfxj}</textarea>
+										</td>
+									</tr>
+									<c:forEach begin="2" end="${orderSx.tbsx_bxsx.size()}" var="tbsxBxsx" items="${orderSx.tbsx_bxsx}" varStatus="status"> 
 									<tr>
-										<td align="center">附险1</td>
-										<td align="center">
+										<td align="center">附险${status.index}<input type="hidden" name="tbsx_bxsx[${status.index}].order" value="${status.index}">
+											<input type="hidden" name="tbsx_bxsx[${status.index}].id" value="${orderSx.tbsx_bxsx[status.index].id}">
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].name" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].name}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].code" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].code}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].bxDate" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].bxDate}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].jfDate" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].jfDate}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].bxMoney" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].bxMoney}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].bxFee" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].bxFee}</textarea>
 										</td>
-										<td align="center">
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].zjbf" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].zjbf}</textarea>
+										</td>
+										<td align="center"><textarea name="tbsx_bxsx[${status.index}].bfxj" style="width: 60px; border: 0px; outline:none;">${orderSx.tbsx_bxsx[status.index].bfxj}</textarea>
 										</td>
 									</tr>
+									</c:forEach>
 								</table>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="button" value="+增加附险"></td>
+							<td><input type="button" value="+增加附险" onclick="bxsxAddNew()"></td>
 						</tr>
 						<tr>
 							<td>保费合计</td>
@@ -730,29 +889,31 @@
 						<tr>
 							<td>
 								<table class="grid">
+								<c:forEach var="tzlj" items="${orderSx.tzlj}" varStatus="status"> 
 									<tr>
 										<td align="right" width="220px">投资账户名称：</td>
 										<td align="left">
-											<input name="tzzhmc" value="${orderSx.tzzhmc }">
+											<input name="tzlj[${status.index}].tzzhmc" value="${tzlj.tzzhmc}">
 										</td>
 									</tr>
 									<tr>
 										<td align="right">分配比例：</td>
 										<td align="left">
-											<input name="fpbl" value="${orderSx.fpbl }">
+											<input name="tzlj[${status.index}].fpbl"  value="${tzlj.fpbl}">
 										</td>
 									</tr>
 									<tr>
 										<td align="right">追加保险费分配比例：</td>
 										<td align="left">
-											<input name="zjbxfpbl" value="${orderSx.zjbxfpbl }">
+											<input name="tzlj[${status.index}].zjbxfpbl"  value="${tzlj.zjbxfpbl}">
 										</td>
 									</tr>
+								</c:forEach>
 								</table>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="button" value="+增加"></td>
+							<td><input type="button" value="+增加" onclick="tzljAddNew()"></td>
 						</tr>
 					</table>
 				</div>

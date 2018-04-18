@@ -40,23 +40,19 @@
                 <tr>
                     <td>证件类型：</td>
                     <td>
-                     <select name="certType" class="easyui-combobox" style="width: 200px">  
-						    <option value="SFZ">身份证</option>  
-						    <option value="HZ">护照</option>  
-						    <option value="JGZ">军官证</option>  
-						    <option value="QT">其它</option>  
+                     <select name="cardType" class="easyui-combobox" style="width: 200px" data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军官证',text:'军官证'},{id:'其他',text:'其他'}],value:'身份证'">  
 						</select>
                     </td>
                 </tr>
                 <tr>
                     <td>证件号码：</td>
-                    <td colspan="3"><input style="width: 390px" name="certNo" type="text" placeholder="请输入证件号码" class="easyui-validatebox span2" data-options="required:true" value=""></td>
+                    <td colspan="3"><input style="width: 390px" name="cardId" type="text" placeholder="请输入证件号码" class="easyui-validatebox span2" data-options="required:true" value=""></td>
                 </tr>
                 <tr>
                     <td>电话：</td>
-                    <td><input name="telphone" type="text" class="easyui-validatebox span2" value=""></td>
+                    <td><input name="telephone" type="text" class="easyui-validatebox span2" value=""></td>
                     <td>手机：</td>
-                    <td><input name="mtelphone" type="text" class="easyui-validatebox span2" value=""></td>
+                    <td><input name="mobilePhone" type="text" class="easyui-validatebox span2" value=""></td>
                 </tr>
                 <tr>
                     <td>Mail：</td>
@@ -66,7 +62,7 @@
                 </tr>
                 <tr>
                     <td>微信号：</td>
-                    <td  colspan="3"><input name="wechat" type="text" class="easyui-validatebox span2" value=""></td>
+                    <td  colspan="3"><input name="wechatNum" type="text" class="easyui-validatebox span2" value=""></td>
                 </tr>
                 <tr>
                     <td>地址：</td>
@@ -74,40 +70,40 @@
 						<div id="city" class="citys">
 		                    <select id="province" name="province"></select>
 		                    <select id="city" name="city"></select>
-		                    <select id="area" name="district"></select>
+		                    <select id="area" name="country"></select>
 			            </div>
-                    	<input style="width: 390px" name="linkaddr" type="text" class="easyui-validatebox span2" value="">
+                    	<input style="width: 390px" name="userAddr" type="text" class="easyui-validatebox span2" value="">
                     </td>
                 </tr>
                 <tr>
                     <td>保险公司：</td>
                     <td  colspan="3">
-                    	<input name="insuranceCompanyId" class="easyui-combobox" data-options="width:180, valueField: 'id', textField: 'insurerName', url: '${path}/mgr/tInsurer/list'"/>
+                    	<input name="insCompany" class="easyui-combobox" data-options="width:180, valueField: 'id', textField: 'insurerName', url: '${path}/mgr/tInsurer/list'"/>
                     </td>
                 </tr>
                 <tr>
                     <td>开户行：</td>
                     <td><input name="bankName" type="text" class="easyui-validatebox span2" value=""></td>
                     <td>开户名称：</td>
-                    <td><input name="bankUserName" type="text" class="easyui-validatebox span2" value=""></td>
+                    <td><input name="bankHost" type="text" class="easyui-validatebox span2" value=""></td>
                 </tr>
                 <tr>
                     <td>银行卡号：</td>
-                    <td  colspan="3"><input style="width: 390px" name="bankNo" type="text" class="easyui-validatebox span2" value=""></td>
+                    <td  colspan="3"><input style="width: 390px" name="bankCard" type="text" class="easyui-validatebox span2" value=""></td>
                 </tr>
                 
                 <tr>
                     <td>状态</td>
                     <td  colspan="3">
                         <select name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0">正常</option>
-                            <option value="1">停用</option>
+                            <option value="01">正常</option>
+                            <option value="02">停用</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>业务员备注</td>
-                    <td colspan="3"><textarea name="comment" style="width: 390px; height: 100px;"></textarea></td>
+                    <td colspan="3"><textarea name="remark" style="width: 390px; height: 100px;"></textarea></td>
                 </tr>
             </table>
         </form>

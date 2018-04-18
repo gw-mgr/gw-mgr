@@ -24,7 +24,7 @@
 	</resultMap>
 	<select id="selectBeneficial" parameterType="com.gewei.model.Beneficial" resultType="Beneficial">
 		SELECT
-			t.person_id as personId,
+			t.person_id as person_id,
 			t.order_id as orderId,
 			t.beneficial_rate as beneficialRate,
 			t.beneficial_name as beneficialName,
@@ -34,7 +34,10 @@
 			t.cert_type as certType,
 			t.cert_no as certNo,
 			t.validity_date as validityDate,
-			t.residential_address as residentialAddress,
+			t.residential_address  as residentialAddress,
+			t.province,
+			t.city,
+			t.country,
 			t.beneficiary_order as beneficiaryOrder,
 			t.create_time as createTime,
 			t.description,
@@ -77,6 +80,9 @@
 		<if test="remark1 != null"> ,remark1=#{remark1}</if>
 		<if test="remark2 != null">, remark2=#{remark2}</if>
 		<if test="remark3 != null">, remark3=#{remark3}</if>
+		<if test="province != null">, province=#{province}</if>
+		<if test="city != null">, city=#{city}</if>
+		<if test="country != null">, country=#{country}</if>
 		where person_id=#{personId}
 	</update>
 </mapper>

@@ -26,7 +26,7 @@
             }
         });
         $("#roleEditStatus").val('${salesMan.status}');
-        $('#city').citys({code:'${salesMan.district}'});
+        $('#city').citys({code:'${salesMan.country}'});
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -35,24 +35,24 @@
             <table class="grid">
                 <tr>
                     <td>姓名：</td>
-                    <td><input name="id" type="hidden"  value="${salesMan.id}">
+                    <td><input name="userId" type="hidden"  value="${salesMan.userId}">
                     <input name="userName" type="text" placeholder="请输入姓名" class="easyui-validatebox span2" data-options="required:true" value="${salesMan.userName}"></td>
                 </tr>
                 <tr>
                     <td>证件类型：</td>
                     <td>
-						<select name="certType" class="easyui-combobox" style="width:200px;" data-options="editable:false,valueField:'id',textField:'text',data:[{id:'SFZ',text:'身份证'},{id:'HZ',text:'护照'},{id:'JGZ',text:'军官证'},{id:'QT',text:'其他'}],value:'${salesMan.certType}'"></select>
+						<select name="cardType" class="easyui-combobox" style="width:200px;" data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军官证',text:'军官证'},{id:'其他',text:'其他'}],value:'${salesMan.cardType}'"></select>
                     </td>
                 </tr>
                 <tr>
                     <td>证件号码：</td>
-                    <td colspan="3"><input style="width: 390px" name="certNo" type="text" placeholder="请输入证件号码" class="easyui-validatebox span2" data-options="required:true" value="${salesMan.certNo}"></td>
+                    <td colspan="3"><input style="width: 390px" name="cardId" type="text" placeholder="请输入证件号码" class="easyui-validatebox span2" data-options="required:true" value="${salesMan.cardId}"></td>
                 </tr>
                 <tr>
                     <td>电话：</td>
-                    <td><input name="telphone" type="text" class="easyui-validatebox span2" value="${salesMan.telphone}"></td>
+                    <td><input name="telephone" type="text" class="easyui-validatebox span2" value="${salesMan.telephone}"></td>
                     <td>手机：</td>
-                    <td><input name="mtelphone" type="text" class="easyui-validatebox span2" value="${salesMan.mtelphone}"></td>
+                    <td><input name="mobilePhone" type="text" class="easyui-validatebox span2" value="${salesMan.mobilePhone}"></td>
                 </tr>
                 <tr>
                     <td>Mail：</td>
@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <td>微信号：</td>
-                    <td><input name="wechat" type="text" class="easyui-validatebox span2" value="${salesMan.wechat}"></td>
+                    <td><input name="wechatNum" type="text" class="easyui-validatebox span2" value="${salesMan.wechatNum}"></td>
                 </tr>
                 <tr>
                     <td>地址：</td>
@@ -70,38 +70,38 @@
 						<div id="city" class="citys">
 		                    <select id="province" name="province"></select>
 		                    <select id="city" name="city"></select>
-		                    <select id="area" name="district"></select>
+		                    <select id="area" name="country"></select>
 						</div>
 						<div style="height: 10px"></div>
-                    	<input style="width: 390px" name="linkaddr" type="text" class="easyui-validatebox span2" value="${salesMan.linkaddr}">
+                    	<input style="width: 390px" name="userAddr" type="text" class="easyui-validatebox span2" value="${salesMan.userAddr}">
                     </td>
                 </tr>
                 <tr>
                     <td>保险公司：</td>
                     <td>
-                    	<input name="insuranceCompanyId" class="easyui-combobox" data-options="width:180, valueField: 'id', textField: 'insurerName', url: '${path}/mgr/tInsurer/list',value:'${salesMan.insuranceCompanyId}'"/>
+                    	<input name="insCompany" class="easyui-combobox" data-options="width:180, valueField: 'id', textField: 'insurerName', url: '${path}/mgr/tInsurer/list',value:'${salesMan.insCompany}'"/>
                     </td>
                 </tr>
                 <tr>
                     <td>开户行：</td>
                     <td><input name="bankName" type="text" class="easyui-validatebox span2" value="${salesMan.bankName}"></td>
                     <td>开户名称：</td>
-                    <td><input name="bankUserName" type="text" class="easyui-validatebox span2" value="${salesMan.bankUserName}"></td>
+                    <td><input name="bankHost" type="text" class="easyui-validatebox span2" value="${salesMan.bankHost}"></td>
                 </tr>
                 <tr>
                     <td>银行卡号：</td>
-                    <td colspan="3"><input style="width: 390px" name="bankNo" type="text" class="easyui-validatebox span2" value="${salesMan.bankNo}"></td>
+                    <td colspan="3"><input style="width: 390px" name="bankCard" type="text" class="easyui-validatebox span2" value="${salesMan.bankCard}"></td>
                 </tr>
                 
                 <tr>
                     <td>状态</td>
                     <td >
-                        <select name="status" class="easyui-combobox" style="width:200px;" data-options="editable:false,valueField:'id',textField:'text',data:[{id:'0',text:'正常'},{id:'1',text:'停用'}],value:'${salesMan.status}'"></select>
+                        <select name="status" class="easyui-combobox" style="width:200px;" data-options="editable:false,valueField:'id',textField:'text',data:[{id:'01',text:'正常'},{id:'02',text:'停用'}],value:'${salesMan.status}'"></select>
                     </td>
                 </tr>
                 <tr>
                     <td>业务员备注</td>
-                    <td colspan="3"><textarea name="comment" style="width: 390px; height: 100px;">${salesMan.comment}</textarea></td>
+                    <td colspan="3"><textarea name="remark" style="width: 390px; height: 100px;">${salesMan.remark}</textarea></td>
                 </tr>
             </table>
         </form>

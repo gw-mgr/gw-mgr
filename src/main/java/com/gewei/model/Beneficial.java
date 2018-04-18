@@ -29,6 +29,12 @@ public class Beneficial extends Model<Beneficial> {
 	private String city;
 	private String country;
 	private String beneficiaryOrder;
+	private String createTime;
+	private String description;
+	private String remark1;
+	private String remark2;
+	private String remark3;
+
 
 	public String getProvince() {
 		return province;
@@ -53,26 +59,7 @@ public class Beneficial extends Model<Beneficial> {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	/**
-	 * 创建时间
-	 */
-	private String createTime;
-	/**
-	 * 备注
-	 */
-	private String description;
-	/**
-	 * 备用字段1
-	 */
-	private String remark1;
-	/**
-	 * 备用字段2
-	 */
-	private String remark2;
-	/**
-	 * 备用字段3
-	 */
-	private String remark3;
+	
 
 	public String getPersonId() {
 		return personId;

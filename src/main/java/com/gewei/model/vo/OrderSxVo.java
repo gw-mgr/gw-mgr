@@ -1,9 +1,7 @@
 package com.gewei.model.vo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.gewei.commons.utils.JsonUtils;
 import com.gewei.model.Beneficial;
 import com.gewei.model.OrderSxBxsx;
@@ -737,6 +735,11 @@ public class OrderSxVo{
 	private String yjzfr;
 	
 	private String shengXiaoRiQi;
+	/**
+     * 投资连结保险填写
+		张三#$#0.03#$#0.03@张四#$#0.04#$#0.04@张五#$#0.05#$#0.05
+     */
+	private String tzljbxtx;
 	
 	private List<TzljForOrderSx> tzlj;
 	
@@ -3332,6 +3335,14 @@ public class OrderSxVo{
 
 	public void setTzlj(List<TzljForOrderSx> tzlj) {
 		this.tzlj = tzlj;
+	}
+
+	public String getTzljbxtx() {
+		return tzljbxtx;
+	}
+
+	public void setTzljbxtx(String tzljbxtx) {
+		this.tzljbxtx = tzljbxtx;
 	}
 
 	@Override

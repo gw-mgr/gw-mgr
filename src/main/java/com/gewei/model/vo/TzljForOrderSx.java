@@ -11,7 +11,7 @@ public class TzljForOrderSx {
 	/**
 	 * 分配比例
 	 */
-	private BigDecimal fpbl;
+	private String fpbl;
 	/**
 	 * 追加保险费分配比例
 	 */
@@ -28,10 +28,10 @@ public class TzljForOrderSx {
 	public void setTzzhmc(String tzzhmc) {
 		this.tzzhmc = tzzhmc;
 	}
-	public BigDecimal getFpbl() {
+	public String getFpbl() {
 		return fpbl;
 	}
-	public void setFpbl(BigDecimal fpbl) {
+	public void setFpbl(String fpbl) {
 		this.fpbl = fpbl;
 	}
 	public String getZjbxfpbl() {
@@ -39,6 +39,11 @@ public class TzljForOrderSx {
 	}
 	public void setZjbxfpbl(String zjbxfpbl) {
 		this.zjbxfpbl = zjbxfpbl;
+	}
+	@Override
+	public String toString() {
+		return "TzljForOrderSx [orderId=" + orderId + ", tzzhmc=" + tzzhmc + ", fpbl=" + fpbl + ", zjbxfpbl=" + zjbxfpbl
+				+ "]";
 	}
 	
 }

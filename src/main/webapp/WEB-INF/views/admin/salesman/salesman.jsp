@@ -12,8 +12,8 @@
         singleSelect : false,
 		selectOnCheck: true,
 		checkOnSelect: true,
-        idField : 'id',
-        sortName : 'id',
+        idField : 'userId',
+        sortName : 'createTime',
         sortOrder : 'asc',
         pageSize : 20,
         pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
@@ -29,13 +29,13 @@
         } , {
             width : '100',
             title : '手机号',
-            field : 'mtelphone',
+            field : 'mobilePhone',
             sortable : true ,
             align : 'center'
         }, {
             width : '100',
             title : '微信号',
-            field : 'wechat' ,
+            field : 'wechatNum' ,
             align : 'center'
         }, {
             width : '80',
@@ -45,12 +45,12 @@
         }, {
             width : '300',
             title : '地址',
-            field : 'linkaddr' ,
+            field : 'userAddr' ,
             align : 'center'
         }, {
             width : '100',
             title : '保险公司',
-            field : 'insuranceCompany' ,
+            field : 'insurerName' ,
             align : 'center'
         }, {
             width : '120',
@@ -64,10 +64,10 @@
             sortable : true, 
             align : 'center',
             formatter : function(value, row) {
-            	if (value == '0'){
+            	if (value == '01'){
 					return '启用';
 				}
-				if (value == '1'){
+				if (value == '02'){
 					return '停用';
 				}
             }
@@ -78,30 +78,30 @@
             width : 200,
             formatter : function(value, row, index) {
                 var str = '';
-                if (row.status == '0'){
+                if (row.status == '01'){
                     <shiro:hasPermission name="/salesman/show">
-              		 str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-show" data-options="plain:true,iconCls:\'fi-layout icon-blue\'" onclick="showSalesManFun(\'{0}\');" >查看</a>', row.id);
+              		 str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-show" data-options="plain:true,iconCls:\'fi-layout icon-blue\'" onclick="showSalesManFun(\'{0}\');" >查看</a>', row.userId);
 	            </shiro:hasPermission>
 	            <shiro:hasPermission name="/salesman/edit">
 	                 str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-         		 	 str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'fi-pencil icon-blue\'" onclick="editSalesManFun(\'{0}\');" >编辑</a>', row.id);
+         		 	 str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'fi-pencil icon-blue\'" onclick="editSalesManFun(\'{0}\');" >编辑</a>', row.userId);
           		</shiro:hasPermission>
 	            <shiro:hasPermission name="/salesman/disable">
 	                str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-	                str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-disable" data-options="plain:true,iconCls:\'fi-x icon-red\'" onclick="disableSalesManFun(\'{0}\');" >停用</a>', row.id);
+	                str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-disable" data-options="plain:true,iconCls:\'fi-x icon-red\'" onclick="disableSalesManFun(\'{0}\');" >停用</a>', row.userId);
 	            </shiro:hasPermission>
 				}
-				if (row.status == '1'){
+				if (row.status == '02'){
 	                <shiro:hasPermission name="/salesman/show">
-              		 str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-show" data-options="plain:true,iconCls:\'fi-layout icon-blue\'" onclick="showSalesManFun(\'{0}\');" >查看</a>', row.id);
+              		 str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-show" data-options="plain:true,iconCls:\'fi-layout icon-blue\'" onclick="showSalesManFun(\'{0}\');" >查看</a>', row.userId);
 	            </shiro:hasPermission>
 	            <shiro:hasPermission name="/salesman/enable">
 	                str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-	                str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-enable" data-options="plain:true,iconCls:\'fi-check icon-red\'" onclick="enableSalesManFun(\'{0}\');" >启用</a>', row.id);
+	                str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-enable" data-options="plain:true,iconCls:\'fi-check icon-red\'" onclick="enableSalesManFun(\'{0}\');" >启用</a>', row.userId);
 	            </shiro:hasPermission>
 	            <shiro:hasPermission name="/salesman/delete">
 		            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-		            str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-del" data-options="plain:true,iconCls:\'fi-x icon-red\'" onclick="deleteSalesManFun(\'{0}\');" >删除</a>', row.id);
+		            str += $.formatString('<a href="javascript:void(0)" class="role-easyui-linkbutton-del" data-options="plain:true,iconCls:\'fi-x icon-red\'" onclick="deleteSalesManFun(\'{0}\');" >删除</a>', row.userId);
 		        </shiro:hasPermission>
 				}
                 return str;
@@ -145,7 +145,7 @@ function addSalesmanFun() {
 function showSalesManFun(id) {
 	if (id == undefined) {
         var rows = salesManDataGrid.datagrid('getSelections');
-        id = rows[0].id;
+        id = rows[0].userId;
     } else {
         salesManDataGrid.datagrid('unselectAll').datagrid('uncheckAll');
     }
@@ -163,7 +163,7 @@ function showSalesManFun(id) {
 function editSalesManFun(id) {
 	if (id == undefined) {
         var rows = salesManDataGrid.datagrid('getSelections');
-        id = rows[0].id;
+        id = rows[0].userId;
     } else {
         salesManDataGrid.datagrid('unselectAll').datagrid('uncheckAll');
     }
@@ -190,9 +190,9 @@ function editSalesManFun(id) {
  function deleteSalesManFun(id) {
      if (id == undefined) {//点击右键菜单才会触发这个
     	 var rows = salesManDataGrid.datagrid('getSelections');
-    	 id = rows[0].id;
+    	 id = rows[0].userId;
          for(j = 1; j < rows.length; j++) {
-        	 id = id + "," + rows[j].id;
+        	 id = id + "," + rows[j].userId;
          }
      } else {//点击操作里面的删除图标会触发这个
          salesManDataGrid.datagrid('unselectAll').datagrid('uncheckAll');
@@ -219,9 +219,9 @@ function editSalesManFun(id) {
   function enableSalesManFun(id) {
       if (id == undefined) {//点击右键菜单才会触发这个
      	 var rows = salesManDataGrid.datagrid('getSelections');
-     	 id = rows[0].id;
+     	 id = rows[0].userId;
           for(j = 1; j < rows.length; j++) {
-         	 id = id + "," + rows[j].id;
+         	 id = id + "," + rows[j].userId;
           }
       } else {//点击操作里面的删除图标会触发这个
           salesManDataGrid.datagrid('unselectAll').datagrid('uncheckAll');
@@ -248,9 +248,9 @@ function editSalesManFun(id) {
    function disableSalesManFun(id) {
        if (id == undefined) {//点击右键菜单才会触发这个
       	 var rows = salesManDataGrid.datagrid('getSelections');
-      	 id = rows[0].id;
+      	 id = rows[0].userId;
            for(j = 1; j < rows.length; j++) {
-          	 id = id + "," + rows[j].id;
+          	 id = id + "," + rows[j].userId;
            }
        } else {//点击操作里面的删除图标会触发这个
            salesManDataGrid.datagrid('unselectAll').datagrid('uncheckAll');
@@ -279,9 +279,9 @@ function editSalesManFun(id) {
 		   if(rows.length==0){
 			  id = "all"; 
 		   }else{
-			   id = rows[0].id;
+			   id = rows[0].userId;
 	           for(j = 1; j < rows.length; j++) {
-	          	 id = id + "," + rows[j].id;
+	          	 id = id + "," + rows[j].userId;
 	           }
 		   }
 	   }
@@ -360,9 +360,11 @@ function salesManSearchFun() {
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'fi-plus fi-print'">批量导出EXCEL</a>
 	</shiro:hasPermission>
+	<!-- 
 	<shiro:hasPermission name="/salesman/add">
 		<a onclick="importSalesmanFun();" href="javascript:void(0);"
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'fi-plus fi-save'">EXCEL导入</a>
 	</shiro:hasPermission>
+	-->
 </div>

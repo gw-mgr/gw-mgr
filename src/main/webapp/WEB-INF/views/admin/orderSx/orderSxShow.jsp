@@ -1,77 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <%@ include file="/commons/head.jsp"%>
+<script type='text/javascript' src='${path }/static/jquery.citys.js'></script>  
 <script type="text/javascript">
     $(function() {
-		$('#province')
-				.combobox(
-						{
-							url : '${path}/mgr/tMerchantManage/chinaAreaList?pId=0',
-							editable : false, //不可编辑状态  
-							cache : false,
-							valueField : 'ID',
-							textField : 'NAME',
-							onHidePanel : function() {
-								var province = $('#province').combobox(
-										'getValue');
-								$('#city').combobox('setValue', '');
-								$("#district").combobox("setValue", '');
-								var country = $('#district').combobox(
-										'getValue');
-								if (province != '') {
-									$
-											.ajax({
-												type : "POST",
-												url : "${path}/mgr/tMerchantManage/chinaAreaList?pId="
-														+ province,
-												cache : false,
-												dataType : "json",
-												success : function(data) {
-													$("#city").combobox(
-															"loadData", data);
-												}
-											});
-								}
-							}
-						});
-		$('#city')
-				.combobox(
-						{
-							editable : false, //不可编辑状态  
-							cache : false,
-							valueField : 'ID',
-							textField : 'NAME',
-							onHidePanel : function() {
-								$("#district").combobox("setValue", '');
-								var city = $('#city').combobox('getValue');
-								if (city != '') {
-									$
-											.ajax({
-												type : "POST",
-												url : "${path}/mgr/tMerchantManage/chinaAreaList?pId="
-														+ city,
-												cache : false,
-												dataType : "json",
-												success : function(data) {
-													$("#district").combobox(
-															"loadData", data);
-												}
-											});
-								}
-							}
-						});
-		$('#district').combobox({
-			editable : false, //不可编辑状态  
-			cache : false,
-			valueField : 'ID',
-			textField : 'NAME',
-			onHidePanel : function() {
-				var str = $('#district').combobox('getText');
-				$("#cregicounty").val(str);
-			}
-		});
-        
-		
+    	$('#city1').citys({code:'${orderSx.pdistrict}'});
+        $('#city2').citys({code:'${orderSx.rdistrict}'});
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false" >
@@ -185,18 +119,13 @@
 							<td align="right"  width="150px">姓名：</td>
 							<td align="left">${orderSx.userName }</td>
 							<td align="right">性别：</td>
-							<td align="left">
-								<select name="sex" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'男',text:'男'},{id:'女',text:'女'}],value:'${orderSx.sex }'">
-								</select>
+							<td align="left">${orderSx.sex }
 							</td>
 						</tr>
 						<tr>
 							<td align="right">婚姻状况：</td>
 							<td align="left">
-								<select name="marryFlag" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'已婚',text:'已婚'},{id:'未婚',text:'未婚'},{id:'离异',text:'离异'},{id:'丧偶',text:'丧偶'}],value:'${orderSx.marryFlag }'">
-								</select>
+								${orderSx.marryFlag }
 							</td>
 							<td align="right">出生日期：</td>
 		                    <td align="left">${orderSx.birthDate }</td>
@@ -204,9 +133,7 @@
 		                <tr>
 		                	<td align="right">证件类型：</td>
 							<td align="left">
-								<select name="certType" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'${orderSx.certType }'">
-								</select>
+								${orderSx.certType }
 							</td>
 		                </tr>
 		                <tr>
@@ -226,32 +153,32 @@
 		                <tr>
 		                	<td align="right">与被保人关系：</td>
 							<td align="left">
-								<select name="insuredRelationship" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'${orderSx.insuredRelationship }'">
-								</select>
+								${orderSx.insuredRelationship }
 							</td>
 							<td align="right">居民类型：</td>
 							<td align="left">
-								<select name="residentType" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'城镇',text:'城镇'},{id:'农村',text:'农村'}],value:'${orderSx.residentType }'">
-								</select>
+								${orderSx.residentType }
 							</td>
 		                </tr>
 		                <tr>
 							<td align="right">通讯地址：</td>
 							<td align="left" colspan="3">
-								<input id="province1" name="pprovince" data-options="required: true" style="width: 120px;" value="${orderSx.pprovince }">
-								<input id="city1" name="pcity" data-options="required: true" style="width: 95px;" value="${orderSx.pcity }">
-								<input id="district1" name="pdistrict" data-options="required: false" style="width: 120px;" value="${orderSx.pdistrict }">
+								<div id="city1" class="citys">
+				                    <select id="province" name="pprovince" style="width: 120px;" disabled="disabled"></select>
+				                    <select id="city" name="pcity" style="width: 120px;" disabled="disabled"></select>
+				                    <select id="area" name="pdistrict" style="width: 120px;" disabled="disabled"></select>
+					            </div>
 								${orderSx.postalAddress }
 							</td>
 						</tr>
 						<tr>
 							<td align="right">现住址：</td>
 							<td align="left" colspan="3">
-								<input id="province2" name="rprovince" data-options="required: true" style="width: 120px;" value="${orderSx.rprovince }">
-								<input id="city2" name="rcity" data-options="required: true" style="width: 95px;" value="${orderSx.rcity }">
-								<input id="district2" name="rdistrict" data-options="required: false" style="width: 120px;" value="${orderSx.rdistrict }">
+								<div id="city2" class="citys">
+				                    <select id="province" name="rprovince" style="width: 120px;" disabled="disabled"></select>
+				                    <select id="city" name="rcity" style="width: 120px;" disabled="disabled"></select>
+				                    <select id="area" name="rdistrict" style="width: 120px;" disabled="disabled"></select>
+					            </div>
 								${orderSx.residentialAddress }
 							</td>
 						</tr>
@@ -284,66 +211,110 @@
 						<tr>
 							<td align="right">与被保人关系：</td>
 							<td align="left">
-								<select name="insuredRelationship" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'${orderSx.insuredRelationship }'">
-								</select>
+								${orderSx.insuredRelationship }
 							</td>
 						</tr>
 					</table>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">
 					<table class="grid">
-						<tr>
-							<td align="right" width="120px">受益顺序：</td>
-							<td align="left">${orderSx.beneficiaryOrder }</td>
-							<td align="right">受益比例：</td>
-							<td align="left">${orderSx.beneficialRate }%</td>
-						</tr>
-						<tr>
-							<td align="right">受益人姓名：</td>
-							<td align="left">${orderSx.beneficialName }</td>
-							<td align="right">性别：</td>
-							<td align="left">
-								<select name="sexS" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'男',text:'男'},{id:'女',text:'女'}],value:'${orderSx.sexS }'">
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right">出生日期：</td>
-		                    <td align="left">${orderSx.birthDateS }</td>
-		                    <td align="right">与被保人关系：</td>
-							<td align="left">
-								<select name="relationship" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'配偶',text:'配偶'},{id:'子女',text:'子女'},{id:'父母',text:'父母'},{id:'本人',text:'本人'},{id:'其他',text:'其他'}],value:'${orderSx.relationship }'">
-								</select>
-							</td>
-						</tr>
-						 <tr>
-		                	<td align="right">证件类型：</td>
-							<td align="left">
-								<select name="certTypeS" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'身份证',text:'身份证'},{id:'护照',text:'护照'},{id:'军人证',text:'军人证'},{id:'通行证',text:'通行证'},{id:'户口本',text:'户口本'}],value:'${orderSx.certTypeS }'">
-								</select>
-							</td>
-		                </tr>
-		                <tr>
-							<td align="right">证件号码：</td>
-							<td align="left" colspan="3">${orderSx.certNoS }</td>
-						</tr>
-						<tr>
-		                	<td align="right">证件有效期至：</td>
-		                    <td align="left">${orderSx.validityDateS }</td>
-		                </tr>
-		                <tr>
-		                	<td align="right">住址：</td>
-							<td align="left">
-								<select name="residentialAddressS" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-								data-options="editable:false,valueField:'id',textField:'text',data:[{id:'同投保人',text:'同投保人'},{id:'同被保险人',text:'同被保险人'},{id:'其他',text:'其他'}],value:'${orderSx.residentialAddressS }'">
-								</select>
-							</td>
-		                </tr>
-					</table>
+							<tr>
+								<td align="right" width="120px">受益顺序：</td>
+								<td align="left">${orderSx.syr[0].beneficiaryOrder }
+								<td align="right">受益比例：</td>
+								<td align="left">${orderSx.syr[0].beneficialRate }%
+							</tr>
+							<tr>
+								<td align="right">受益人姓名：</td>
+								<td align="left">${orderSx.syr[0].beneficialName }
+								<td align="right">性别：</td>
+								<td align="left">
+									${orderSx.syr[0].sex }
+								</td>
+							</tr>
+							<tr>
+								<td align="right">出生日期：</td>
+			                    <td align="left">${orderSx.syr[0].birthDate }</td>
+			                    <td align="right">与被保人关系：</td>
+								<td align="left">
+									${orderSx.syr[0].relationship }
+								</td>
+							</tr>
+							 <tr>
+			                	<td align="right">证件类型：</td>
+								<td align="left">
+									${orderSx.syr[0].certType }
+								</td>
+			                </tr>
+			                <tr>
+								<td align="right">证件号码：</td>
+								<td align="left" colspan="3">${orderSx.syr[0].certNo }</td>
+							</tr>
+							<tr>
+			                	<td align="right">证件有效期至：</td>
+			                    <td align="left">${orderSx.syr[0].validityDate }</td>
+			                </tr>
+			                <tr>
+			                	<td align="right">住址：</td>
+								<td align="left">
+									${orderSx.syr[0].residentialAddress }
+								</td>
+			                </tr>
+			                <tr>
+			                	<td colspan="4">
+			                	</td>
+			                </tr>
+						</table>
+						<c:forEach begin="1" end="${orderSx.syr.size()}" var="tbsxBxsx" items="${orderSx.syr}" varStatus="status"> 
+						<table class="grid">
+							<tr>
+								<td align="right" width="120px">受益顺序：</td>
+								<td align="left">${orderSx.syr[status.index].beneficiaryOrder }</td>
+								<td align="right">受益比例：</td>
+								<td align="left">${orderSx.syr[status.index].beneficialRate }%</td>
+							</tr>
+							<tr>
+								<td align="right">受益人姓名：</td>
+								<td align="left">${orderSx.syr[status.index].beneficialName }</td>
+								<td align="right">性别：</td>
+								<td align="left">
+									${orderSx.syr[status.index].sex }
+								</td>
+							</tr>
+							<tr>
+								<td align="right">出生日期：</td>
+			                    <td align="left">${orderSx.syr[status.index].birthDate }</td>
+			                    <td align="right">与被保人关系：</td>
+								<td align="left">
+									${orderSx.syr[status.index].relationship }
+								</td>
+							</tr>
+							 <tr>
+			                	<td align="right">证件类型：</td>
+								<td align="left">
+									${orderSx.syr[status.index].certType }
+								</td>
+			                </tr>
+			                <tr>
+								<td align="right">证件号码：</td>
+								<td align="left" colspan="3">${orderSx.syr[status.index].certNo }</td>
+							</tr>
+							<tr>
+			                	<td align="right">证件有效期至：</td>
+			                    <td align="left">${orderSx.syr[status.index].validityDate }</td>
+			                </tr>
+			                <tr>
+			                	<td align="right">住址：</td>
+								<td align="left">
+							${orderSx.syr[status.index].residentialAddress }
+								</td>
+			                </tr>
+			                <tr>
+			                	<td colspan="4">
+			                	</td>
+			                </tr>
+						</table>
+						</c:forEach>
 				</div>
 				<div class="sxtablelist sxhidedomdiv sxshowsss">
 					<table class="grid">
@@ -356,33 +327,25 @@
 									<tr>
 										<td align="right" width="220px">缴费频率：</td>
 										<td align="left">
-											<select name="jfpl" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'年交',text:'年交'},{id:'趸交',text:'趸交'},{id:'月交（月交首付需交纳2个月保险费）',text:'月交（月交首付需交纳2个月保险费）'},{id:'其他',text:'其他'}],value:'${orderSx.jfpl }'">
-											</select>
+										${orderSx.jfpl }
 										</td>
 									</tr>
 									<tr>
 										<td align="right">保险费自动垫交选择：</td>
 										<td align="left">
-											<select name="sfzdxj" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'是',text:'是'},{id:'否',text:'否'}],value:'${orderSx.sfzdxj }'">
-											</select>
+											${orderSx.sfzdxj }
 										</td>
 									</tr>
 									<tr>
 										<td align="right">首期保费支付方式：</td>
 										<td align="left">
-											<select name="sqjffs" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'银行转账',text:'银行转账'},{id:'其他',text:'其他'}],value:'${orderSx.sqjffs }'">
-											</select>
+											${orderSx.sqjffs }
 										</td>
 									</tr>
 									<tr>
 										<td align="right">续期保费支付方式：</td>
 										<td align="left">
-											<select name="xqjffs" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'银行转账',text:'银行转账'},{id:'其他',text:'其他'}],value:'${orderSx.xqjffs }'">
-											</select>
+											${orderSx.xqjffs }
 										</td>
 									</tr>
 								</table>
@@ -427,43 +390,67 @@
 										<td align="center">保险费<br />小计<br />（元）</td>
 									</tr>
 									<tr>
-										<td align="center">主险</td>
-										<td align="center">
+										<td align="center">主险
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].name}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].code}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].bxDate}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].jfDate}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].bxMoney}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].bxFee}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[0].zjbf}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[0].bfxj}
 										</td>
 									</tr>
+									<tr id="a">
+										<td align="center">附险1
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].name}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].code}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].bxDate}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].jfDate}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].bxMoney}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].bxFee}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].zjbf}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[1].bfxj}
+										</td>
+									</tr>
+									<c:forEach begin="2" end="${orderSx.tbsx_bxsx.size()}" var="tbsxBxsx" items="${orderSx.tbsx_bxsx}" varStatus="status"> 
 									<tr>
-										<td align="center">附险1</td>
-										<td align="center">
+										<td align="center">附险${status.index}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].name}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].code}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].bxDate}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].jfDate}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].bxMoney}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].bxFee}
 										</td>
-										<td align="center">
+										<td align="center">${orderSx.tbsx_bxsx[status.index].zjbf}
+										</td>
+										<td align="center">${orderSx.tbsx_bxsx[status.index].bfxj}
 										</td>
 									</tr>
+									</c:forEach>
 								</table>
 							</td>
 						</tr>
@@ -479,9 +466,7 @@
 									<tr>
 										<td align="right" width="220px">红利领取方式：</td>
 										<td align="left">
-											<select name="hllqfs" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'累计生息',text:'累计生息'},{id:'现金领取',text:'现金领取'},{id:'红利转万能险账户',text:'红利转万能险账户'},{id:'抵交保险费',text:'抵交保险费'},{id:'其他',text:'其他'}],value:'${orderSx.hllqfs }'">
-											</select>
+											${orderSx.hllqfs }
 										</td>
 									</tr>
 								</table>
@@ -496,33 +481,25 @@
 									<tr>
 										<td align="right" width="220px">领取年龄：</td>
 										<td align="left">
-											<select name="hllqnl" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'50岁',text:'50岁'},{id:'55岁',text:'55岁'},{id:'60岁',text:'60岁'},{id:'65岁',text:'65岁'},{id:'其他',text:'其他'}],value:'${orderSx.hllqnl }'">
-											</select>
+											${orderSx.hllqnl }
 										</td>
 									</tr>
 									<tr>
 										<td align="right" width="220px">领取方式：</td>
 										<td align="left">
-											<select name="lqfs" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'年领',text:'年领'},{id:'月领',text:'月领'},{id:'其他',text:'其他'}],value:'${orderSx.lqfs }'">
-											</select>
+											${orderSx.lqfs }
 										</td>
 									</tr>
 									<tr>
 										<td align="right" width="220px">领取类型：</td>
 										<td align="left">
-											<select name="hllqlx" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'平准年金',text:'平准年金'},{id:'增额年金',text:'增额年金'},{id:'其他',text:'其他'}],value:'${orderSx.hllqlx }'">
-											</select>
+											${orderSx.hllqlx }
 										</td>
 									</tr>
 									<tr>
 										<td align="right" width="220px">自动支付保险费选择：</td>
 										<td align="left">
-											<select name="sfzdzf" class="easyui-combobox" style="width:150px;" readonly="readonly" 
-											data-options="editable:false,valueField:'id',textField:'text',data:[{id:'是',text:'是'},{id:'否',text:'否'}],value:'${orderSx.sfzdzf }'">
-											</select>
+											${orderSx.sfzdzf }
 										</td>
 									</tr>
 								</table>
@@ -534,24 +511,26 @@
 						<tr>
 							<td>
 								<table class="grid">
+									<c:forEach var="tzlj" items="${orderSx.tzlj}" varStatus="status"> 
 									<tr>
 										<td align="right" width="220px">投资账户名称：</td>
 										<td align="left">
-											${orderSx.tzzhmc }
+											<input name="tzlj[${status.index}].tzzhmc" value="${tzlj.tzzhmc}">
 										</td>
 									</tr>
 									<tr>
 										<td align="right">分配比例：</td>
 										<td align="left">
-											${orderSx.fpbl }
+											<input name="tzlj[${status.index}].fpbl"  value="${tzlj.fpbl}">
 										</td>
 									</tr>
 									<tr>
 										<td align="right">追加保险费分配比例：</td>
 										<td align="left">
-											${orderSx.zjbxfpbl }
+											<input name="tzlj[${status.index}].zjbxfpbl"  value="${tzlj.zjbxfpbl}">
 										</td>
 									</tr>
+								</c:forEach>
 								</table>
 							</td>
 						</tr>
@@ -1095,50 +1074,46 @@
 						<tr>
 							<td align="right">保险公司：</td>
 							<td align="left">
-							<input name="insuranceCompanyId" class="easyui-combobox" value="${orderSx.insuranceCompanyId }" data-options="width:180, valueField: 'id', textField: 'insurerName', url: '${path}/mgr/tInsurer/list'"/>
+							<input name="insuranceCompanyId" disabled="disabled" class="easyui-combobox" value="${orderSx.insuranceCompanyId }" data-options="width:180, valueField: 'id', textField: 'insurerName', url: '${path}/mgr/tInsurer/list'"/>
 							<input name="insuranceCompany" type="hidden" value="${orderSx.insuranceCompany }"> 
 							</td>
 							<td align="right">保险公司报案电话：</td>
 							<td align="left">
-							<input style="width: 180px" name="insuranceCompanyTel" value="${orderSx.insuranceCompanyTel }"></td>
+							${orderSx.insuranceCompanyTel }</td>
 						</tr>
 						<tr>
 							<td align="right">出单渠道：</td>
 							<td align="left">
-								<input name="operator" class="easyui-combobox" value="${orderSx.operator }" data-options="width:180, valueField: 'id', textField: 'name', url: '${path}/mgr/fuser/list'"/>
+								<input name="operator" disabled="disabled" disclass="easyui-combobox" value="${orderSx.operator }" data-options="width:180, valueField: 'id', textField: 'name', url: '${path}/mgr/fuser/list'"/>
 							</td>
 							<td align="right">投保方式：</td>
-							<td align="left"><input name="tbfs" class="easyui-combobox" value="${orderSx.tbfs }" data-options="width:180, valueField: 'id', textField: 'name', url: '${path}/mgr/parameter/list?type=01'"/></td>
+							<td align="left"><input name="tbfs" class="easyui-combobox" value="${orderSx.tbfs }" data-options="width:180, valueField: 'id', textField: 'name', url: '${path}/mgr/parameter/list?type=01'" disabled="disabled"/></td>
 						</tr>
 						<tr>
 							<td align="right">净主险：</td>
-							<td align="left"><input style="width: 130px" class="easyui-numberbox" value="${orderSx.jzx }" data-options="min:0,precision:2" id="jzx" name="jzx" >
-								<a href="javascript:void(0);" class="easyui-linkbutton"  onclick="zxbfFun();">工具</a>
+							<td align="left">${orderSx.jzx }
 							</td>
 							<td align="right">主险税：</td>
-							<td align="left"><input style="width: 180px" class="easyui-numberbox" value="${orderSx.zxs }" data-options="min:0,precision:2" id="zxs" name="zxs" ></td>
+							<td align="left">${orderSx.zxs }</td>
 						</tr>
 						<tr>
 							<td align="right">净附险1：</td>
-							<td align="left"><input style="width: 130px" class="easyui-numberbox" value="${orderSx.jfx1 }" data-options="min:0,precision:2" id="jfx1" name="jfx1">
-								<a href="javascript:void(0);" class="easyui-linkbutton"  onclick="jfx1Fun();">工具</a>
+							<td align="left">${orderSx.jfx1 }
 							</td>
 							<td align="right">附险1税：</td>
-							<td align="left"><input style="width: 180px" class="easyui-numberbox" value="${orderSx.fxs1 }" data-options="min:0,precision:2" id="fxs1" name="fxs1"></td>
+							<td align="left">${orderSx.fxs1 }</td>
 						</tr>
 						<tr>
 							<td align="right">净附险2：</td>
-							<td align="left"><input style="width: 130px" class="easyui-numberbox" value="${orderSx.jfx2 }" data-options="min:0,precision:2" id="jfx2" name="jfx2">
-								<a href="javascript:void(0);" class="easyui-linkbutton"  onclick="jfx2Fun();">工具</a>
+							<td align="left">${orderSx.jfx2 }
 							</td>
 							<td align="right">附险2税：</td>
-							<td align="left"><input style="width: 180px" class="easyui-numberbox" value="${orderSx.fxs2 }" data-options="min:0,precision:2" id="fxs2" name="fxs2"></td>
+							<td align="left">${orderSx.fxs2 }</td>
 						</tr>
 						<tr>
 							<td align="right">业务员：</td>
-							<td align="left"><input id="salesManSx" name="salesMan" type="hidden" value="${orderSx.salesMan }">
-	                    	<input id="salesManNameSx" name="salesManName" value="${orderSx.salesManName }" type="text" readonly="readonly" placeholder="请选择业务员">
-	                    	<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'fi-magnifying-glass',plain:true" onclick="saleManForOrderSxCheckFun();">选择</a></td>
+							<td align="left">
+	                    	${orderSx.salesManName }
 							<td align="right">佣金支付对象：</td>
 							<td align="left"><select name="yjzfdx" class="easyui-combobox" style="width: 180px">  
 							    <option value="01">业务员</option>  
@@ -1147,48 +1122,47 @@
 						</tr>
 						<tr>
 							<td align="right">主险佣金比例：</td>
-							<td align="left"><input style="width: 180px" name="zxyjbl" class="easyui-numberbox" value="${orderSx.zxyjbl }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.zxyjbl }</td>
 							<td align="right">主线佣金金额：</td>
-							<td align="left"><input style="width: 180px" name="zxyjje" class="easyui-numberbox" value="${orderSx.zxyjje }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.zxyjje }</td>
 						</tr>
 						<tr>
 							<td align="right">附险1佣金比例：</td>
-							<td align="left"><input style="width: 180px" name="fxyjbl1" class="easyui-numberbox" value="${orderSx.fxyjbl1 }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.fxyjbl1 }</td>
 							<td align="right">附险1佣金金额：</td>
-							<td align="left"><input style="width: 180px" name="fxyjje1" class="easyui-numberbox" value="${orderSx.fxyjje1 }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.fxyjje1 }</td>
 						</tr>
 						<tr>
 							<td align="right">附险2佣金比例：</td>
-							<td align="left"><input style="width: 180px" name="fxyjbl2" class="easyui-numberbox" value="${orderSx.fxyjbl2 }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.fxyjbl2 }</td>
 							<td align="right">附险2佣金金额：</td>
-							<td align="left"><input style="width: 180px" name="fxyjje2" class="easyui-numberbox" value="${orderSx.fxyjje2 }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.fxyjje2 }</td>
 						</tr>
 						<tr>
 							<td align="right">综合金融奖比例：</td>
-							<td align="left"><input style="width: 180px" name="zhjrjbl" class="easyui-numberbox" value="${orderSx.zhjrjbl }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.zhjrjbl }</td>
 							<td align="right">综合金融奖金额：</td>
-							<td align="left"><input style="width: 180px" name="zhjrjje" class="easyui-numberbox" value="${orderSx.zhjrjje }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.zhjrjje }</td>
 						</tr>
 						
 						<tr>
 							<td align="right">保险公司短期激励：</td>
-							<td align="left"><input style="width: 180px" name="bxgsdqjl" class="easyui-numberbox" value="${orderSx.bxgsdqjl }" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.bxgsdqjl }</td>
 							<td align="right">是否有礼品：</td>
 							<td align="left"><input type="radio" name="sfylp" class="easyui-validatebox" value="01">否
         				        <input type="radio" name="sfylp" class="easyui-validatebox" value="02">是</td>
 						</tr>
 						<tr>
 							<td align="right">礼品内容：</td>
-							<td align="left" colspan="3"><input style="width: 500px" name="lpnr" value="${orderSx.lpnr }"></td>
+							<td align="left" colspan="3">${orderSx.lpnr }
 						</tr>
 						<tr>
 							<td align="right">录单员ID：</td>
 							<td align="left">
-								<input style="width: 180px; border: 0px;outline:none;" name="recorderName" value="${recorderName }">
-								<input type="hidden" name="recorder" value="${recorder }">
+								${recorderName }
 							</td>
 							<td align="right">录单员佣金：</td>
-							<td align="left"><input style="width: 180px" name="recordertc" value="${orderSx.recordertc }" class="easyui-numberbox" value="" data-options="min:0,precision:2"></td>
+							<td align="left">${orderSx.recordertc }</td>
 						</tr>
 					</table>
 				</div>

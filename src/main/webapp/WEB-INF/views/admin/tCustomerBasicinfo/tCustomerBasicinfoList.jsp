@@ -68,7 +68,7 @@
             }
         } ] ],
         onLoadSuccess:function(data){
-            $('.tCustomerBasicinfo-easyui-linkbutton-show').linkbutton({text:'编辑'});
+            $('.tCustomerBasicinfo-easyui-linkbutton-show').linkbutton({text:'查看'});
             $('.tCustomerBasicinfo-easyui-linkbutton-del').linkbutton({text:'删除'});
         },
         toolbar : '#tCustomerBasicinfoToolbar'

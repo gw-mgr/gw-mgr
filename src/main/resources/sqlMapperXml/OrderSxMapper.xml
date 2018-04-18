@@ -180,7 +180,52 @@
 		<result column="SJZFYJ" property="sjzfyj" />
 		<result column="YJZFSJ" property="yjzfsj" />
 		<result column="YJZFR" property="yjzfr" />
+		<collection property="tbsx_bxsx" ofType="OrderSxBxsx" select="getBxsxs" column="ORDER_ID"></collection>
+		<collection property="syr" ofType="Beneficial" select="getSyr" column="ORDER_ID"></collection>
 	</resultMap>
+	<select id="getBxsxs" parameterType="String" resultType="OrderSxBxsx">  
+        SELECT
+			t.id,
+			t.order_id as orderId,
+			t.`order`,
+			t.`name`,
+			t.`code`,
+			t.bx_date as bxDate,
+			t.jf_date as jfDate,
+			t.bx_money as bxMoney,
+			t.bx_fee as bxFee,
+			t.zjbf,
+			t.bfxj
+			FROM
+			order_sx_bxsx t  
+        where ORDER_ID = #{ORDER_ID}  
+    </select>
+    <select id="getSyr" parameterType="String" resultType="Beneficial">  
+        SELECT
+			t.person_id as person_id,
+			t.order_id as orderId,
+			t.beneficial_rate as beneficialRate,
+			t.beneficial_name as beneficialName,
+			t.sex,
+			t.birth_date as birthDate,
+			t.relationship,
+			t.cert_type as certType,
+			t.cert_no as certNo,
+			t.validity_date as validityDate,
+			t.residential_address  as residentialAddress,
+			t.province,
+			t.city,
+			t.country,
+			t.beneficiary_order as beneficiaryOrder,
+			t.create_time as createTime,
+			t.description,
+			t.remark1,
+			t.remark2,
+			t.remark3
+			FROM
+			beneficial t  
+        where ORDER_ID = #{ORDER_ID}  
+    </select>
 	<select id="selectPage" resultType="Map">
 		SELECT
 			t.ORDER_ID AS orderId,

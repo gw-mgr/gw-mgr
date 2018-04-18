@@ -32,48 +32,119 @@
 		<result column="REMARK" property="remark" />
 		<result column="REMARK2" property="remark2" />
 	</resultMap>
-<select id="selectPage" resultType="Map">
-        SELECT
-		t.USER_ID as userId,
-		t.USER_NAME as userName,
-		t.TELEPHONE as telephone,
-		t.MOBILE_PHONE as mobilePhone,
-		t.MERCHANT_ID as merchantId,
-		t.SEX as sex,
-		t.CARD_TYPE as cardType,
-		t.CARD_ID as cardId,
-		t.MAIL as mail,
-		t.QQ as qq,
-		t.WECHAT_NUM as wechatNum,
-		t.WECHAT_NAME as wechatName,
-		t.PROVINCE as province,
-		t.CITY as city,
-		t.COUNTRY as country,
-		t.USER_ADDR as userAddr,
-		t.INS_COMPANY as insCompany,
-		t.BANK_NAME as bankName,
-		t.BANK_HOST as bankHost,
-		t.BANK_CARD as bankCard,
-		t.CREATE_TIME as createTime,
-		t.UPDATE_TIME as updateTime,
-		t.STATUS as status,
-		t.RECOMMENDER as recommender,
-		t.DIR_RECOMMENDER as dirRecommender,
-		t.REMARK as remark,
-		t.REMARK2 as remark2
-		FROM
-		t_member_basicinfo t
+	<select id="selectPage" resultType="Map">
+	        SELECT
+			t.USER_ID as userId,
+			t.USER_NAME as userName,
+			t.TELEPHONE as telephone,
+			t.MOBILE_PHONE as mobilePhone,
+			t.MERCHANT_ID as merchantId,
+			t.SEX as sex,
+			t.CARD_TYPE as cardType,
+			t.CARD_ID as cardId,
+			t.MAIL as mail,
+			t.QQ as qq,
+			t.WECHAT_NUM as wechatNum,
+			t.WECHAT_NAME as wechatName,
+			p.NAME as province,
+			c.NAME as city,
+			u.NAME as country,
+			t.USER_ADDR as userAddr,
+			t.INS_COMPANY as insCompany,
+			t.BANK_NAME as bankName,
+			t.BANK_HOST as bankHost,
+			t.BANK_CARD as bankCard,
+			t.CREATE_TIME as createTime,
+			t.UPDATE_TIME as updateTime,
+			t.STATUS as status,
+			t.RECOMMENDER as recommender,
+			t.DIR_RECOMMENDER as dirRecommender,
+			t.REMARK as remark,
+			t.REMARK2 as remark2,
+			i.INSURER_NAME as insurerName
+			FROM
+			t_member_basicinfo t
+			LEFT JOIN t_china_area c on c.id = t.city
+			LEFT JOIN t_china_area p on p.id = t.PROVINCE
+			LEFT JOIN t_china_area u on u.id = t.COUNTRY
+			LEFT JOIN t_insurer i on i.id = t.INS_COMPANY
         <where>
+        	<![CDATA[ t.STATUS <> '03' ]]>
             <if test=" user_name != null and user_name != '' ">
-                t.user_name like CONCAT('%',#{user_name},'%' )
+                and t.user_name like CONCAT('%',#{user_name},'%' )
             </if>
             <if test=" mtelphone != null and mtelphone != '' ">
-                t.mobile_phone = #{mtelphone}
+                and t.mobile_phone = #{mtelphone}
             </if>
             <if test=" wechat != null and wechat != '' ">
-                t.wechat_num = #{wechat} 
+                and t.wechat_num = #{wechat} 
             </if>
         </where>
         GROUP BY t.USER_ID
     </select>
+    <select id="selectById" resultType="TMemberBasicinfo">
+    	SELECT
+			t.USER_ID as userId,
+			t.USER_NAME as userName,
+			t.TELEPHONE as telephone,
+			t.MOBILE_PHONE as mobilePhone,
+			t.MERCHANT_ID as merchantId,
+			t.SEX as sex,
+			t.CARD_TYPE as cardType,
+			t.CARD_ID as cardId,
+			t.MAIL as mail,
+			t.QQ as qq,
+			t.WECHAT_NUM as wechatNum,
+			t.WECHAT_NAME as wechatName,
+			t.PROVINCE as province,
+			t.CITY as city,
+			t.COUNTRY as country,
+			t.USER_ADDR as userAddr,
+			t.INS_COMPANY as insCompany,
+			t.BANK_NAME as bankName,
+			t.BANK_HOST as bankHost,
+			t.BANK_CARD as bankCard,
+			t.CREATE_TIME as createTime,
+			t.UPDATE_TIME as updateTime,
+			t.STATUS as status,
+			t.RECOMMENDER as recommender,
+			t.DIR_RECOMMENDER as dirRecommender,
+			t.REMARK as remark,
+			t.REMARK2 as remark2
+			FROM
+			t_member_basicinfo t
+        <where>
+            t.USER_ID=#{id}
+        </where>
+    </select>
+    <update id="updateById" parameterType="TMemberBasicinfo">
+	 update t_member_basicinfo set 
+	 	<if test="userName != null"> USER_NAME=#{userName}</if>
+		<if test="telephone != null">, TELEPHONE=#{telephone}</if>
+		<if test="mobilePhone != null">, MOBILE_PHONE=#{mobilePhone}</if>
+		<if test="merchantId != null">, MERCHANT_ID=#{merchantId}</if>
+		<if test="sex != null"> ,SEX=#{sex}</if>
+		<if test="mail != null">, MAIL=#{mail}</if>
+		<if test="qq != null">, QQ=#{qq}</if>
+		<if test="cardType != null"> ,CARD_TYPE=#{cardType}</if>
+		<if test="cardId != null">, CARD_ID=#{cardId}</if>
+		<if test="wechatNum != null">, WECHAT_NUM=#{wechatNum}</if>
+		<if test="wechatName != null">, WECHAT_NAME=#{wechatName}</if>
+		<if test="province != null">, PROVINCE=#{province}</if>
+		<if test="city != null">,CITY=#{city}</if>
+		<if test="country != null">,COUNTRY=#{country}</if>
+		<if test="userAddr != null">,USER_ADDR=#{userAddr}</if>
+		<if test="insCompany != null">,INS_COMPANY=#{insCompany}</if>
+		<if test="bankName != null">,BANK_NAME=#{bankName}</if>
+		<if test="bankHost != null">,BANK_HOST=#{bankHost}</if>
+		<if test="bankCard != null">,BANK_CARD=#{bankCard}</if>
+		<if test="createTime != null">,CREATE_TIME=#{createTime}</if>
+		<if test="updateTime != null">,UPDATE_TIME=#{updateTime}</if>
+		<if test="status != null">,STATUS=#{status}</if>
+		<if test="recommender != null">,RECOMMENDER=#{recommender}</if>
+		<if test="dirRecommender != null">,DIR_RECOMMENDER=#{dirRecommender}</if>
+		<if test="remark != null">,REMARK=#{remark}</if>
+		<if test="remark2 != null">,REMARK2=#{remark2}</if>
+		where USER_ID=#{userId}
+	</update>
 </mapper>

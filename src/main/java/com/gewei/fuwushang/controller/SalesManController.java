@@ -11,6 +11,9 @@ import javax.validation.Valid;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +27,15 @@ import com.gewei.commons.base.BaseController;
 import com.gewei.commons.report.excel.EasyExcel;
 import com.gewei.commons.result.PageInfo;
 import com.gewei.commons.utils.BeanUtils;
+import com.gewei.commons.utils.DateUtil;
 import com.gewei.commons.utils.StringUtils;
-import com.gewei.fuwushang.service.ISalesManService;
-import com.gewei.model.SalesMan;
+import com.gewei.fuwushang.service.ITInsurerService;
+import com.gewei.fuwushang.service.IUserService;
+import com.gewei.model.TInsurer;
+import com.gewei.model.TMemberBasicinfo;
 import com.gewei.model.excel.SalesManExcel;
-import com.google.gson.Gson;
+import com.gewei.model.vo.UserVo;
+import com.gewei.wx.service.ITMemberBasicinfoService;
 
 /**
  * 业务员管理
@@ -44,8 +51,11 @@ import com.google.gson.Gson;
 public class SalesManController extends BaseController {
 
 	@Autowired
-	private ISalesManService salesManService;
-
+	private ITMemberBasicinfoService salesManService;
+	@Autowired
+	private ITInsurerService insurerService;
+    @Autowired 
+    private IUserService userService;
 	/**
 	 * 权限管理页
 	 *
@@ -105,8 +115,16 @@ public class SalesManController extends BaseController {
 	 */
 	@PostMapping("/add")
 	@ResponseBody
-	public Object add(@Valid SalesMan salesMan) {
-		salesMan.setCreateTime(new Date());
+	public Object add(@Valid TMemberBasicinfo salesMan) {
+		salesMan.setUserId(StringUtils.getUUId());
+		Subject currentUser = SecurityUtils.getSubject();
+        PrincipalCollection collection = currentUser.getPrincipals();
+        if (null != collection) {
+            String loginName = collection.getPrimaryPrincipal().toString();
+            UserVo userVo = userService.selectUserVoByLoginName(loginName);
+            salesMan.setMerchantId(userVo.getOrganizationId());
+        }
+		salesMan.setCreateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
 		salesManService.insert(salesMan);
 		return renderSuccess("添加成功！");
 	}
@@ -123,10 +141,14 @@ public class SalesManController extends BaseController {
 		if (id.indexOf(",") > 0) {
 			String arr[] = id.split(",");
 			for (String str : arr) {
-				salesManService.deleteById(Long.valueOf(str));
+				TMemberBasicinfo salesMan = salesManService.selectById(str);
+				salesMan.setStatus("03");
+				salesManService.updateById(salesMan);
 			}
 		} else {
-			salesManService.deleteById(Long.valueOf(id));
+			TMemberBasicinfo salesMan = salesManService.selectById(id);
+			salesMan.setStatus("03");
+			salesManService.updateById(salesMan);
 		}
 		return renderSuccess("删除成功！");
 	}
@@ -139,8 +161,8 @@ public class SalesManController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/editPage")
-	public String editPage(Model model, Long id) {
-		SalesMan salesMan = salesManService.selectById(id);
+	public String editPage(Model model, String id) {
+		TMemberBasicinfo salesMan = salesManService.selectById(id);
 		model.addAttribute("salesMan", salesMan);
 		return "admin/salesman/salesmanEdit";
 	}
@@ -153,8 +175,10 @@ public class SalesManController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/showPage")
-	public String showPage(Model model, Long id) {
-		SalesMan salesMan = salesManService.selectById(id);
+	public String showPage(Model model, String id) {
+		TMemberBasicinfo salesMan = salesManService.selectById(id);
+		TInsurer ins  = insurerService.selectById(salesMan.getInsCompany());
+		salesMan.setInsCompany(ins.getInsurerName());
 		model.addAttribute("salesMan", salesMan);
 		return "admin/salesman/salesmanShow";
 	}
@@ -167,8 +191,18 @@ public class SalesManController extends BaseController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Object edit(@Valid SalesMan salesMan) {
-		salesManService.updateById(salesMan);
+	public Object edit(@Valid TMemberBasicinfo salesMan) {
+		TMemberBasicinfo member = salesManService.selectById(salesMan.getUserId());
+		BeanUtils.copyNotNullProperties(salesMan, member);
+		member.setUpdateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
+		Subject currentUser = SecurityUtils.getSubject();
+        PrincipalCollection collection = currentUser.getPrincipals();
+        if (null != collection) {
+            String loginName = collection.getPrimaryPrincipal().toString();
+            UserVo userVo = userService.selectUserVoByLoginName(loginName);
+            member.setMerchantId(userVo.getOrganizationId());
+        }
+		salesManService.updateById(member);
 		return renderSuccess("编辑成功！");
 	}
 
@@ -181,8 +215,8 @@ public class SalesManController extends BaseController {
 	@RequestMapping("/disable")
 	@ResponseBody
 	public Object disable(String id) {
-		SalesMan salesMan = salesManService.selectById(id);
-		salesMan.setStatus("1");
+		TMemberBasicinfo salesMan = salesManService.selectById(id);
+		salesMan.setStatus("02");
 		salesManService.updateById(salesMan);
 		return renderSuccess("停用成功！");
 	}
@@ -196,8 +230,8 @@ public class SalesManController extends BaseController {
 	@RequestMapping("/enable")
 	@ResponseBody
 	public Object enable(String id) {
-		SalesMan salesMan = salesManService.selectById(id);
-		salesMan.setStatus("0");
+		TMemberBasicinfo salesMan = salesManService.selectById(id);
+		salesMan.setStatus("01");
 		salesManService.updateById(salesMan);
 		return renderSuccess("启用成功！");
 	}
@@ -212,16 +246,18 @@ public class SalesManController extends BaseController {
 	@RequestMapping("/exportExcel")
 	@ResponseBody
 	public void exportExcel(HttpServletResponse response, String id) throws IOException, InvalidFormatException {
-		EntityWrapper<SalesMan> entityWrapper = new EntityWrapper<SalesMan>();
-		
+		EntityWrapper<TMemberBasicinfo> entityWrapper = new EntityWrapper<TMemberBasicinfo>();
+		entityWrapper.ne("STATUS", "03");
 		if(!"all".equals(id)){
 			entityWrapper.in("ID", id.split(","));
 		}
-		List<SalesMan> list  = salesManService.selectList(entityWrapper);
+		List<TMemberBasicinfo> list  = salesManService.selectList(entityWrapper);
 		List<SalesManExcel> listEx = new ArrayList<SalesManExcel>();
-		for(SalesMan sale : list){
+		for(TMemberBasicinfo sale : list){
 			SalesManExcel salesManExcel = new SalesManExcel();
 			BeanUtils.copyNotNullProperties(sale, salesManExcel);
+			TInsurer ins  = insurerService.selectById(salesManExcel.getInsCompany());
+			salesManExcel.setInsCompanyName(ins.getInsurerName());
 			listEx.add(salesManExcel);
 		}
 		Workbook wb = new XSSFWorkbook();

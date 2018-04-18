@@ -2,6 +2,7 @@ package com.gewei.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -2126,9 +2127,59 @@ public class OrderSx extends Model<OrderSx> {
 		this.yjzfr = yjzfr;
 	}
 
+
 	@Override
 	protected Serializable pkVal() {
 		return this.orderId;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderSx [orderId=" + orderId + ", orderNo=" + orderNo + ", orderType=" + orderType + ", tbStartTime="
+				+ tbStartTime + ", tbEndTime=" + tbEndTime + ", orderFlag=" + orderFlag + ", merchantId=" + merchantId
+				+ ", printFlag=" + printFlag + ", commissionFlag=" + commissionFlag + ", checkoutFlag=" + checkoutFlag
+				+ ", giftFlag=" + giftFlag + ", bxgszxsqyjbl=" + bxgszxsqyjbl + ", bxgszxsqyj=" + bxgszxsqyj
+				+ ", bxgsfx1sqyjbl=" + bxgsfx1sqyjbl + ", bxgsfx1sqyj=" + bxgsfx1sqyj + ", bxgsfx2sqyjbl="
+				+ bxgsfx2sqyjbl + ", bxgsfx2sqyj=" + bxgsfx2sqyj + ", bxgskpyjbl=" + bxgskpyjbl + ", bxgskpyj="
+				+ bxgskpyj + ", gsglfje=" + gsglfje + ", gsglfbl=" + gsglfbl + ", gstcje=" + gstcje + ", gstcbl="
+				+ gstcbl + ", gsjsje=" + gsjsje + ", gsjsbl=" + gsjsbl + ", policyholderId=" + policyholderId
+				+ ", insuredId=" + insuredId + ", beneficiaryId=" + beneficiaryId + ", jfpl=" + jfpl + ", sfzdxj="
+				+ sfzdxj + ", sqjffs=" + sqjffs + ", xqjffs=" + xqjffs + ", khhmc=" + khhmc + ", yhzh=" + yhzh
+				+ ", bfhj=" + bfhj + ", hllqfs=" + hllqfs + ", lqfs=" + lqfs + ", hllqnl=" + hllqnl + ", hllqsj="
+				+ hllqsj + ", hllqlx=" + hllqlx + ", sfzdzf=" + sfzdzf + ", tzljbxtx=" + tzljbxtx + ", tbrsg=" + tbrsg
+				+ ", tbrtz=" + tbrtz + ", bbrsg=" + bbrsg + ", bbrtz=" + bbrtz + ", mtxy=" + mtxy + ", xysj=" + xysj
+				+ ", yjzl=" + yjzl + ", mtyj=" + mtyj + ", yjsj=" + yjsj + ", hysj=" + hysj + ", cssg=" + cssg
+				+ ", cstz=" + cstz + ", spgsmc=" + spgsmc + ", sprq=" + sprq + ", spje=" + spje + ", spsy=" + spsy
+				+ ", jzlx=" + jzlx + ", jzqfrq=" + jzqfrq + ", jzjl=" + jzjl + ", clyt=" + clyt + ", cllx=" + cllx
+				+ ", jzgj=" + jzgj + ", jzyy=" + jzyy + ", jzzlsj=" + jzzlsj + ", txwsx1=" + txwsx1 + ", bxwsx1="
+				+ bxwsx1 + ", txwsx2=" + txwsx2 + ", bxwsx2=" + bxwsx2 + ", txwsx3=" + txwsx3 + ", bxwsx3=" + bxwsx3
+				+ ", txwsx4=" + txwsx4 + ", bxwsx4=" + bxwsx4 + ", txwsx6=" + txwsx6 + ", bxwsx6=" + bxwsx6
+				+ ", txwsx7=" + txwsx7 + ", bxwsx7=" + bxwsx7 + ", txwsx8=" + txwsx8 + ", txwsx9=" + txwsx9
+				+ ", txwsx11=" + txwsx11 + ", txwsx12=" + txwsx12 + ", txwsx13=" + txwsx13 + ", txwsx14=" + txwsx14
+				+ ", txwsx15=" + txwsx15 + ", txwsx16=" + txwsx16 + ", txwsx17=" + txwsx17 + ", txwsx18=" + txwsx18
+				+ ", txwsx19=" + txwsx19 + ", txwsx20=" + txwsx20 + ", bxwsx8=" + bxwsx8 + ", bxwsx9=" + bxwsx9
+				+ ", bxwsx11=" + bxwsx11 + ", bxwsx12=" + bxwsx12 + ", bxwsx13=" + bxwsx13 + ", bxwsx14=" + bxwsx14
+				+ ", bxwsx15=" + bxwsx15 + ", bxwsx16=" + bxwsx16 + ", bxwsx17=" + bxwsx17 + ", bxwsx18=" + bxwsx18
+				+ ", bxwsx19=" + bxwsx19 + ", bxwsx20=" + bxwsx20 + ", txwsx5a=" + txwsx5a + ", txwsx5b=" + txwsx5b
+				+ ", txwsx5c=" + txwsx5c + ", txwsx5d=" + txwsx5d + ", txwsx5e=" + txwsx5e + ", txwsx5f=" + txwsx5f
+				+ ", txwsx5g=" + txwsx5g + ", txwsx5h=" + txwsx5h + ", txwsx5i=" + txwsx5i + ", txwsx5j=" + txwsx5j
+				+ ", txwsx5k=" + txwsx5k + ", bxwsx5a=" + bxwsx5a + ", bxwsx5b=" + bxwsx5b + ", bxwsx5c=" + bxwsx5c
+				+ ", bxwsx5d=" + bxwsx5d + ", bxwsx5e=" + bxwsx5e + ", bxwsx5f=" + bxwsx5f + ", bxwsx5g=" + bxwsx5g
+				+ ", bxwsx5h=" + bxwsx5h + ", bxwsx5i=" + bxwsx5i + ", bxwsx5j=" + bxwsx5j + ", bxwsx5k=" + bxwsx5k
+				+ ", txwsx10a=" + txwsx10a + ", txwsx10b=" + txwsx10b + ", txwsx10c=" + txwsx10c + ", bxwsx10a="
+				+ bxwsx10a + ", bxwsx10b=" + bxwsx10b + ", bxwsx10c=" + bxwsx10c + ", txwsx11a=" + txwsx11a
+				+ ", txwsx11b=" + txwsx11b + ", bxwsx11a=" + bxwsx11a + ", bxwsx11b=" + bxwsx11b + ", tbrnsr=" + tbrnsr
+				+ ", tbrsrly=" + tbrsrly + ", bbrnsr=" + bbrnsr + ", bbrsrly=" + bbrsrly + ", insuranceCompanyId="
+				+ insuranceCompanyId + ", operator=" + operator + ", tbfs=" + tbfs + ", jzx=" + jzx + ", zxs=" + zxs
+				+ ", jfx1=" + jfx1 + ", fxs1=" + fxs1 + ", jfx2=" + jfx2 + ", fxs2=" + fxs2 + ", salesManCommission="
+				+ salesManCommission + ", salesMan=" + salesMan + ", yjzfdx=" + yjzfdx + ", zxyjbl=" + zxyjbl
+				+ ", zxyjje=" + zxyjje + ", fxyjbl1=" + fxyjbl1 + ", fxyjje1=" + fxyjje1 + ", fxyjbl2=" + fxyjbl2
+				+ ", fxyjje2=" + fxyjje2 + ", zhjrjbl=" + zhjrjbl + ", zhjrjje=" + zhjrjje + ", bxgsdqjl=" + bxgsdqjl
+				+ ", sfylp=" + sfylp + ", lpnr=" + lpnr + ", recorder=" + recorder + ", recorderid=" + recorderid
+				+ ", recordertc=" + recordertc + ", createTime=" + createTime + ", updateTime=" + updateTime
+				+ ", updateUser=" + updateUser + ", remark1=" + remark1 + ", remark2=" + remark2 + ", remark3="
+				+ remark3 + ", ddr=" + ddr + ", ddDate=" + ddDate + ", bgsml=" + bgsml + ", sjzfyj=" + sjzfyj
+				+ ", yjzfsj=" + yjzfsj + ", yjzfr=" + yjzfr + "]";
 	}
 
 }

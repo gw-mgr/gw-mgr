@@ -178,7 +178,7 @@ public class OrderSxController extends BaseController {
 		StringBuffer bxtx = new StringBuffer("");
 		if (tzlj != null && tzlj.size() >= 1) {
 			for(TzljForOrderSx tz : tzlj){
-				bxtx.append(tz.getTzzhmc()).append("#$#").append(tz.getFpbl()).append("#$#").append(tz.getZjbxfpbl()).append("@");
+				bxtx.append(tz.getTzzhmc()).append("#").append(tz.getFpbl()).append("#").append(tz.getZjbxfpbl()).append("@");
 			}
 		}
 		orderSx.setTzljbxtx(bxtx.length() == 0 ? bxtx.toString() : bxtx.substring(0, bxtx.length() - 1).toString());
@@ -352,6 +352,7 @@ public class OrderSxController extends BaseController {
 	@GetMapping("/editPage")
 	public String editPage(Model model, String id) {
 		OrderSxVo orderSxVo = orderSxService.selectOrderByOrderId(id);
+		System.out.println(orderSxVo.toString());
 		OrderSx orderSx = new OrderSx();
 		BeanUtils.copyNotNullProperties(orderSxVo, orderSx);
 		orderSx.setCreateTime(DateUtil.strToShot(orderSx.getCreateTime()));
@@ -368,6 +369,30 @@ public class OrderSxController extends BaseController {
             model.addAttribute("recorderName", userVo.getName());
         }
         System.out.println(orderSxVo.toString());
+        if(!orderSxVo.getTzljbxtx().equals("")){
+        	List<TzljForOrderSx> tzlj = new ArrayList<TzljForOrderSx>();
+        	String str = orderSxVo.getTzljbxtx();
+        	String[] arr = str.split("@");
+        	for(String col:arr){
+        		TzljForOrderSx tf = new TzljForOrderSx();
+        		tf.setTzzhmc(col.split("#")[0]);
+        		tf.setFpbl(col.split("#")[1]);
+        		tf.setZjbxfpbl(col.split("#")[2]);
+        		tzlj.add(tf);
+        	}
+        	orderSxVo.setTzlj(tzlj);
+        }
+        EntityWrapper<OrderSxBxsx> wrapper = new EntityWrapper<OrderSxBxsx>();
+        wrapper.eq("ORDER_ID", orderSxVo.getOrderId());
+        wrapper.orderBy("'ORDER'", false);
+        List<OrderSxBxsx> bxsxList = iOrderSxBxsxServiceImpl.selectList(wrapper);
+        orderSxVo.setTbsx_bxsx(bxsxList);
+        
+        EntityWrapper<Beneficial> wrapper1 = new EntityWrapper<Beneficial>();
+        wrapper1.eq("ORDER_ID", orderSxVo.getOrderId());
+        List<Beneficial> syrList = beneficialService.selectList(wrapper1);
+        model.addAttribute("syrNum",syrList.size()); 
+        orderSxVo.setSyr(syrList);
 		model.addAttribute("orderSx", orderSxVo);
 		return "admin/orderSx/orderSxEdit";
 	}
@@ -382,6 +407,52 @@ public class OrderSxController extends BaseController {
 	public Object edit(@Valid OrderSxVo orderSxVo) {
 		System.out.println(orderSxVo.toString());
 		OrderSx orderSx = new OrderSx();
+		List<OrderSxBxsx> tbsxBxsx = orderSxVo.getTbsx_bxsx();
+		if (tbsxBxsx != null && tbsxBxsx.size() >= 1) {
+			for (OrderSxBxsx orderSxBxsx : tbsxBxsx) {
+				EntityWrapper<OrderSxBxsx> orderSxBxsxWrapper = new EntityWrapper<OrderSxBxsx>();
+				orderSxBxsxWrapper.eq("ORDER_ID", orderSxVo.getOrderId());
+				orderSxBxsxWrapper.eq("ID", orderSxBxsx.getId());
+				OrderSxBxsx orderSxBxsx2 = iOrderSxBxsxServiceImpl.selectOne(orderSxBxsxWrapper);
+				if (orderSxBxsx2 == null) {
+					orderSxBxsx2 = new OrderSxBxsx();
+					orderSxBxsx2.setOrderId(orderSxVo.getOrderId());
+					BeanUtils.copyNotNullProperties(orderSxBxsx, orderSxBxsx2);
+					iOrderSxBxsxServiceImpl.insert(orderSxBxsx2);
+					continue;
+				}
+				BeanUtils.copyNotNullProperties(orderSxBxsx, orderSxBxsx2);
+				iOrderSxBxsxServiceImpl.update(orderSxBxsx2, orderSxBxsxWrapper);
+			}
+		}
+		
+		List<Beneficial> syr = orderSxVo.getSyr();
+		String beneficiaryId = "";
+		if (syr != null && syr.size() >= 1) {
+			for(Beneficial be : syr){
+				System.out.println("---be----"+be.toString());
+				EntityWrapper<Beneficial> orderSxBxsxWrapper = new EntityWrapper<Beneficial>();
+				orderSxBxsxWrapper.eq("ORDER_ID", orderSxVo.getOrderId());
+				orderSxBxsxWrapper.eq("PERSON_ID", be.getPersonId());
+				Beneficial bene = beneficialService.selectOne(orderSxBxsxWrapper);
+				if (bene == null) {
+					bene = new Beneficial();
+					bene.setPersonId(StringUtils.getUUId());
+					bene.setOrderId(orderSxVo.getOrderId());
+					BeanUtils.copyNotNullProperties(be, bene);
+					System.out.println("---bene----"+bene.toString());
+					bene.setCreateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
+					beneficialService.insert(bene);
+					continue;
+				}
+				BeanUtils.copyNotNullProperties(be, bene);
+				beneficialService.update(bene, orderSxBxsxWrapper);
+				
+				beneficiaryId = beneficiaryId + bene.getPersonId() + ",";
+			}
+		}
+		beneficiaryId = beneficiaryId.length() > 0 ? beneficiaryId.substring(0, beneficiaryId.length()-1):beneficiaryId;
+		
 		BeanUtils.copyNotNullProperties(orderSxVo, orderSx);
 		changeMoney(orderSx, "100");
 		OrderSxVo order = orderSxService.selectOrderByOrderId(orderSxVo.getOrderId());
@@ -436,27 +507,6 @@ public class OrderSxController extends BaseController {
 			b = policyholderService.updateById(bpolicyholder);
 		}
 		
-		Beneficial beneficial = new Beneficial();
-		beneficial.setPersonId(orderSxVo.getBeneficiaryId());
-		Beneficial be = beneficialService.selectBeneficial(beneficial);
-		
-		BeanUtils.copyNotNullProperties(orderSxVo, beneficial);
-		beneficial.setSex(orderSxVo.getSexS());
-		beneficial.setBirthDate(orderSxVo.getBirthDateS());
-		beneficial.setCertType(orderSxVo.getCertTypeS());
-		beneficial.setCertNo(orderSxVo.getCertNoS());
-		beneficial.setValidityDate(orderSxVo.getValidityDateS());
-		beneficial.setResidentialAddress(orderSxVo.getResidentialAddressS());
-		beneficial.setOrderId(orderSx.getOrderId());
-		beneficial.setPersonId(StringUtils.getUUId());
-		beneficial.setCreateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
-		if(be == null){
-			bpolicyholder.setCreateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
-			bpolicyholder.setStatus("0");
-			b = beneficialService.insert(beneficial);
-		}else{
-			b = beneficialService.updateById(beneficial);
-		}
 		OrderSx orderUp = new OrderSx();
 		BeanUtils.copyNotNullProperties(orderSxVo, orderUp);
 		orderUp.setUpdateTime(DateUtil.get_String$yyyyMMddHHmmss(new Date()));
@@ -486,14 +536,49 @@ public class OrderSxController extends BaseController {
      */
     @GetMapping("/show")
     public String showPage(Model model, String id) {
-        OrderSxVo orderSx = orderSxService.selectOrderByOrderId(id);
-        orderSx.setCreateTime(DateUtil.strToShot(orderSx.getCreateTime()));
-        orderSx.setUpdateTime(DateUtil.strToShot(orderSx.getUpdateTime()));
-        OrderSx order = new OrderSx();
-        BeanUtils.copyNotNullProperties(orderSx, order);
-        changeMoney(order, "0.01");
-        BeanUtils.copyNotNullProperties(order, orderSx);
-        model.addAttribute("orderSx", orderSx);
+    	OrderSxVo orderSxVo = orderSxService.selectOrderByOrderId(id);
+		System.out.println(orderSxVo.toString());
+		OrderSx orderSx = new OrderSx();
+		BeanUtils.copyNotNullProperties(orderSxVo, orderSx);
+		orderSx.setCreateTime(DateUtil.strToShot(orderSx.getCreateTime()));
+		orderSx.setUpdateTime(DateUtil.strToShot(orderSx.getUpdateTime()));
+		orderSx.setDdDate(DateUtil.strToShot(orderSx.getDdDate()));
+		changeMoney(orderSx, "0.01");
+		BeanUtils.copyNotNullProperties(orderSx, orderSxVo);
+		Subject currentUser = SecurityUtils.getSubject();
+        PrincipalCollection collection = currentUser.getPrincipals();
+        if (null != collection) {
+            String loginName = collection.getPrimaryPrincipal().toString();
+            UserVo userVo = userService.selectUserVoByLoginName(loginName);
+            model.addAttribute("recorder", userVo.getId());
+            model.addAttribute("recorderName", userVo.getName());
+        }
+        System.out.println(orderSxVo.toString());
+        if(!orderSxVo.getTzljbxtx().equals("")){
+        	List<TzljForOrderSx> tzlj = new ArrayList<TzljForOrderSx>();
+        	String str = orderSxVo.getTzljbxtx();
+        	String[] arr = str.split("@");
+        	for(String col:arr){
+        		TzljForOrderSx tf = new TzljForOrderSx();
+        		tf.setTzzhmc(col.split("#")[0]);
+        		tf.setFpbl(col.split("#")[1]);
+        		tf.setZjbxfpbl(col.split("#")[2]);
+        		tzlj.add(tf);
+        	}
+        	orderSxVo.setTzlj(tzlj);
+        }
+        EntityWrapper<OrderSxBxsx> wrapper = new EntityWrapper<OrderSxBxsx>();
+        wrapper.eq("ORDER_ID", orderSxVo.getOrderId());
+        wrapper.orderBy("'ORDER'", false);
+        List<OrderSxBxsx> bxsxList = iOrderSxBxsxServiceImpl.selectList(wrapper);
+        orderSxVo.setTbsx_bxsx(bxsxList);
+        
+        EntityWrapper<Beneficial> wrapper1 = new EntityWrapper<Beneficial>();
+        wrapper1.eq("ORDER_ID", orderSxVo.getOrderId());
+        List<Beneficial> syrList = beneficialService.selectList(wrapper1);
+        model.addAttribute("syrNum",syrList.size()); 
+        orderSxVo.setSyr(syrList);
+		model.addAttribute("orderSx", orderSxVo);
         return "admin/orderSx/orderSxShow";
     }
     /**
