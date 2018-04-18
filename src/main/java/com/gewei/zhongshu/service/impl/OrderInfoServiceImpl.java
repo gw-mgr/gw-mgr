@@ -101,32 +101,47 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 	@Override
 	public void getOrderInsDataGroupByProvince(PageInfo pageInfo) {
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(pageInfo.getNowpage(), pageInfo.getSize());
-		//		List<Map<String, String>> provinceCXList = orderInfoMapper.getOrderCXProvinceList();
+		// List<Map<String, String>> provinceCXList =
+		// orderInfoMapper.getOrderCXProvinceList();
 		List<Map<String, String>> provinceList = new ArrayList<Map<String, String>>();
-		//		provinceList.addAll(provinceCXList);
+		// provinceList.addAll(provinceCXList);
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>(1);
-		//		for (Map<String, String> provinceMap : provinceList) {
-		//			String provinceId = provinceMap.get("provinceId");
+		// for (Map<String, String> provinceMap : provinceList) {
+		// String provinceId = provinceMap.get("provinceId");
 		HashMap<String, Object> hashMap = new HashMap<String, Object>(5);
-		//			String provinceName = tMerchantManageMapper.getGrantNameByAreaId(provinceId);
+		// String provinceName =
+		// tMerchantManageMapper.getGrantNameByAreaId(provinceId);
 		hashMap.put("provinceName", "重庆");
-		//			Integer yesterdayTotalNum = orderInfoMapper.getYesterdayTotalNumByProvinceId(provinceId);
+		// Integer yesterdayTotalNum =
+		// orderInfoMapper.getYesterdayTotalNumByProvinceId(provinceId);
 		hashMap.put("yesterdayTotalNum", 2);
-		//			Integer yesterdayFinishedNum = orderInfoMapper.getYesterdayFinishedNumByProvinceId(provinceId);
+		// Integer yesterdayFinishedNum =
+		// orderInfoMapper.getYesterdayFinishedNumByProvinceId(provinceId);
 		hashMap.put("yesterdayFinishedNum", 3);
-		//			Float dealMoney = orderInfoMapper.getdealMoneyByProvinceId(provinceId);
+		// Float dealMoney =
+		// orderInfoMapper.getdealMoneyByProvinceId(provinceId);
 		hashMap.put("dealMoney", 53 / 100);
-		//			Float recommendMoney = orderInfoMapper.getrecommendMoneyByProvinceId(provinceId);
+		// Float recommendMoney =
+		// orderInfoMapper.getrecommendMoneyByProvinceId(provinceId);
 		hashMap.put("recommendMoney", 109 / 100);
 		resultList.add(hashMap);
-		//		}
+		// }
 		pageInfo.setRows(resultList);
 		pageInfo.setTotal(1);
 	}
 
-
 	@Override
 	public List<Map<String, String>> getOrderTypeList() {
 		return orderInfoMapper.getOrderTypeList();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectOtherList(HashMap<String, Object> condition) {
+		return orderInfoMapper.selectOtherList(condition);
+	}
+
+	@Override
+	public int getOtherOrderCount(HashMap<String, Object> condition) {
+		return orderInfoMapper.getOtherOrderCount(condition);
 	}
 }
