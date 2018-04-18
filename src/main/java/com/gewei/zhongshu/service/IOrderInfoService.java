@@ -1,4 +1,5 @@
 package com.gewei.zhongshu.service;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.service.IService;
@@ -17,7 +18,9 @@ public interface IOrderInfoService extends IService<OrderInfo> {
 	long getOrderTotalMoney();
 	long getYesterdayOrderTotalNum();
 	long getYesterdayOrderTotalMoney();
-	Map<String,Long> getYesterdayOrderNumOfAllOrderType();
+	Map<String, Long> getYesterdayOrderNumOfAllOrderType();
 	void getOrderInsDataGroupByProvince(PageInfo pageInfo);
 	List<Map<String, String>> getOrderTypeList();
+	List<Map<String, Object>> selectOtherList(HashMap<String, Object> condition);
+	int getOtherOrderCount(HashMap<String, Object> condition);
 }
