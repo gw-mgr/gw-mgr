@@ -27,7 +27,6 @@ import com.gewei.commons.utils.BeanUtils;
 import com.gewei.commons.utils.StringUtils;
 import com.gewei.fuwushang.service.ISalesManService;
 import com.gewei.model.SalesMan;
-import com.gewei.model.TMerchantManage;
 import com.gewei.model.excel.SalesManExcel;
 import com.google.gson.Gson;
 

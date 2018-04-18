@@ -32,5 +32,48 @@
 		<result column="REMARK" property="remark" />
 		<result column="REMARK2" property="remark2" />
 	</resultMap>
-
+<select id="selectPage" resultType="Map">
+        SELECT
+		t.USER_ID as userId,
+		t.USER_NAME as userName,
+		t.TELEPHONE as telephone,
+		t.MOBILE_PHONE as mobilePhone,
+		t.MERCHANT_ID as merchantId,
+		t.SEX as sex,
+		t.CARD_TYPE as cardType,
+		t.CARD_ID as cardId,
+		t.MAIL as mail,
+		t.QQ as qq,
+		t.WECHAT_NUM as wechatNum,
+		t.WECHAT_NAME as wechatName,
+		t.PROVINCE as province,
+		t.CITY as city,
+		t.COUNTRY as country,
+		t.USER_ADDR as userAddr,
+		t.INS_COMPANY as insCompany,
+		t.BANK_NAME as bankName,
+		t.BANK_HOST as bankHost,
+		t.BANK_CARD as bankCard,
+		t.CREATE_TIME as createTime,
+		t.UPDATE_TIME as updateTime,
+		t.STATUS as status,
+		t.RECOMMENDER as recommender,
+		t.DIR_RECOMMENDER as dirRecommender,
+		t.REMARK as remark,
+		t.REMARK2 as remark2
+		FROM
+		t_member_basicinfo t
+        <where>
+            <if test=" user_name != null and user_name != '' ">
+                t.user_name like CONCAT('%',#{user_name},'%' )
+            </if>
+            <if test=" mtelphone != null and mtelphone != '' ">
+                t.mobile_phone = #{mtelphone}
+            </if>
+            <if test=" wechat != null and wechat != '' ">
+                t.wechat_num = #{wechat} 
+            </if>
+        </where>
+        GROUP BY t.USER_ID
+    </select>
 </mapper>
