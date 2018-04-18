@@ -99,7 +99,7 @@
 	});
 
 	function chooseOrderTab(tabContent) {
-		var tabName = "订单列表";
+		var tabName = "订单列表" + tabContent;
 		var href = "${path}/mgr/tOrderManage/orderInfo?orderType=" + tabContent;
 		//var content = '<iframe src="${path}/tOrderManage/orderInfo" frameborder="0" style="border:0;width:100%;height:99.5%;"></iframe>';
 		// 添加一个新的标签页面板（tab panel）
@@ -137,19 +137,19 @@
 			</div>
 		</div>
 		<div style="border: 0px solid; width: 1300px; height: 90px; margin-left: 5px;">
-			<div id="CaiChanDiv" onclick="chooseOrderTab('CCBX');" style="background-color: #FF3399; line-height: 30px; text-align: center; border-radius: 10px; border: 0px solid; float: left; width: 600px; height: 70px; padding-top: 10px; margin-left: 30px; font-size: 15px">
+			<div id="CaiChanDiv" onclick="chooseOrderTab('CX');" style="background-color: #FF3399; line-height: 30px; text-align: center; border-radius: 10px; border: 0px solid; float: left; width: 600px; height: 70px; padding-top: 10px; margin-left: 30px; font-size: 15px">
 				财产保险
 				<br>
 				(&nbsp;昨日成交数： <span id="CCBXOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
-			<div id="RenShouDiv" onclick="chooseOrderTab('RSBX');" style="background-color: #FF3399; line-height: 30px; text-align: center; border-radius: 10px; border: 0px solid; float: left; width: 600px; height: 70px; padding-top: 10px; margin-left: 35px; font-size: 15px">
+			<div id="RenShouDiv" onclick="chooseOrderTab('SX');" style="background-color: #FF3399; line-height: 30px; text-align: center; border-radius: 10px; border: 0px solid; float: left; width: 600px; height: 70px; padding-top: 10px; margin-left: 35px; font-size: 15px">
 				人寿保险
 				<br>
 				(&nbsp;昨日成交数： <span id="RSBXOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
 		</div>
 		<div style="border: 0px solid; width: 1300px; height: 80px; margin-left: 5px; margin-top: 10px">
-			<div id="DaiKuanDiv" onclick="chooseOrderTab('DKYW');" style="background-color: #FF8000; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 55px; font-size: 15px">
+			<div id="DaiKuanDiv" onclick="chooseOrderTab('Other');" style="background-color: #FF8000; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 55px; font-size: 15px">
 				贷款业务
 				<br>
 				(&nbsp;昨日成交数： <span id="DKYWOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
@@ -159,17 +159,17 @@
 				<br>
 				(&nbsp;昨日成交数： <span id="LCCPOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div> -->
-			<div id="ErShouCheDiv" onclick="chooseOrderTab('ESQC');" style="background-color: #80FF00; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+			<div id="ErShouCheDiv" onclick="chooseOrderTab('Other');" style="background-color: #80FF00; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				二手汽车
 				<br>
 				(&nbsp;昨日成交数： <span id="ESQCOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
-			<div id="CheWuDiv" onclick="chooseOrderTab('CWDB');" style="background-color: #00FF7F; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+			<div id="CheWuDiv" onclick="chooseOrderTab('Other');" style="background-color: #00FF7F; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				车务代办
 				<br>
 				(&nbsp;昨日成交数： <span id="CWDBOrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
 			</div>
-			<div id="MeiRongDiv" onclick="chooseOrderTab('QCMR');" style="background-color: #0080FF; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
+			<div id="MeiRongDiv" onclick="chooseOrderTab('Other');" style="background-color: #0080FF; line-height: 30px; text-align: center; border-radius: 5px; border: 0px solid; float: left; width: 235px; height: 70px; padding-top: 10px; margin-left: 85px; font-size: 15px">
 				汽车美容
 				<br>
 				(&nbsp;昨日成交数： <span id="QCMROrderTotalNum" style="font-size: 18px; color: #000000; font-weight: bold"></span> &nbsp;)
