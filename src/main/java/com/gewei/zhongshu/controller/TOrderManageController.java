@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,14 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.gewei.commons.base.BaseController;
 import com.gewei.commons.result.PageInfo;
 import com.gewei.fuwushang.service.IOrderCxService;
 import com.gewei.fuwushang.service.IOrderSxService;
-import com.gewei.model.OrderSx;
+import com.gewei.model.TChinaArea;
+import com.gewei.model.TMerchantProductCategory;
 import com.gewei.model.vo.OrderInfoVo;
 import com.gewei.zhongshu.service.IOrderInfoService;
+import com.gewei.zhongshu.service.ITChinaAreaService;
+import com.gewei.zhongshu.service.ITMerchantProductCategoryService;
 
 /**
  * <p>
@@ -41,6 +45,10 @@ public class TOrderManageController extends BaseController {
 	private IOrderSxService iOrderSxServiceImpl;
 	@Autowired
 	private IOrderCxService iOrderCxServiceImpl;
+	@Autowired
+	private ITChinaAreaService iTChinaAreaServiceImpl;
+	@Autowired
+	private ITMerchantProductCategoryService iTMerchantProductCategoryServiceImpl;
 
 	@GetMapping("/manage")
 	public String manager() {
@@ -49,24 +57,80 @@ public class TOrderManageController extends BaseController {
 
 	@PostMapping("/orderList")
 	@ResponseBody
-	public PageInfo orderList(Integer page, Integer rows, String sort, String order) throws UnsupportedEncodingException {
-		TreeSet<String> orderIdSet = new TreeSet<String>((x, y) -> x.compareTo(y));
-		// 寿险订单查询
-		EntityWrapper<OrderSx> sxEW = new EntityWrapper<OrderSx>();
-		List<OrderSx> sxList = iOrderSxServiceImpl.selectList(sxEW);
-		for (OrderSx orderSx : sxList) {
-			
-		}
-		// 财险订单查询
-		// 普通订单查询
+	public PageInfo orderList(OrderInfoVo orderInfoVo, String orderTypeQuery, Integer page, Integer rows, String sort, String order, String orderType) throws UnsupportedEncodingException {
 		PageInfo pageInfo = new PageInfo(page, rows, sort, order);
+		// 封装过滤条件
+		HashMap<String, Object> condition = new HashMap<String, Object>();
+		String createStartTime = orderInfoVo.getCreateStartTime();
+		String createEndTime = orderInfoVo.getCreateEndTime();
+		String province = orderInfoVo.getProvince();
+		String city = orderInfoVo.getCity();
+		String country = orderInfoVo.getCountry();
+		String keywordType = orderInfoVo.getKeywordType();
+		String keywordInfo = orderInfoVo.getKeywordInfo();
+		if (createStartTime != null && !createStartTime.trim().equals("")) {
+			createStartTime = createStartTime.replace("-", "") + "000000";
+			condition.put("createStartTime", createStartTime);
+		}
+		if (createEndTime != null && !createEndTime.trim().equals("")) {
+			createEndTime = createEndTime.replace("-", "") + "235959";
+			condition.put("createEndTime", createEndTime);
+		}
+		if (province != null && !province.trim().equals("")) {
+			condition.put("province", province);
+		}
+		if (city != null && !city.trim().equals("")) {
+			condition.put("city", city);
+		}
+		if (country != null && !country.trim().equals("")) {
+			condition.put("country", country);
+		}
+		if (orderType != null && !orderType.trim().equals("")) {
+			condition.put("orderType", orderType);
+		}
+		// 分页参数
+		int start = (page - 1) * rows;
+		condition.put("start", start);
+		condition.put("rows", rows);
+		condition.put("sort", sort);
+		condition.put("order", order);
+		if (keywordInfo != null && !keywordInfo.trim().equals("")) {
+			condition.put("keywordInfo", keywordInfo);
+			condition.put("keywordType", keywordType);
+		}
+		if (orderTypeQuery != null && !orderTypeQuery.trim().equals("")) {
+			condition.put("orderTypeQuery", orderTypeQuery);
+		}
+		if (orderType.equals("ROOTCC")) {
+			// 财险
+			System.out.println("【condition】" + JSON.toJSONString(condition));
+			List<Map<String, Object>> cxList = iOrderCxServiceImpl.selectCXList(condition);
+			int cxCount = iOrderCxServiceImpl.getCXOrderCount(condition);
+			pageInfo.setRows(cxList);
+			pageInfo.setTotal(cxCount);
+		} else if (orderType.equals("ROOTRS")) {
+			// 寿险
+			System.out.println("【condition】" + JSON.toJSONString(condition));
+			List<Map<String, Object>> sxList = iOrderSxServiceImpl.selectSXList(condition);
+			int sxCount = iOrderSxServiceImpl.getSXOrderCount(condition);
+			pageInfo.setRows(sxList);
+			pageInfo.setTotal(sxCount);
+		} else if (orderType.equals("Other")) {
+			// 其他
+			System.out.println("【condition】" + JSON.toJSONString(condition));
+			List<Map<String, Object>> sxList = iOrderInfoServiceImpl.selectOtherList(condition);
+			int sxCount = iOrderInfoServiceImpl.getOtherOrderCount(condition);
+			pageInfo.setRows(sxList);
+			pageInfo.setTotal(sxCount);
+
+		}
 		return pageInfo;
 	}
 
 	@GetMapping("/orderInfo")
 	public String orderInfo(Model model, String orderType) {
 		model.addAttribute("orderType", orderType);
-		return "admin/orderManage/tOrderInfoList";
+		return "admin/orderManage/order" + orderType + "List";
 	}
 
 	@PostMapping("/orderTypeList")
@@ -96,6 +160,33 @@ public class TOrderManageController extends BaseController {
 		Map<String, Long> yesterdayOrderNum = iOrderInfoServiceImpl.getYesterdayOrderNumOfAllOrderType();
 		result.putAll(yesterdayOrderNum);
 		return JSON.toJSONString(result);
+	}
+
+	@PostMapping("/orderTypeListOfOther")
+	@ResponseBody
+	public Object getOrderTypeListOfOther() {
+		Wrapper<TMerchantProductCategory> wrapper = new EntityWrapper<TMerchantProductCategory>();
+		wrapper.where("CATEGORY_ID in ( 'ROOTQCM','ROOTDK','ROOTCM','ROOTQCS') or CATEGORY_ID like 'ROOTCD%'");
+		List<TMerchantProductCategory> selectList = iTMerchantProductCategoryServiceImpl.selectList(wrapper);
+		return selectList;
+	}
+
+	@PostMapping("/orderTypeListOfCX")
+	@ResponseBody
+	public Object orderTypeListOfCX() {
+		Wrapper<TMerchantProductCategory> wrapper = new EntityWrapper<TMerchantProductCategory>();
+		wrapper.like("CATEGORY_ID", "ROOTCC", SqlLike.RIGHT);
+		List<TMerchantProductCategory> selectList = iTMerchantProductCategoryServiceImpl.selectList(wrapper);
+		return selectList;
+	}
+
+	@PostMapping("/areaQuery")
+	@ResponseBody
+	public Object areaQuery() {
+		Wrapper<TChinaArea> wrapper = new EntityWrapper<TChinaArea>();
+		wrapper.eq("PID", "0");
+		List<TChinaArea> selectList = iTChinaAreaServiceImpl.selectList(wrapper);
+		return selectList;
 	}
 
 	@PostMapping("/dataGrid")
