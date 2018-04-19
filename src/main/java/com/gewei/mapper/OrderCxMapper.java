@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
@@ -28,4 +30,8 @@ public interface OrderCxMapper extends BaseMapper<OrderCx> {
 	List<Map<String,Object>> selectCXList(HashMap<String, Object> condition);
 
 	int getCXOrderCount(HashMap<String, Object> condition);
+	
+	@Select("SELECT count(*) FROM order_cx WHERE ORDER_FLAG = '01'")
+	Long getCountExamineOrderCx();
+	
 }

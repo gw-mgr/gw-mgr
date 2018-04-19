@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.gewei.model.OrderInfo;
@@ -43,4 +45,13 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
 	List<Map<String, Object>> selectOtherList(HashMap<String, Object> condition);
 
 	int getOtherOrderCount(HashMap<String, Object> condition);
+	
+	@Select("SELECT count(*) FROM order_sx WHERE ORDER_FLAG = '01' and order_type='ROOTCD'")
+	Long getCountExamineOrderCd();
+	@Select("SELECT count(*) FROM order_sx WHERE ORDER_FLAG = '01' and order_type='ROOTCM'")
+	Long getCountExamineOrderCm();
+	@Select("SELECT count(*) FROM order_sx WHERE ORDER_FLAG = '01' and order_type='ROOTCP'")
+	Long getCountExamineOrderCp();
+	@Select("SELECT count(*) FROM order_sx WHERE ORDER_FLAG = '01' and order_type='ROOTDK'")
+	Long getCountExamineOrderDk();
 }

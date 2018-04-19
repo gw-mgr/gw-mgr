@@ -223,6 +223,33 @@
 		} else if (tabContent == 'messageManage') {
 			tabName = "消息管理";
 			href = "${path}/mgr/zmessage/manager";
+		}else if (tabContent == 'examineOrderCx') {
+			tabName = "财险订单管理";
+			href = "${path}/mgr/orderCx/manager";
+		}
+		else if (tabContent == 'examineOrderSx') {
+			tabName = "寿险订单管理";
+			href = "${path}/mgr/orderSx/manager";
+		}
+		else if (tabContent == 'examineOrderDk') {
+			tabName = "贷款订单管理";
+			href = "${path}/mgr/orderInfo/manager?type=Dk";
+		}
+		else if (tabContent == 'examineOrderLc') {
+			tabName = "理财订单管理";
+			href = "${path}/mgr/orderInfo/manager?type=Lc";
+		}
+		else if (tabContent == 'examineOrderCm') {
+			tabName = "汽车美容订单管理";
+			href = "${path}/mgr/orderInfo/manager?type=Cm";
+		}
+		else if (tabContent == 'examineOrderCd') {
+			tabName = "车务订单管理";
+			href = "${path}/mgr/orderInfo/manager?type=Cd";
+		}
+		else if (tabContent == 'examineOrderCp') {
+			tabName = "二手车订单管理";
+			href = "${path}/mgr/orderInfo/manager?type=Cp";
 		}
 		// 添加一个新的标签页面板（tab panel）
 		if ($("#index_tabs").tabs('exists', tabName)) {

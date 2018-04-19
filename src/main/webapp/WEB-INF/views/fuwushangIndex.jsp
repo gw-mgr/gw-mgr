@@ -4,10 +4,25 @@
 <%@ include file="/commons/basejs.jsp"%>
 <script type="text/javascript">
 	$(function() {
+		$.ajax({
+			type : "get",
+			dataType : "json",
+			url : "${path}/mgr/home/homePage/ajaxDataForFWS",
+			success : function(result) {
+				$("#examineOrderCx").html("( " + result.examineOrderCx + " )");
+				$("#examineOrderSx").html("( " + result.examineOrderSx + " )");
+				$("#examineOrderCd").html("( " + result.examineOrderCd + " )");
+				$("#examineOrderCm").html("( " + result.examineOrderCm + " )");
+				$("#examineOrderCp").html("( " + result.examineOrderCp + " )");
+				$("#examineOrderDk").html("( " + result.examineOrderDk + " )");
+			}
+		});
+		
+		
 		$('#dataGrid')
 				.datagrid(
 						{
-							url : '${path}/mgr/user/dataGrid',
+							url : '${path}/mgr/home/homePage/dataGrid',
 							fit : true,
 							striped : true,
 							rownumbers : true,
@@ -68,81 +83,81 @@
 						});
 	});
 </script>
-<div
-	style="display: inline-block;width: 37%; height:18%; margin: 0 0 0 10%; background-image: url('${staticPath }/static/style/images/u131.png');background-repeat:no-repeat">
+<div  onclick="chooseIndexTab('examineOrderCx');"
+	style="cursor: pointer;display: inline-block;width: 37%; height:18%; margin: 0 0 0 10%; background-image: url('${staticPath }/static/style/images/u131.png');background-repeat:no-repeat">
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>财产保险</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderCx" style="font-size: 24px; color: #FFFFFF; font-weight: bold"></span>
 	</p>
 </div>
-<div
-	style="display: inline-block;width: 37%; height:18%; margin: 0 10% 0 1%; background-image: url('${staticPath }/static/style/images/u131.png');background-repeat:no-repeat">
+<div onclick="chooseIndexTab('examineOrderSx');"
+	style="cursor: pointer;display: inline-block;width: 37%; height:18%; margin: 0 10% 0 1%; background-image: url('${staticPath }/static/style/images/u131.png');background-repeat:no-repeat">
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>人寿保险</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderSx" style="font-size: 24px; color: #FFFFFF; font-weight: bold"></span>
 	</p>
 </div>
-<div
-	style="display: inline-block;width: 15%; height:18%; margin: 0 0 0 10%; background-image: url('${staticPath }/static/style/images/u135.png');background-repeat:no-repeat">
+<div onclick="chooseIndexTab('examineOrderDk');"
+	style="cursor: pointer;display: inline-block;width: 15%; height:18%; margin: 0 0 0 10%; background-image: url('${staticPath }/static/style/images/u135.png');background-repeat:no-repeat">
 	<p
 		style="width: 200%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>贷款业务</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderDk" style="font-size: 24px; color: #FFFFFF; font-weight: bold"></span>
 	</p>
 </div>
-<div
-	style="display: inline-block;width: 15%; height:18%; margin: 0 0 0 0; background-image: url('${staticPath }/static/style/images/u137.png');background-repeat:no-repeat">
+<div onclick="chooseIndexTab('examineOrderLc');"
+	style="cursor: pointer;display: inline-block;width: 15%; height:18%; margin: 0 0 0 0; background-image: url('${staticPath }/static/style/images/u137.png');background-repeat:no-repeat">
 	<p
 		style="width: 200%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>理财业务</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderLc" style="font-size: 24px; color: #FFFFFF; font-weight: bold">0</span>
 	</p>
 </div>
-<div
-	style="display: inline-block;width: 15%; height:18%; margin: 0 0 0 0; background-image: url('${staticPath }/static/style/images/u139.png');background-repeat:no-repeat">
+<div onclick="chooseIndexTab('examineOrderCp');"
+	style="cursor: pointer;display: inline-block;width: 15%; height:18%; margin: 0 0 0 0; background-image: url('${staticPath }/static/style/images/u139.png');background-repeat:no-repeat">
 	<p
 		style="width: 200%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>二手车业务</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderCp" style="font-size: 24px; color: #FFFFFF; font-weight: bold"></span>
 	</p>
 </div>
-<div
-	style="display: inline-block;width: 15%; height:18%; margin: 0 0 0 0; background-image: url('${staticPath }/static/style/images/u141.png');background-repeat:no-repeat">
+<div onclick="chooseIndexTab('examineOrderCd');"
+	style="cursor: pointer;display: inline-block;width: 15%; height:18%; margin: 0 0 0 0; background-image: url('${staticPath }/static/style/images/u141.png');background-repeat:no-repeat">
 	<p
 		style="width: 200%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>车务代办</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderCd" style="font-size: 24px; color: #FFFFFF; font-weight: bold"></span>
 	</p>
 </div>
-<div
-	style="display: inline-block;width: 15%; height:18%; margin: 0 10% 0 0; background-image: url('${staticPath }/static/style/images/u143.png');background-repeat:no-repeat">
+<div onclick="chooseIndexTab('examineOrderCm');"
+	style="cursor: pointer;display: inline-block;width: 15%; height:18%; margin: 0 10% 0 0; background-image: url('${staticPath }/static/style/images/u143.png');background-repeat:no-repeat">
 	<p
 		style="width: 200%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
 		<span>汽修美容</span>
 	</p>
 	<p
 		style="width: 100%; margin: 0 10% 0 10%; font-size: 17px; line-height: 200%">
-		<span>（未成交：</span><span>12）</span>
+		<span>未成交：</span><span id="examineOrderCm" style="font-size: 24px; color: #FFFFFF; font-weight: bold"></span>
 	</p>
 </div>
 <div style="top: 40%; width: 100%; position: absolute;">
